@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embiciate | Tu rodado en Mar del Plata</title>
+    <meta name="description" content="Embiciate es tu tienda de bicicletas y accesorios en Mar del Plata. Encontrá tu rodado perfecto con diseño premium.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="logo">
+            <span class="text-accent" data-txt="marca_color">EM</span><span data-txt="marca_blanco">BICIATE</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#hero">Inicio</a></li>
+            <li><a href="#bicicletas">Bicicletas</a></li>
+            <li><a href="#accesorios">Accesorios</a></li>
+            <li><a href="#contacto" class="btn-outline">Contacto</a></li>
+        </ul>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content fade-in-up">
+            <h1 data-txt="hero_titulo">Libertad en<br>movimiento</h1>
+            <p data-txt="hero_subtitulo">Descubre nuestra colección premium de bicicletas y rodados deportivos para conquistar Mar del Plata, la costa y la montaña.</p>
+            <div class="hero-buttons">
+                <a href="#bicicletas" class="btn-primary">Ver Modelos</a>
+                <a href="#contacto" class="btn-text">Dónde estamos &rarr;</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Bicicletas Section -->
+    <section id="bicicletas" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in-up">Encontrá Tu Estilo</h2>
+            <div class="grid">
+                <!-- Mountain Bike -->
+                <div class="card fade-in-up">
+                    <div class="card-img-wrapper">
+                        <img src="assets/mtb.png" data-img="bici_mountain" alt="Mountain Bike Premium" class="card-img">
+                    </div>
+                    <div class="card-content">
+                        <span class="badge" data-txt="mtb_etiqueta">Aventura</span>
+                        <h3 data-txt="mtb_titulo">Mountain Bikes</h3>
+                        <p data-txt="mtb_descripcion">Ideales para terrenos irregulares, sierras y aquellos que buscan adrenalina más allá del asfalto.</p>
+                        <span class="view-more">Consultar Detalles &rarr;</span>
+                    </div>
+                </div>
+                <!-- Urbana -->
+                <div class="card fade-in-up" style="transition-delay: 0.2s;">
+                    <div class="card-img-wrapper">
+                        <img src="assets/urban.png" data-img="bici_urbana" alt="Bicicleta Urbana" class="card-img">
+                    </div>
+                    <div class="card-content">
+                        <span class="badge" data-txt="urbana_etiqueta">Ciudad</span>
+                        <h3 data-txt="urbana_titulo">Bicicletas Urbanas</h3>
+                        <p data-txt="urbana_descripcion">Diseño elegante y máxima comodidad para tus trayectos diarios por la costa o la ciudad.</p>
+                        <span class="view-more">Consultar Detalles &rarr;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Accesorios Section -->
+    <section id="accesorios" class="section bg-darker">
+        <div class="container">
+            <div class="grid grid-single">
+                <div class="card grid-row-card fade-in-up">
+                    <div class="card-img-wrapper">
+                        <img src="assets/accs.png" data-img="accesorios" alt="Accesorios para bicicleta" class="card-img">
+                    </div>
+                    <div class="card-content flex-center">
+                        <div>
+                            <h2 class="section-title text-left">Equipamiento<br><span class="text-accent" data-txt="accs_titulo_color">Premium</span></h2>
+                            <p class="description-text" data-txt="accs_descripcion">Contamos con la mejor calidad en cascos, luces traseras y delanteras, y sistemas de seguridad antirrobo. No dejes nada al azar a la hora de pedalear seguro.</p>
+                            <a href="#contacto" class="btn-outline mt-2">Consultar Stock</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto Section -->
+    <section id="contacto" class="section">
+        <div class="container text-center fade-in-up">
+            <h2 class="section-title">Estamos Cerca Tuyo</h2>
+            <div class="contact-box">
+                <p class="mb-2" data-txt="contacto_texto">Vení a conocer todos nuestros modelos en vivo en nuestro local ubicado en <strong>Mar del Plata</strong>. Te asesoraremos para que encuentres la bicicleta perfecta para vos.</p>
+                <div class="contact-info">
+                    <div class="info-item">
+                        <span class="icon">📍</span>
+                        <p data-txt="direccion">Güemes 1234, Mar del Plata, Argentina</p>
+                    </div>
+                    <div class="info-item">
+                        <span class="icon">🕒</span>
+                        <p data-txt="horarios">Lunes a Sábados: 09:00 a 20:00 hs</p>
+                    </div>
+                </div>
+                <div class="contact-cta mt-2">
+                    <!-- WhatsApp Link generated by JS -->
+                    <a href="#" target="_blank" id="btn-whatsapp" class="btn-primary w-full max-w-sm">
+                        📲 Consultar por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <span class="text-accent" data-txt="marca_color">EM</span><span data-txt="marca_blanco">BICIATE</span>
+            </div>
+            <p>&copy; 2026 Embiciate. Pasión por las bicicletas. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Archivo de Configuración de Usuario -->
+    <script src="config.js"></script>
+    
+    <!-- Scripts Funcionales -->
+    <script src="script.js"></script>
+</body>
+</html>
