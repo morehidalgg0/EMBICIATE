@@ -75,8 +75,8 @@ const CONFIG = {
             modelo: "FIREBIRD ALUMINIO >>",
             precio: "$299.900",
             specs: "RODADO 29' • 21 VELOCIDADES • FRENOS A DISCO",
-            imagen: "assets/candela.png", // Bici para PC (horizontal)
-            imagen_mobile: "assets/candela.png" // Bici para Celular (vertical). Si no tenés, repetí la de PC.
+            imagen: "assets/morena (2).png", // Bici para PC (horizontal)
+            imagen_mobile: "assets/morena (2).png" // Bici para Celular (vertical). Si no tenés, repetí la de PC.
         },
         {
             modelo: "FIAT 500 >>",
