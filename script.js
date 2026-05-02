@@ -22,17 +22,89 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // 3. Cambiar Fondo Hero
-        const seccionHero = document.getElementById('hero');
-        if (seccionHero && CONFIG.imagenes.hero_fondo) {
-            seccionHero.style.backgroundImage = `url('${CONFIG.imagenes.hero_fondo}')`;
-        }
+        // Ahora el fondo está controlado por CSS para admitir múltiples capas (bicicleta + montañas)
+        // const seccionHero = document.getElementById('hero');
+        // if (seccionHero && CONFIG.imagenes.hero_fondo) {
+        //     seccionHero.style.backgroundImage = `url('${CONFIG.imagenes.hero_fondo}')`;
+        // }
 
         // 4. Configurar Enlace de WhatsApp
         const btnWa = document.getElementById('btn-whatsapp');
-        if (btnWa && CONFIG.whatsapp_numero) {
+        const btnWaHero = document.getElementById('btn-whatsapp-hero');
+        if (CONFIG.whatsapp_numero) {
             const numero = CONFIG.whatsapp_numero.replace(/\D/g, ''); // limpia caracteres no numericos
             const mensaje = encodeURIComponent(CONFIG.whatsapp_mensaje);
-            btnWa.href = `https://wa.me/${numero}?text=${mensaje}`;
+            const waLink = `https://wa.me/${numero}?text=${mensaje}`;
+            if (btnWa) btnWa.href = waLink;
+            if (btnWaHero) btnWaHero.href = waLink;
+        }
+        
+        // 5. Hero Slider
+        if (CONFIG.hero_slider && CONFIG.hero_slider.length > 0) {
+            let currentIndex = 0;
+            let sliderInterval;
+            const heroBikeLayer = document.getElementById('hero-bike-layer');
+            const heroPriceCard = document.getElementById('hero-price-card');
+            const sliderModelo = document.getElementById('slider-modelo');
+            const sliderPrecio = document.getElementById('slider-precio');
+            const sliderSpecs = document.getElementById('slider-specs');
+            const btnPrev = document.getElementById('slider-prev');
+            const btnNext = document.getElementById('slider-next');
+
+            if (heroBikeLayer && heroPriceCard && sliderModelo && sliderPrecio && sliderSpecs) {
+                // Aseguramos que tengan la clase de transición
+                heroBikeLayer.classList.add('slider-fade');
+                heroPriceCard.classList.add('slider-fade');
+
+                const changeSlide = (direction) => {
+                    // Calculamos el próximo índice
+                    currentIndex = (currentIndex + direction + CONFIG.hero_slider.length) % CONFIG.hero_slider.length;
+                    const nextBike = CONFIG.hero_slider[currentIndex];
+
+                    // Efecto de desvanecimiento
+                    heroBikeLayer.classList.add('fade-out');
+                    heroPriceCard.classList.add('fade-out');
+
+                    // Esperamos a que la opacidad baje a 0 (500ms)
+                    setTimeout(() => {
+                        // Cambiamos los datos
+                        heroBikeLayer.style.backgroundImage = `url('${nextBike.imagen}')`;
+                        sliderModelo.innerHTML = nextBike.modelo;
+                        sliderPrecio.innerHTML = nextBike.precio;
+                        sliderSpecs.innerHTML = nextBike.specs;
+
+                        // Efecto de reaparición
+                        heroBikeLayer.classList.remove('fade-out');
+                        heroPriceCard.classList.remove('fade-out');
+                    }, 500);
+                };
+
+                const startSlider = () => {
+                    sliderInterval = setInterval(() => changeSlide(1), 5000);
+                };
+
+                const resetSlider = () => {
+                    clearInterval(sliderInterval);
+                    startSlider();
+                };
+
+                // Listeners de flechas
+                if (btnPrev) {
+                    btnPrev.addEventListener('click', () => {
+                        changeSlide(-1);
+                        resetSlider();
+                    });
+                }
+                
+                if (btnNext) {
+                    btnNext.addEventListener('click', () => {
+                        changeSlide(1);
+                        resetSlider();
+                    });
+                }
+
+                startSlider();
+            }
         }
         
     } else {

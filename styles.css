@@ -199,12 +199,23 @@ h1, h2, h3, h4 {
 
 /* Hero Section */
 .hero {
-    height: 100vh;
-    background: url('assets/hero.png') no-repeat center center/cover;
+    min-height: 100vh;
+    background: url('assets/morena.png') no-repeat center center/cover, #000;
     display: flex;
     align-items: center;
-    padding: 0 5%;
+    padding: 100px 5% 0 5%;
     position: relative;
+}
+
+.hero-bike-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('assets/....png') no-repeat right bottom/contain;
+    z-index: 0;
+    transition: opacity 0.5s ease-in-out;
 }
 
 .hero-overlay {
@@ -213,36 +224,198 @@ h1, h2, h3, h4 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right, rgba(5, 5, 5, 0.95) 0%, rgba(5, 5, 5, 0.5) 50%, rgba(5, 5, 5, 0.2) 100%);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 40%, rgba(0, 0, 0, 0) 100%);
     z-index: 1;
 }
 
-.hero-content {
+.hero-container {
     position: relative;
     z-index: 2;
-    max-width: 650px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-content {
+    max-width: 600px;
+    margin-top: 10vh;
+    margin-bottom: 2rem;
 }
 
 .hero h1 {
-    font-size: clamp(3.5rem, 8vw, 6rem);
-    margin-bottom: 1.5rem;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    margin-bottom: 1rem;
     text-transform: uppercase;
-    letter-spacing: -2px;
+    letter-spacing: -1px;
+    line-height: 0.9;
+    font-style: italic;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
 }
 
 .hero p {
-    font-size: 1.2rem;
-    color: var(--color-text-muted);
-    margin-bottom: 2.5rem;
-    line-height: 1.6;
-    max-width: 500px;
+    font-size: 1.1rem;
+    color: #e0e0e0;
+    margin-bottom: 2rem;
+    line-height: 1.5;
 }
 
-.hero-buttons {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
+.btn-whatsapp-hero {
+    display: inline-flex;
     align-items: center;
+    background-color: var(--color-accent);
+    color: #fff;
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    gap: 1rem;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.btn-whatsapp-hero:hover {
+    transform: scale(1.05);
+    background-color: var(--color-accent-hover);
+}
+
+.btn-whatsapp-hero .wa-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-whatsapp-hero .btn-text-content {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.btn-whatsapp-hero .btn-text-content strong {
+    font-size: 1.1rem;
+}
+
+.btn-whatsapp-hero .btn-text-content span {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.hero-features {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.hero-features .feature {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.85rem;
+    line-height: 1.2;
+    color: #ccc;
+}
+
+.hero-features .feature svg {
+    width: 28px;
+    height: 28px;
+    opacity: 0.8;
+}
+
+.hero-price-card {
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    margin-bottom: 2rem;
+    width: fit-content;
+    gap: 3rem;
+}
+
+.price-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.bike-model {
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.price {
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.bike-specs {
+    font-size: 0.8rem;
+    color: #aaa;
+    letter-spacing: 1px;
+}
+
+.price-divider {
+    width: 1px;
+    height: 80px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.price-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.hasta {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color: #aaa;
+}
+
+.cuotas {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+}
+
+.cuotas .num {
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.cuotas .text {
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.con-todas {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.hero-brands {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #888;
+    font-weight: 800;
+    font-style: italic;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
 }
 
 /* Grids & Cards */
@@ -427,6 +600,52 @@ h1, h2, h3, h4 {
     transform: translateY(0);
 }
 
+.slider-fade {
+    transition: opacity 0.5s ease-in-out;
+}
+
+.slider-fade.fade-out {
+    opacity: 0;
+}
+
+/* Slider Arrows */
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.3s ease, transform 0.3s ease, color 0.3s ease;
+}
+
+.slider-arrow:hover {
+    background: var(--color-accent);
+    color: var(--color-dark);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.slider-arrow.prev {
+    left: 20px;
+}
+
+.slider-arrow.next {
+    right: 20px;
+}
+
+.slider-arrow svg {
+    width: 28px;
+    height: 28px;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
     .grid-row-card {
@@ -478,16 +697,70 @@ h1, h2, h3, h4 {
     }
     
     .hero {
-        text-align: center;
-        justify-content: center;
-    }
-    
-    .hero-overlay {
-        background: linear-gradient(to bottom, rgba(5, 5, 5, 0.7) 0%, rgba(5, 5, 5, 0.9) 100%);
+        padding-top: 140px;
+        padding-bottom: 250px; /* Espacio para que la bici no tape el texto y tarjetas */
     }
 
-    .hero-buttons {
+    .hero-bike-layer {
+        background-position: center bottom;
+        background-size: 100% auto;
+    }
+
+    .slider-arrow {
+        top: auto;
+        bottom: 20px;
+        transform: none;
+        width: 40px;
+        height: 40px;
+    }
+
+    .slider-arrow:hover {
+        transform: scale(1.1);
+    }
+
+    .slider-arrow.prev {
+        left: 20%;
+    }
+
+    .slider-arrow.next {
+        right: 20%;
+    }
+
+    .hero-overlay {
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.2) 100%);
+    }
+
+    .hero-content {
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-features {
         justify-content: center;
+    }
+
+    .hero-price-card {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        align-items: center;
+        text-align: center;
+        margin: 2rem auto;
+    }
+    
+    .price-right {
+        align-items: center;
+    }
+
+    .price-divider {
+        width: 100%;
+        height: 1px;
+    }
+
+    .hero-brands {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem;
     }
     
     .contact-box {
