@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let currentIndex = 0;
             let sliderInterval;
             const heroBikeLayer = document.getElementById('hero-bike-layer');
+            const heroBikeImgMobile = document.getElementById('hero-bike-img-mobile'); // Nuevo elemento mobile
             const heroPriceCard = document.getElementById('hero-price-card');
             const sliderModelo = document.getElementById('slider-modelo');
             const sliderPrecio = document.getElementById('slider-precio');
@@ -61,6 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const isMobileInit = window.innerWidth <= 768;
                 const initialImgSrc = (isMobileInit && initialBike.imagen_mobile) ? initialBike.imagen_mobile : initialBike.imagen;
                 heroBikeLayer.style.backgroundImage = `url('${initialImgSrc}')`;
+                if (heroBikeImgMobile) {
+                    heroBikeImgMobile.src = initialImgSrc;
+                }
 
                 const changeSlide = (direction) => {
                     // Calculamos el próximo índice
@@ -74,11 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Efecto de desvanecimiento
                     heroBikeLayer.classList.add('fade-out');
                     heroPriceCard.classList.add('fade-out');
+                    if (heroBikeImgMobile) heroBikeImgMobile.classList.add('fade-out');
 
                     // Esperamos a que la opacidad baje a 0 (500ms)
                     setTimeout(() => {
                         // Cambiamos los datos
                         heroBikeLayer.style.backgroundImage = `url('${imgSrc}')`;
+                        if (heroBikeImgMobile) heroBikeImgMobile.src = imgSrc;
                         sliderModelo.innerHTML = nextBike.modelo;
                         sliderPrecio.innerHTML = nextBike.precio;
                         sliderSpecs.innerHTML = nextBike.specs;
@@ -86,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         // Efecto de reaparición
                         heroBikeLayer.classList.remove('fade-out');
                         heroPriceCard.classList.remove('fade-out');
+                        if (heroBikeImgMobile) heroBikeImgMobile.classList.remove('fade-out');
                     }, 500);
                 };
 
