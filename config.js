@@ -75,25 +75,29 @@ const CONFIG = {
             modelo: "FIREBIRD ALUMINIO >>",
             precio: "$299.900",
             specs: "RODADO 29' • 21 VELOCIDADES • FRENOS A DISCO",
-            imagen: "assets/....png" // Bici original
+            imagen: "assets/....png", // Bici para PC (horizontal)
+            imagen_mobile: "assets/....png" // Bici para Celular (vertical). Si no tenés, repetí la de PC.
         },
         {
             modelo: "FIAT 500 >>",
             precio: "$289.900",
             specs: "RODADO 29' • 21 VELOCIDADES • CUADRO ALUMINIO",
-            imagen: "assets/nicol.png" // Bici Fiat 500
+            imagen: "assets/nicol.png", 
+            imagen_mobile: "assets/nicol.png" 
         },
         {
             modelo: "MOUNTAIN BIKE PRO >>",
             precio: "$345.000",
             specs: "RODADO 29' • 24 VELOCIDADES • FRENOS HIDRÁULICOS",
-            imagen: "assets/mtb.png" // Bici de la sección abajo
+            imagen: "assets/mtb.png", 
+            imagen_mobile: "assets/mtb.png" 
         },
         {
             modelo: "URBANA CLASSIC >>",
             precio: "$210.000",
             specs: "RODADO 28' • 6 VELOCIDADES • ESTILO VINTAGE",
-            imagen: "assets/urban.png" // Bici de la sección abajo
+            imagen: "assets/urban.png", 
+            imagen_mobile: "assets/urban.png" 
         }
     ]
 };

@@ -696,14 +696,71 @@ h1, h2, h3, h4 {
         transform: rotate(-45deg) translate(6px, -7px);
     }
     
+    .navbar .logo img {
+        height: 100px !important; /* Más chico para que entre el botón */
+    }
+
+    .btn-nav-mobile {
+        display: flex !important;
+        align-items: center;
+        background: var(--color-accent);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        text-decoration: none;
+        margin-right: 15px;
+        margin-left: auto;
+    }
+    
+    .hamburger {
+        margin-left: 0;
+    }
+
     .hero {
-        padding-top: 140px;
-        padding-bottom: 250px; /* Espacio para que la bici no tape el texto y tarjetas */
+        padding-top: 100px;
+        padding-bottom: 50px; 
     }
 
     .hero-bike-layer {
-        background-position: center bottom;
-        background-size: 100% auto;
+        background-position: right 10% center;
+        background-size: 160% auto; /* Bici grande a la derecha */
+    }
+
+    .hero-content {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .hero h1, .hero p, .btn-whatsapp-hero {
+        max-width: 65%; /* Limitar texto a la izquierda */
+    }
+
+    .hero-features {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+    
+    .feature {
+        flex-direction: row;
+        text-align: left;
+        gap: 0.5rem;
+    }
+    
+    .feature svg {
+        width: 36px;
+        height: 36px;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 50%;
+        padding: 6px;
+    }
+    
+    .feature span {
+        font-size: 0.75rem;
     }
 
     .slider-arrow {
@@ -727,16 +784,7 @@ h1, h2, h3, h4 {
     }
 
     .hero-overlay {
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.2) 100%);
-    }
-
-    .hero-content {
-        align-items: center;
-        text-align: center;
-    }
-
-    .hero-features {
-        justify-content: center;
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.3) 100%);
     }
 
     .hero-price-card {
