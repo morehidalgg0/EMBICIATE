@@ -17,7 +17,7 @@ const CONFIG = {
     marca_color: "EM",
     marca_blanco: "BICIATE",
 
-    hero_titulo: "LA BICI<br><span class=\"text-accent\">QUE BUSCÁS</span><br>ESTÁ ACÁ",
+    hero_titulo: "TU PRÓXIMA BICI<br><span class=\"text-accent\">ESTÁ ACÁ</span>",
     hero_subtitulo: "Las mejores marcas, los mejores precios<br>y la <span class=\"text-accent\">asesoría</span> que necesitás.",
 
     // ---------------------------------------------------------------------

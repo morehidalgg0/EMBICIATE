@@ -724,7 +724,7 @@ h1, h2, h3, h4 {
     }
 
     .hero {
-        padding-top: 100px;
+        padding-top: 60px; /* Reducimos aire muerto arriba */
         padding-bottom: 50px; 
     }
 
@@ -735,12 +735,12 @@ h1, h2, h3, h4 {
     .hero-bike-mobile-wrapper {
         display: block;
         width: 100%;
-        margin: 1.5rem 0;
+        margin: 0; /* Quitamos margen para que se pegue más a los elementos */
     }
 
     .hero-bike-img-mobile {
         width: 100%;
-        height: 55vh; /* Ocupa 55% del alto de pantalla */
+        height: 70vh; /* Protagonista absoluta (70% del alto) */
         object-fit: contain; /* Garantiza que no se corte NUNCA */
     }
 
@@ -755,21 +755,30 @@ h1, h2, h3, h4 {
         line-height: 1.1;
         margin-bottom: 0.5rem;
     }
+    
+    .hide-on-mobile {
+        display: none !important; /* Ocultamos subtítulo para ir directo a la venta */
+    }
 
     .hero h1, .hero p, .btn-whatsapp-hero {
         max-width: 100%; /* Todo al 100% centrado */
     }
 
     .btn-whatsapp-hero {
-        padding: 10px 15px;
-        margin: 0 auto;
+        padding: 12px 15px; /* Un poco más alto */
+        margin: 10px auto 0 auto;
     }
     
+    .btn-full-width-mobile {
+        width: 100%;
+        justify-content: center;
+    }
+
     .btn-whatsapp-hero .btn-text-content strong {
-        font-size: 0.75rem;
+        font-size: 0.85rem; /* Letra un poco más grande */
     }
     .btn-whatsapp-hero .btn-text-content span {
-        font-size: 0.65rem;
+        font-size: 0.75rem;
     }
 
     .hero-features {
