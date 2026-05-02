@@ -683,8 +683,8 @@ h1, h2, h3, h4 {
     }
 
     .navbar {
-        padding: 10px 5%;
-        min-height: 60px;
+        padding: 5px 5%; /* Mínimo posible */
+        min-height: 50px;
     }
 
     .nav-links.active {
@@ -707,7 +707,7 @@ h1, h2, h3, h4 {
     }
     
     .navbar .logo img {
-        height: 45px !important; /* Aún más chico para salvar espacio vertical */
+        height: 40px !important; /* Mínimo absoluto para salvar espacio */
     }
 
     .btn-nav-mobile {
@@ -722,8 +722,8 @@ h1, h2, h3, h4 {
         height: 100vh;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
-        padding: 60px 16px 5px 16px; /* 60px top para salvar exacto el navbar */
+        justify-content: space-between; /* Como pediste */
+        padding: 50px 16px 8px 16px; /* 50px exactos para salvar la altura del navbar */
     }
     
     .hero-container {
@@ -750,9 +750,9 @@ h1, h2, h3, h4 {
 
     .hero-bike-img-mobile {
         width: 100%;
-        height: 55vh; /* Bajamos de 75vh a 55vh para garantizar que entre SIN SCROLL en cualquier pantalla */
+        height: 50vh; /* Bajamos estrictamente a 50vh para que SIEMPRE entre sin scroll */
         object-fit: contain;
-        margin-top: 0; /* Sin márgenes que la empujen hacia abajo */
+        margin: 0; 
     }
 
     .hero-content {
@@ -766,10 +766,9 @@ h1, h2, h3, h4 {
     }
 
     .hero h1 {
-        font-size: 2rem; /* Más chico para asegurar 1 o 2 líneas máximo */
-        line-height: 1.1;
-        margin-top: 0;
-        margin-bottom: 0; 
+        font-size: 2rem; 
+        line-height: 1; /* Cero aire entre las dos líneas */
+        margin: 0; /* Cero margen arriba y abajo */
     }
     
     .hide-on-mobile {
@@ -781,8 +780,8 @@ h1, h2, h3, h4 {
     }
 
     .btn-whatsapp-hero {
-        padding: 10px 15px; /* Un poco más compacto */
-        margin: 5px auto 5px auto; /* Pegado arriba y abajo */
+        padding: 10px 15px; 
+        margin: 0 auto; /* Cero aire con respecto a la foto o texto */
     }
     
     .btn-full-width-mobile {
