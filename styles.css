@@ -724,8 +724,8 @@ h1, h2, h3, h4 {
     }
 
     .hero-bike-layer {
-        background-position: right center;
-        background-size: 90% auto; /* La bici ocupará el 90% del ancho, apoyada a la derecha, sin cortarse */
+        background-position: right -30px bottom 10%; /* Empujada a la derecha y abajo */
+        background-size: 140% auto; /* Más grande para que se corte atrás como en la foto */
     }
 
     .hero-content {
