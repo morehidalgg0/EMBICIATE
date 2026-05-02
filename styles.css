@@ -702,21 +702,11 @@ h1, h2, h3, h4 {
     }
     
     .navbar .logo img {
-        height: 100px !important; /* Más chico para que entre el botón */
+        height: 60px !important; /* Logo más chico para ganar espacio */
     }
 
     .btn-nav-mobile {
-        display: flex !important;
-        align-items: center;
-        background: var(--color-accent);
-        color: white;
-        padding: 6px 12px;
-        border-radius: 4px;
-        font-size: 0.8rem;
-        font-weight: bold;
-        text-decoration: none;
-        margin-right: 15px;
-        margin-left: auto;
+        display: none !important; /* Ocultamos botón secundario como solicitaste */
     }
     
     .hamburger {
@@ -724,8 +714,19 @@ h1, h2, h3, h4 {
     }
 
     .hero {
-        padding-top: 60px; /* Reducimos aire muerto arriba */
-        padding-bottom: 50px; 
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 70px 16px 10px 16px; /* 70px top para salvar el navbar */
+    }
+    
+    .hero-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 0;
     }
 
     .hero-bike-layer {
@@ -733,40 +734,48 @@ h1, h2, h3, h4 {
     }
 
     .hero-bike-mobile-wrapper {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        flex-grow: 1; /* Ocupa todo el espacio restante abajo */
         width: 100%;
-        margin: 0; /* Quitamos margen para que se pegue más a los elementos */
+        margin: 0;
     }
 
     .hero-bike-img-mobile {
         width: 100%;
-        height: 70vh; /* Protagonista absoluta (70% del alto) */
-        object-fit: contain; /* Garantiza que no se corte NUNCA */
+        height: 75vh;
+        object-fit: contain;
+        margin-top: -20px; /* Sube la bici para pegarse al botón */
     }
 
     .hero-content {
-        align-items: center; /* Volvemos al centrado vertical */
-        text-align: center; /* Texto centrado */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
         width: 100%;
+        height: 100%;
+        margin-top: 0;
     }
 
     .hero h1 {
         font-size: 2.2rem;
         line-height: 1.1;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0; /* Pegado al botón */
     }
     
     .hide-on-mobile {
-        display: none !important; /* Ocultamos subtítulo para ir directo a la venta */
+        display: none !important;
     }
 
     .hero h1, .hero p, .btn-whatsapp-hero {
-        max-width: 100%; /* Todo al 100% centrado */
+        max-width: 100%;
     }
 
     .btn-whatsapp-hero {
-        padding: 12px 15px; /* Un poco más alto */
-        margin: 10px auto 0 auto;
+        padding: 12px 15px;
+        margin: 5px auto 0 auto; /* Pegado al texto */
     }
     
     .btn-full-width-mobile {
