@@ -742,7 +742,7 @@ h1, h2, h3, h4 {
     .hero-bike-mobile-wrapper {
         display: flex;
         flex-direction: column;
-        justify-content: flex-start; /* Subimos la bici */
+        justify-content: flex-end; /* Anclamos el contenedor al fondo */
         flex-grow: 1; 
         width: 100%;
         margin: 0;
@@ -752,6 +752,7 @@ h1, h2, h3, h4 {
         width: 100%;
         height: 50vh; /* Bajamos estrictamente a 50vh para que SIEMPRE entre sin scroll */
         object-fit: contain;
+        object-position: bottom center; /* La gravedad hace su trabajo: las ruedas tocan el piso */
         margin: 0; 
     }
 
