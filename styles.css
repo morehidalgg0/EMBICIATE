@@ -214,7 +214,7 @@ h1, h2, h3, h4 {
     width: 100%;
     height: 100%;
     background: url('assets/....png') no-repeat right bottom/contain;
-    z-index: 0;
+    z-index: 1; /* Arriba del overlay oscuro */
     transition: opacity 0.5s ease-in-out;
 }
 
@@ -225,7 +225,7 @@ h1, h2, h3, h4 {
     width: 100%;
     height: 100%;
     background: linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 40%, rgba(0, 0, 0, 0) 100%);
-    z-index: 1;
+    z-index: 0; /* Solo oscurece la montaña, no la bici */
 }
 
 .hero-container {
@@ -724,8 +724,8 @@ h1, h2, h3, h4 {
     }
 
     .hero-bike-layer {
-        background-position: right 10% center;
-        background-size: 160% auto; /* Bici grande a la derecha */
+        background-position: right -20% center;
+        background-size: auto 75%; /* Ajustamos la bici para que ocupe el 75% del alto y respire */
     }
 
     .hero-content {
@@ -733,8 +733,25 @@ h1, h2, h3, h4 {
         text-align: left;
     }
 
+    .hero h1 {
+        font-size: 2.2rem;
+        line-height: 1.1;
+        margin-bottom: 0.5rem;
+    }
+
     .hero h1, .hero p, .btn-whatsapp-hero {
-        max-width: 65%; /* Limitar texto a la izquierda */
+        max-width: 55%; /* Dejamos 45% libre para la bici */
+    }
+
+    .btn-whatsapp-hero {
+        padding: 10px 15px;
+    }
+    
+    .btn-whatsapp-hero .btn-text-content strong {
+        font-size: 0.75rem;
+    }
+    .btn-whatsapp-hero .btn-text-content span {
+        font-size: 0.65rem;
     }
 
     .hero-features {
