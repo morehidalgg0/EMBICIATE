@@ -58,22 +58,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 heroPriceCard.classList.add('slider-fade');
 
                 // Configurar la primera bici al cargar la página (para que sea responsiva de entrada)
-                const initialBike = CONFIG.hero_slider[0];
-                const isMobileInit = window.innerWidth <= 768;
-                const initialImgSrc = (isMobileInit && initialBike.imagen_mobile) ? initialBike.imagen_mobile : initialBike.imagen;
-                heroBikeLayer.style.backgroundImage = `url('${initialImgSrc}')`;
-                if (heroBikeImgMobile) {
-                    heroBikeImgMobile.src = initialImgSrc;
-                }
+                const getSlideImage = (bike) => {
+                    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+                    return (isMobile && bike.imagen_mobile) ? bike.imagen_mobile : bike.imagen;
+                };
+
+                const renderSlide = (bike) => {
+                    const imgSrc = getSlideImage(bike);
+                    heroBikeLayer.style.backgroundImage = `url('${imgSrc}')`;
+                    if (heroBikeImgMobile) {
+                        heroBikeImgMobile.src = imgSrc;
+                        heroBikeImgMobile.alt = bike.modelo ? `Bicicleta ${bike.modelo.replace(/>/g, '').trim()}` : 'Bicicleta destacada';
+                    }
+                    sliderModelo.innerHTML = bike.modelo;
+                    sliderPrecio.innerHTML = bike.precio;
+                    sliderSpecs.innerHTML = bike.specs;
+                };
+
+                renderSlide(CONFIG.hero_slider[0]);
 
                 const changeSlide = (direction) => {
                     // Calculamos el próximo índice
                     currentIndex = (currentIndex + direction + CONFIG.hero_slider.length) % CONFIG.hero_slider.length;
                     const nextBike = CONFIG.hero_slider[currentIndex];
-
-                    // Detectamos si es celular
-                    const isMobile = window.innerWidth <= 768;
-                    const imgSrc = (isMobile && nextBike.imagen_mobile) ? nextBike.imagen_mobile : nextBike.imagen;
 
                     // Efecto de desvanecimiento
                     heroBikeLayer.classList.add('fade-out');
@@ -83,11 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Esperamos a que la opacidad baje a 0 (500ms)
                     setTimeout(() => {
                         // Cambiamos los datos
-                        heroBikeLayer.style.backgroundImage = `url('${imgSrc}')`;
-                        if (heroBikeImgMobile) heroBikeImgMobile.src = imgSrc;
-                        sliderModelo.innerHTML = nextBike.modelo;
-                        sliderPrecio.innerHTML = nextBike.precio;
-                        sliderSpecs.innerHTML = nextBike.specs;
+                        renderSlide(nextBike);
 
                         // Efecto de reaparición
                         heroBikeLayer.classList.remove('fade-out');
@@ -95,6 +98,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (heroBikeImgMobile) heroBikeImgMobile.classList.remove('fade-out');
                     }, 500);
                 };
+
+                let resizeTimeout;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        renderSlide(CONFIG.hero_slider[currentIndex]);
+                    }, 150);
+                });
 
                 const startSlider = () => {
                     sliderInterval = setInterval(() => changeSlide(1), 5000);
