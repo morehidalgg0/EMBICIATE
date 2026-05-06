@@ -18,7 +18,7 @@ const CONFIG = {
     marca_blanco: "BICIATE",
 
     bicicletas_titulo: "Bicicletas destacadas",
-    bicicletas_intro: "Modelos listos para consultar por WhatsApp. Cambia precios, fotos y detalles desde este archivo.",
+    bicicletas_intro: "Toca cada modelo para ver su ficha, detalles y precio.",
     bicicletas_destacadas: [
         {
             etiqueta: "Oferta",
