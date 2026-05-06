@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Urgencia Banner -->
+    <div class="urgencia-banner">
+        ⚡ Stock limitado — Consultá disponibilidad antes de que se agote
+    </div>
+
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <a href="#hero" class="logo">
@@ -25,7 +30,7 @@
             <li><a href="#accesorios">Accesorios</a></li>
             <li><a href="#contacto" class="btn-outline">Contacto</a></li>
         </ul>
-        <a href="#" target="_blank" id="btn-nav-mobile" class="btn-nav-mobile" style="display: none;">
+        <a href="https://wa.me/5492230000000?text=Hola!%20Vengo%20de%20la%20página%20web,%20quiero%20hacer%20una%20consulta." target="_blank" id="btn-nav-mobile" class="btn-nav-mobile" style="display: none;">
             <svg viewBox="0 0 24 24" fill="white" width="16" height="16" style="margin-right: 5px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
             ESCRIBINOS
         </a>
@@ -116,6 +121,51 @@
         </div>
     </header>
 
+    <!-- Testimonios Section -->
+    <section id="testimonios" class="section testimonios-section">
+        <div class="container">
+            <div class="testimonios-heading fade-in-up">
+                <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+                <div class="clientes-contador">
+                    <span class="contador-numero">+500</span>
+                    <span class="contador-texto">Clientes en Mar del Plata</span>
+                </div>
+            </div>
+
+            <div class="testimonios-grid">
+                <div class="testimonio-card fade-in-up">
+                    <div class="testimonio-content">
+                        <p class="testimonio-texto">"Excelente atención y asesoramiento. Encontré la bici perfecta para mis paseos por la costa."</p>
+                        <div class="testimonio-autor">
+                            <span class="autor-nombre">María González</span>
+                            <span class="autor-barrio">Plaza Colón</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonio-card fade-in-up" style="transition-delay: 0.1s;">
+                    <div class="testimonio-content">
+                        <p class="testimonio-texto">"Compré mi mountain bike aquí y la calidad es impresionante. El servicio técnico es de primera."</p>
+                        <div class="testimonio-autor">
+                            <span class="autor-nombre">Carlos Rodríguez</span>
+                            <span class="autor-barrio">Puerto</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonio-card fade-in-up" style="transition-delay: 0.2s;">
+                    <div class="testimonio-content">
+                        <p class="testimonio-texto">"Tienda confiable con precios competitivos. Me ayudaron a elegir la bici urbana ideal para la ciudad."</p>
+                        <div class="testimonio-autor">
+                            <span class="autor-nombre">Ana López</span>
+                            <span class="autor-barrio">Centro</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Precios Section -->
     <section id="precios" class="section pricing-section">
         <div class="container">
@@ -139,7 +189,7 @@
                             <li>Opciones con freno a disco</li>
                             <li>Hasta 12 cuotas fijas</li>
                         </ul>
-                        <a href="https://wa.me/5492235505397?text=Hola%20Embiciate%2C%20quiero%20consultar%20precios%20de%20Mountain%20Bikes." target="_blank" rel="noopener" class="btn-primary pricing-btn">Consultar por WhatsApp</a>
+                        <a href="https://wa.me/5492230000000?text=Hola!%20Me%20interesa%20una%20Mountain%20Bike,%20¿tienen%20stock%20disponible?" target="_blank" rel="noopener" class="btn-primary pricing-btn">Consultar por WhatsApp</a>
                     </div>
                 </article>
 
@@ -150,13 +200,13 @@
                     <div class="pricing-content">
                         <span class="pricing-tag">Urbanas</span>
                         <h3>Bicicletas Urbanas</h3>
-                        <div class="pricing-price">Desde <strong>$210.000</strong></div>
+                        <div class="pricing-price">Desde <strong>$189.900</strong></div>
                         <ul class="pricing-list">
                             <li>Modelos comodos para ciudad</li>
                             <li>Rodados para uso diario</li>
                             <li>Consulta stock actual</li>
                         </ul>
-                        <a href="https://wa.me/5492235505397?text=Hola%20Embiciate%2C%20quiero%20consultar%20precios%20de%20bicicletas%20urbanas." target="_blank" rel="noopener" class="btn-primary pricing-btn">Consultar por WhatsApp</a>
+                        <a href="https://wa.me/5492230000000?text=Hola!%20Me%20interesa%20una%20Bicicleta%20Urbana,%20¿tienen%20stock%20disponible?" target="_blank" rel="noopener" class="btn-primary pricing-btn">Consultar por WhatsApp</a>
                     </div>
                 </article>
 
@@ -173,7 +223,7 @@
                             <li>Opciones para MTB y ciudad</li>
                             <li>Disponibilidad variable</li>
                         </ul>
-                        <a href="https://wa.me/5492235505397?text=Hola%20Embiciate%2C%20quiero%20consultar%20por%20accesorios%20para%20bicicleta." target="_blank" rel="noopener" class="btn-primary pricing-btn">Consultar por WhatsApp</a>
+                        <a href="https://wa.me/5492230000000?text=Hola!%20Me%20interesa%20accesorios%20para%20bicicleta,%20¿tienen%20stock%20disponible?" target="_blank" rel="noopener" class="btn-primary pricing-btn">Consultar por WhatsApp</a>
                     </div>
                 </article>
             </div>
@@ -197,9 +247,10 @@
                     </div>
                     <div class="card-content">
                         <span class="badge" data-txt="mtb_etiqueta">Aventura</span>
+                        <div class="card-price-badge">Desde $299.900</div>
                         <h3 data-txt="mtb_titulo">Mountain Bikes</h3>
                         <p data-txt="mtb_descripcion">Ideales para terrenos irregulares, sierras y aquellos que buscan adrenalina más allá del asfalto.</p>
-                        <span class="view-more">Consultar Detalles &rarr;</span>
+                        <a href="https://wa.me/5492230000000?text=Hola!%20Me%20interesa%20una%20Mountain%20Bike,%20¿tienen%20stock%20disponible?" target="_blank" rel="noopener" class="btn-primary card-btn">Consultar Detalles →</a>
                     </div>
                 </div>
                 <!-- Urbana -->
@@ -209,9 +260,10 @@
                     </div>
                     <div class="card-content">
                         <span class="badge" data-txt="urbana_etiqueta">Ciudad</span>
+                        <div class="card-price-badge">Desde $189.900</div>
                         <h3 data-txt="urbana_titulo">Bicicletas Urbanas</h3>
                         <p data-txt="urbana_descripcion">Diseño elegante y máxima comodidad para tus trayectos diarios por la costa o la ciudad.</p>
-                        <span class="view-more">Consultar Detalles &rarr;</span>
+                        <a href="https://wa.me/5492230000000?text=Hola!%20Me%20interesa%20una%20Bicicleta%20Urbana,%20¿tienen%20stock%20disponible?" target="_blank" rel="noopener" class="btn-primary card-btn">Consultar Detalles →</a>
                     </div>
                 </div>
             </div>
@@ -249,7 +301,7 @@
                         <div>
                             <h2 class="section-title text-left">Equipamiento<br><span class="text-accent" data-txt="accs_titulo_color">Premium</span></h2>
                             <p class="description-text" data-txt="accs_descripcion">Contamos con la mejor calidad en cascos, luces traseras y delanteras, y sistemas de seguridad antirrobo. No dejes nada al azar a la hora de pedalear seguro.</p>
-                            <a href="#contacto" class="btn-outline mt-2">Consultar Stock</a>
+                            <a href="https://wa.me/5492230000000?text=Hola!%20Me%20interesa%20accesorios%20para%20bicicleta,%20¿tienen%20stock%20disponible?" target="_blank" rel="noopener" class="btn-outline mt-2">Consultar Stock</a>
                         </div>
                     </div>
                 </div>

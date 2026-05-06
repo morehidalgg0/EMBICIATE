@@ -129,6 +129,19 @@ h1, h2, h3, h4 {
     color: #fff;
 }
 
+/* Urgencia Banner */
+.urgencia-banner {
+    background-color: #0d0d0d;
+    color: #d7ff32;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(215, 255, 50, 0.2);
+}
+
 /* Navbar */
 .navbar {
     position: fixed;
@@ -480,6 +493,87 @@ h1, h2, h3, h4 {
 .card:hover .card-img {
     transform: scale(1.08);
     opacity: 1;
+}
+
+/* Testimonios Section */
+.testimonios-section {
+    background-color: var(--color-bg-darker);
+}
+
+.testimonios-heading {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.clientes-contador {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    color: var(--color-accent);
+    font-weight: 800;
+    font-size: 1.2rem;
+}
+
+.contador-numero {
+    font-size: 2rem;
+    color: #d7ff32;
+}
+
+.contador-texto {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.testimonios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.testimonio-card {
+    background-color: var(--color-card);
+    border: 1px solid var(--color-card-border);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+.testimonio-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 85, 0, 0.4);
+}
+
+.testimonio-content {
+    text-align: center;
+}
+
+.testimonio-texto {
+    color: var(--color-text);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.testimonio-autor {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.autor-nombre {
+    font-weight: 700;
+    color: var(--color-accent);
+    font-size: 1rem;
+}
+
+.autor-barrio {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .pricing-section {
@@ -857,6 +951,15 @@ h1, h2, h3, h4 {
     letter-spacing: 1px;
     display: inline-block;
     margin-bottom: 1rem;
+}
+
+.card-price-badge {
+    color: #d7ff32;
+    font-size: 1.2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
 }
 
 .card-content h3 {

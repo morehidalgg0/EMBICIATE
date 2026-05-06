@@ -26,7 +26,7 @@ const CONFIG = {
             precio: "$299.900",
             imagen: "assets/morena (2).png",
             specs: ["Rodado 29", "21 velocidades", "Frenos a disco"],
-            mensaje: "Hola Embiciate, quiero consultar por la Firebird Aluminio."
+            mensaje: "Hola! Me interesa una Mountain Bike, ¿tienen stock disponible?"
         },
         {
             etiqueta: "Aluminio",
@@ -34,7 +34,7 @@ const CONFIG = {
             precio: "$289.900",
             imagen: "assets/nicol.png",
             specs: ["Rodado 29", "Cuadro aluminio", "21 velocidades"],
-            mensaje: "Hola Embiciate, quiero consultar por la Fiat 500."
+            mensaje: "Hola! Me interesa una Mountain Bike, ¿tienen stock disponible?"
         },
         {
             etiqueta: "MTB",
@@ -42,15 +42,15 @@ const CONFIG = {
             precio: "$345.000",
             imagen: "assets/mtb.png",
             specs: ["Rodado 29", "24 velocidades", "Frenos hidraulicos"],
-            mensaje: "Hola Embiciate, quiero consultar por la Mountain Bike Pro."
+            mensaje: "Hola! Me interesa una Mountain Bike, ¿tienen stock disponible?"
         },
         {
             etiqueta: "Ciudad",
             modelo: "Urbana Classic",
-            precio: "$210.000",
+            precio: "$189.900",
             imagen: "assets/urban.png",
             specs: ["Rodado 28", "6 velocidades", "Estilo vintage"],
-            mensaje: "Hola Embiciate, quiero consultar por la Urbana Classic."
+            mensaje: "Hola! Me interesa una Bicicleta Urbana, ¿tienen stock disponible?"
         }
     ],
 
@@ -87,8 +87,8 @@ const CONFIG = {
     // WHATSAPP:
     // Formato: código de país completo (ej: 54 para argentina) seguido del 9 
     // y tu código de área + número completo (sin el 15 y sin espacios/guiones).
-    whatsapp_numero: "5492235505397",
-    whatsapp_mensaje: "Hola Embiciate, vengo de ver su página web y quiero hacerles una consulta:",
+    whatsapp_numero: "5492230000000",
+    whatsapp_mensaje: "Hola! Me interesa una bicicleta, ¿tienen stock disponible?",
 
     // ---------------------------------------------------------------------
     // 5. IMÁGENES Y FOTOS
@@ -132,7 +132,7 @@ const CONFIG = {
         },
         {
             modelo: "URBANA CLASSIC >>",
-            precio: "$210.000",
+            precio: "$189.900",
             specs: "RODADO 28' • 6 VELOCIDADES • ESTILO VINTAGE",
             imagen: "assets/urban.png", 
             imagen_mobile: "assets/urban.png" 
