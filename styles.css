@@ -290,6 +290,53 @@ h1, h2, h3, h4 {
     line-height: 1.5;
 }
 
+.hero-price-highlight {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    margin: 0.6rem 0 1.8rem;
+    color: #ffffff;
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 8px 30px rgba(0, 0, 0, 0.55);
+    position: relative;
+}
+
+.hero-price-highlight::before {
+    content: '⚡ PRECIO ESPECIAL';
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #d7ff32;
+    background: rgba(215, 255, 50, 0.12);
+    border: 1px solid rgba(215, 255, 50, 0.3);
+    border-radius: 999px;
+    padding: 0.2rem 0.75rem;
+    margin-bottom: 0.4rem;
+    width: fit-content;
+    animation: pricePulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pricePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(215, 255, 50, 0); }
+    50% { box-shadow: 0 0 12px 3px rgba(215, 255, 50, 0.2); }
+}
+
+.hero-price-highlight span {
+    color: #d7ff32;
+    font-size: clamp(3rem, 9vw, 6.5rem);
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 0.9;
+    text-shadow: 0 0 40px rgba(215, 255, 50, 0.35), 0 4px 20px rgba(0,0,0,0.6);
+    display: block;
+}
+
 .btn-whatsapp-hero {
     display: inline-flex;
     align-items: center;
@@ -756,8 +803,20 @@ h1, h2, h3, h4 {
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: 1fr;
     gap: 1.5rem;
+}
+
+@media (min-width: 700px) {
+    .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .product-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 }
 
 .product-card {
@@ -768,7 +827,6 @@ h1, h2, h3, h4 {
     border: 1px solid var(--color-card-border);
     border-radius: 8px;
     overflow: hidden;
-    cursor: pointer;
     transition: transform 0.4s ease, border-color 0.4s ease;
 }
 
@@ -782,7 +840,9 @@ h1, h2, h3, h4 {
 .product-img-wrapper {
     height: 240px;
     overflow: hidden;
-    background: #000;
+    background:
+        linear-gradient(135deg, rgba(215, 255, 50, 0.12), transparent 42%),
+        #000;
 }
 
 .product-img {
@@ -814,10 +874,11 @@ h1, h2, h3, h4 {
 }
 
 .product-price {
-    color: #fff;
+    color: #d7ff32;
     font-weight: 900;
-    font-size: 1.15rem;
+    font-size: 1.3rem;
     white-space: nowrap;
+    text-shadow: 0 0 12px rgba(215, 255, 50, 0.2);
 }
 
 .product-content h3 {

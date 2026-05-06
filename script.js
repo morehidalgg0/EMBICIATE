@@ -25,15 +25,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const bicicletasGrid = document.getElementById('bicicletas-destacadas');
         if (bicicletasGrid && Array.isArray(CONFIG.bicicletas_destacadas)) {
             const numero = CONFIG.whatsapp_numero ? CONFIG.whatsapp_numero.replace(/\D/g, '') : '';
+            const bikes = CONFIG.bicicletas_destacadas.slice(0, 10);
 
-            bicicletasGrid.innerHTML = CONFIG.bicicletas_destacadas.map((bike, index) => {
+            bicicletasGrid.innerHTML = bikes.map((bike, index) => {
                 const specs = Array.isArray(bike.specs) ? bike.specs : [];
                 const delay = index ? ` style="transition-delay: ${Math.min(index * 0.1, 0.3)}s;"` : '';
+                const mensaje = encodeURIComponent(bike.mensaje || `Hola Embiciate, quiero consultar por ${bike.modelo}.`);
+                const waLink = numero ? `https://wa.me/${numero}?text=${mensaje}` : '#contacto';
+                const imagen = bike.imagen || 'assets/placeholder-bike.svg';
 
                 return `
-                    <article class="product-card fade-in-up" role="button" tabindex="0" data-bike-index="${index}"${delay}>
+                    <article class="product-card fade-in-up"${delay}>
                         <div class="product-img-wrapper">
-                            <img src="${bike.imagen}" alt="Bicicleta ${bike.modelo}" class="product-img">
+                            <img src="${imagen}" alt="Bicicleta ${bike.modelo}" class="product-img">
                         </div>
                         <div class="product-content">
                             <div class="product-topline">
@@ -44,69 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             <ul class="product-specs">
                                 ${specs.map(spec => `<li>${spec}</li>`).join('')}
                             </ul>
-                            <span class="btn-primary product-btn">Ver detalles</span>
+                            <a href="${waLink}" target="_blank" rel="noopener" class="btn-primary product-btn">Consultar por WhatsApp</a>
                         </div>
                     </article>
                 `;
             }).join('');
-
-            const modal = document.getElementById('bike-modal');
-            const modalImg = document.getElementById('bike-modal-img');
-            const modalBadge = document.getElementById('bike-modal-badge');
-            const modalPrice = document.getElementById('bike-modal-price');
-            const modalTitle = document.getElementById('bike-modal-title');
-            const modalSpecs = document.getElementById('bike-modal-specs');
-            const modalWhatsapp = document.getElementById('bike-modal-whatsapp');
-
-            const closeBikeModal = () => {
-                if (!modal) return;
-                modal.classList.remove('active');
-                modal.setAttribute('aria-hidden', 'true');
-                document.body.style.overflow = '';
-            };
-
-            const openBikeModal = (index) => {
-                const bike = CONFIG.bicicletas_destacadas[index];
-                if (!modal || !bike) return;
-
-                const specs = Array.isArray(bike.specs) ? bike.specs : [];
-                const mensaje = encodeURIComponent(bike.mensaje || `Hola Embiciate, quiero consultar por ${bike.modelo}.`);
-                const waLink = numero ? `https://wa.me/${numero}?text=${mensaje}` : '#contacto';
-
-                modalImg.src = bike.imagen;
-                modalImg.alt = `Bicicleta ${bike.modelo}`;
-                modalBadge.textContent = bike.etiqueta || 'Destacada';
-                modalPrice.textContent = bike.precio;
-                modalTitle.textContent = bike.modelo;
-                modalSpecs.innerHTML = specs.map(spec => `<li>${spec}</li>`).join('');
-                modalWhatsapp.href = waLink;
-
-                modal.classList.add('active');
-                modal.setAttribute('aria-hidden', 'false');
-                document.body.style.overflow = 'hidden';
-            };
-
-            bicicletasGrid.addEventListener('click', (event) => {
-                const card = event.target.closest('.product-card');
-                if (!card) return;
-                openBikeModal(Number(card.dataset.bikeIndex));
-            });
-
-            bicicletasGrid.addEventListener('keydown', (event) => {
-                if (event.key !== 'Enter' && event.key !== ' ') return;
-                const card = event.target.closest('.product-card');
-                if (!card) return;
-                event.preventDefault();
-                openBikeModal(Number(card.dataset.bikeIndex));
-            });
-
-            document.querySelectorAll('[data-close-bike-modal]').forEach(button => {
-                button.addEventListener('click', closeBikeModal);
-            });
-
-            document.addEventListener('keydown', (event) => {
-                if (event.key === 'Escape') closeBikeModal();
-            });
         }
 
         // 4. Cambiar Fondo Hero

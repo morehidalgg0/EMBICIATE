@@ -17,47 +17,38 @@ const CONFIG = {
     marca_color: "EM",
     marca_blanco: "BICIATE",
 
-    bicicletas_titulo: "Bicicletas destacadas",
-    bicicletas_intro: "Toca cada modelo para ver detalles, precio y disponibilidad.",
+    bicicletas_titulo: "Bicicletas Destacadas",
+    bicicletas_intro: "Modelos listos para consultar por WhatsApp.",
     bicicletas_destacadas: [
         {
-            etiqueta: "Oferta",
-            modelo: "Firebird Aluminio",
-            precio: "$299.900",
-            imagen: "assets/morena (2).png",
+            etiqueta: "Desde",
+            modelo: "Modelo 1",
+            precio: "$269.900",
+            imagen: "assets/placeholder-bike.svg",
             specs: ["Rodado 29", "21 velocidades", "Frenos a disco"],
-            mensaje: "Hola! Me interesa una Mountain Bike, ¿tienen stock disponible?"
+            mensaje: "Hola Embiciate, quiero consultar por el Modelo 1."
         },
         {
-            etiqueta: "Aluminio",
-            modelo: "Fiat 500",
-            precio: "$289.900",
-            imagen: "assets/nicol.png",
-            specs: ["Rodado 29", "Cuadro aluminio", "21 velocidades"],
-            mensaje: "Hola! Me interesa una Mountain Bike, ¿tienen stock disponible?"
+            etiqueta: "Destacada",
+            modelo: "Modelo 2",
+            precio: "$299.900",
+            imagen: "assets/placeholder-bike.svg",
+            specs: ["Rodado 29", "21 velocidades", "Frenos a disco"],
+            mensaje: "Hola Embiciate, quiero consultar por el Modelo 2."
         },
         {
-            etiqueta: "MTB",
-            modelo: "Mountain Bike Pro",
-            precio: "$345.000",
-            imagen: "assets/mtb.png",
-            specs: ["Rodado 29", "24 velocidades", "Frenos hidraulicos"],
-            mensaje: "Hola! Me interesa una Mountain Bike, ¿tienen stock disponible?"
-        },
-        {
-            etiqueta: "Ciudad",
-            modelo: "Urbana Classic",
-            precio: "$189.900",
-            imagen: "assets/urban.png",
-            specs: ["Rodado 28", "6 velocidades", "Estilo vintage"],
-            mensaje: "Hola! Me interesa una Bicicleta Urbana, ¿tienen stock disponible?"
+            etiqueta: "Premium",
+            modelo: "Modelo 3",
+            precio: "$349.900",
+            imagen: "assets/placeholder-bike.svg",
+            specs: ["Rodado 29", "21 velocidades", "Frenos a disco"],
+            mensaje: "Hola Embiciate, quiero consultar por el Modelo 3."
         }
     ],
 
-    hero_titulo: "TU PRÓXIMA BICI<br><span class=\"text-accent\">ESTÁ ACÁ</span>",
-    hero_subtitulo: "Las mejores marcas, los mejores precios<br>y la <span class=\"text-accent\">asesoría</span> que necesitás.",
+    hero_titulo: "TU PROXIMA BICI<br><span class=\"text-accent\">ESTA ACA</span>",
+    hero_precio_principal: "Bicicletas desde <span>$269.900</span>",
 
-    // ---------------------------------------------------------------------
     // 2. BICICLETAS (Tarjetas Modelo)
     // ---------------------------------------------------------------------
     // Mountain Bike
