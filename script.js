@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <ul class="product-specs">
                                 ${specs.map(spec => `<li>${spec}</li>`).join('')}
                             </ul>
-                            <span class="btn-primary product-btn">Ver ficha</span>
+                            <span class="btn-primary product-btn">Ver detalles</span>
                         </div>
                     </article>
                 `;

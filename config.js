@@ -18,7 +18,7 @@ const CONFIG = {
     marca_blanco: "BICIATE",
 
     bicicletas_titulo: "Bicicletas destacadas",
-    bicicletas_intro: "Toca cada modelo para ver su ficha, detalles y precio.",
+    bicicletas_intro: "Toca cada modelo para ver detalles, precio y disponibilidad.",
     bicicletas_destacadas: [
         {
             etiqueta: "Oferta",

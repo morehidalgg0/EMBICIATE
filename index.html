@@ -20,6 +20,7 @@
         </a>
         <ul class="nav-links">
             <li><a href="#hero">Inicio</a></li>
+            <li><a href="#precios">Precios</a></li>
             <li><a href="#bicicletas">Bicicletas</a></li>
             <li><a href="#accesorios">Accesorios</a></li>
             <li><a href="#contacto" class="btn-outline">Contacto</a></li>
@@ -115,6 +116,70 @@
         </div>
     </header>
 
+    <!-- Precios Section -->
+    <section id="precios" class="section pricing-section">
+        <div class="container">
+            <div class="pricing-heading fade-in-up">
+                <span class="pricing-kicker">Stock limitado en Mar del Plata</span>
+                <h2 class="section-title">Precios desde hoy</h2>
+                <p>Consulta disponibilidad por WhatsApp y te asesoramos con rodado, talle y forma de pago.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <article class="pricing-card fade-in-up">
+                    <div class="pricing-img-wrap">
+                        <img src="assets/mtb.png" alt="Bicicleta mountain bike" class="pricing-img">
+                    </div>
+                    <div class="pricing-content">
+                        <span class="pricing-tag">MTB</span>
+                        <h3>Mountain Bikes</h3>
+                        <div class="pricing-price">Desde <strong>$299.900</strong></div>
+                        <ul class="pricing-list">
+                            <li>Rodado 29 disponible</li>
+                            <li>Opciones con freno a disco</li>
+                            <li>Hasta 12 cuotas fijas</li>
+                        </ul>
+                        <a href="https://wa.me/5492235505397?text=Hola%20Embiciate%2C%20quiero%20consultar%20precios%20de%20Mountain%20Bikes." target="_blank" rel="noopener" class="btn-primary pricing-btn">Consultar por WhatsApp</a>
+                    </div>
+                </article>
+
+                <article class="pricing-card pricing-card-featured fade-in-up" style="transition-delay: 0.1s;">
+                    <div class="pricing-img-wrap">
+                        <img src="assets/urban.png" alt="Bicicleta urbana" class="pricing-img">
+                    </div>
+                    <div class="pricing-content">
+                        <span class="pricing-tag">Urbanas</span>
+                        <h3>Bicicletas Urbanas</h3>
+                        <div class="pricing-price">Desde <strong>$210.000</strong></div>
+                        <ul class="pricing-list">
+                            <li>Modelos comodos para ciudad</li>
+                            <li>Rodados para uso diario</li>
+                            <li>Consulta stock actual</li>
+                        </ul>
+                        <a href="https://wa.me/5492235505397?text=Hola%20Embiciate%2C%20quiero%20consultar%20precios%20de%20bicicletas%20urbanas." target="_blank" rel="noopener" class="btn-primary pricing-btn">Consultar por WhatsApp</a>
+                    </div>
+                </article>
+
+                <article class="pricing-card fade-in-up" style="transition-delay: 0.2s;">
+                    <div class="pricing-img-wrap">
+                        <img src="assets/accs.png" alt="Accesorios para bicicleta" class="pricing-img">
+                    </div>
+                    <div class="pricing-content">
+                        <span class="pricing-tag">Accesorios</span>
+                        <h3>Equipamiento</h3>
+                        <div class="pricing-price pricing-no-price">Consultar stock</div>
+                        <ul class="pricing-list">
+                            <li>Cascos, luces y seguridad</li>
+                            <li>Opciones para MTB y ciudad</li>
+                            <li>Disponibilidad variable</li>
+                        </ul>
+                        <a href="https://wa.me/5492235505397?text=Hola%20Embiciate%2C%20quiero%20consultar%20por%20accesorios%20para%20bicicleta." target="_blank" rel="noopener" class="btn-primary pricing-btn">Consultar por WhatsApp</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
     <!-- Bicicletas Section -->
     <section id="bicicletas" class="section">
         <div class="container">
@@ -156,7 +221,7 @@
     <div class="bike-modal" id="bike-modal" aria-hidden="true">
         <div class="bike-modal-backdrop" data-close-bike-modal></div>
         <div class="bike-modal-panel" role="dialog" aria-modal="true" aria-labelledby="bike-modal-title">
-            <button class="bike-modal-close" type="button" data-close-bike-modal aria-label="Cerrar ficha">×</button>
+            <button class="bike-modal-close" type="button" data-close-bike-modal aria-label="Cerrar detalles">×</button>
             <div class="bike-modal-img-wrapper">
                 <img src="" alt="" class="bike-modal-img" id="bike-modal-img">
             </div>
@@ -165,7 +230,7 @@
                     <span class="badge" id="bike-modal-badge">Destacada</span>
                     <span class="product-price" id="bike-modal-price">$0</span>
                 </div>
-                <h3 id="bike-modal-title">Ficha de bicicleta</h3>
+                <h3 id="bike-modal-title">Detalles de la bicicleta</h3>
                 <ul class="product-specs bike-modal-specs" id="bike-modal-specs"></ul>
                 <a href="#contacto" target="_blank" rel="noopener" class="btn-primary product-btn" id="bike-modal-whatsapp">Consultar esta bici</a>
             </div>
