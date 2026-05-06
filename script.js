@@ -63,6 +63,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // 5. Configurar Enlace de WhatsApp
         const btnWa = document.getElementById('btn-whatsapp');
         const btnWaHero = document.getElementById('btn-whatsapp-hero');
+        const btnUbicacion = document.getElementById('btn-ubicacion');
+        if (btnUbicacion && CONFIG.ubicacion_url) {
+            btnUbicacion.href = CONFIG.ubicacion_url;
+        }
+
         if (CONFIG.whatsapp_numero) {
             const numero = CONFIG.whatsapp_numero.replace(/\D/g, ''); // limpia caracteres no numericos
             const mensaje = encodeURIComponent(CONFIG.whatsapp_mensaje);

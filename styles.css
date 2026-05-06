@@ -707,6 +707,20 @@ h1, h2, h3, h4 {
     font-size: 1.5rem;
 }
 
+.contact-cta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-location {
+    border-color: rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.04);
+}
+
 /* Footer */
 .footer {
     padding: 3rem 5%;
@@ -1107,8 +1121,14 @@ h1, h2, h3, h4 {
         font-size: 0.9rem;
     }
 
+    .contact-cta {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+    }
+
     /* Botón WhatsApp contacto: ancho completo */
-    .contact-cta .btn-primary {
+    .contact-cta .btn-primary,
+    .contact-cta .btn-outline {
         width: 100%;
         max-width: 100%;
         text-align: center;

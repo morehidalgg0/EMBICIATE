@@ -81,6 +81,7 @@ const CONFIG = {
     // ---------------------------------------------------------------------
     contacto_texto: "Vení a conocer todos nuestros modelos en vivo en nuestro local ubicado en <strong>Mar del Plata</strong>. Te asesoraremos para que encuentres la bicicleta perfecta para vos.",
     direccion: "Los Gallegos (Rivadavia 3050.Subsuelo) , Mar del Plata, Argentina",
+    ubicacion_url: "https://share.google/kyp1uH8sStsCnTlP2",
     horarios: "Lunes a Sábados: 09:00 a 21:00 hs",
 
     // WHATSAPP:
