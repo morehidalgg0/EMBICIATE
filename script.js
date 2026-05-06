@@ -21,14 +21,46 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // 3. Cambiar Fondo Hero
+        // 3. Renderizar Bicicletas Destacadas
+        const bicicletasGrid = document.getElementById('bicicletas-destacadas');
+        if (bicicletasGrid && Array.isArray(CONFIG.bicicletas_destacadas)) {
+            const numero = CONFIG.whatsapp_numero ? CONFIG.whatsapp_numero.replace(/\D/g, '') : '';
+
+            bicicletasGrid.innerHTML = CONFIG.bicicletas_destacadas.map((bike, index) => {
+                const specs = Array.isArray(bike.specs) ? bike.specs : [];
+                const mensaje = encodeURIComponent(bike.mensaje || `Hola Embiciate, quiero consultar por ${bike.modelo}.`);
+                const waLink = numero ? `https://wa.me/${numero}?text=${mensaje}` : '#contacto';
+                const delay = index ? ` style="transition-delay: ${Math.min(index * 0.1, 0.3)}s;"` : '';
+
+                return `
+                    <article class="product-card fade-in-up"${delay}>
+                        <div class="product-img-wrapper">
+                            <img src="${bike.imagen}" alt="Bicicleta ${bike.modelo}" class="product-img">
+                        </div>
+                        <div class="product-content">
+                            <div class="product-topline">
+                                <span class="badge">${bike.etiqueta || 'Destacada'}</span>
+                                <span class="product-price">${bike.precio}</span>
+                            </div>
+                            <h3>${bike.modelo}</h3>
+                            <ul class="product-specs">
+                                ${specs.map(spec => `<li>${spec}</li>`).join('')}
+                            </ul>
+                            <a href="${waLink}" target="_blank" class="btn-primary product-btn">Consultar esta bici</a>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        // 4. Cambiar Fondo Hero
         // Ahora el fondo está controlado por CSS para admitir múltiples capas (bicicleta + montañas)
         // const seccionHero = document.getElementById('hero');
         // if (seccionHero && CONFIG.imagenes.hero_fondo) {
         //     seccionHero.style.backgroundImage = `url('${CONFIG.imagenes.hero_fondo}')`;
         // }
 
-        // 4. Configurar Enlace de WhatsApp
+        // 5. Configurar Enlace de WhatsApp
         const btnWa = document.getElementById('btn-whatsapp');
         const btnWaHero = document.getElementById('btn-whatsapp-hero');
         if (CONFIG.whatsapp_numero) {
@@ -39,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (btnWaHero) btnWaHero.href = waLink;
         }
         
-        // 5. Hero Slider
+        // 6. Hero Slider
         if (CONFIG.hero_slider && CONFIG.hero_slider.length > 0) {
             let currentIndex = 0;
             let sliderInterval;

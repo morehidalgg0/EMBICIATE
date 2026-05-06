@@ -17,6 +17,43 @@ const CONFIG = {
     marca_color: "EM",
     marca_blanco: "BICIATE",
 
+    bicicletas_titulo: "Bicicletas destacadas",
+    bicicletas_intro: "Modelos listos para consultar por WhatsApp. Cambia precios, fotos y detalles desde este archivo.",
+    bicicletas_destacadas: [
+        {
+            etiqueta: "Oferta",
+            modelo: "Firebird Aluminio",
+            precio: "$299.900",
+            imagen: "assets/morena (2).png",
+            specs: ["Rodado 29", "21 velocidades", "Frenos a disco"],
+            mensaje: "Hola Embiciate, quiero consultar por la Firebird Aluminio."
+        },
+        {
+            etiqueta: "Aluminio",
+            modelo: "Fiat 500",
+            precio: "$289.900",
+            imagen: "assets/nicol.png",
+            specs: ["Rodado 29", "Cuadro aluminio", "21 velocidades"],
+            mensaje: "Hola Embiciate, quiero consultar por la Fiat 500."
+        },
+        {
+            etiqueta: "MTB",
+            modelo: "Mountain Bike Pro",
+            precio: "$345.000",
+            imagen: "assets/mtb.png",
+            specs: ["Rodado 29", "24 velocidades", "Frenos hidraulicos"],
+            mensaje: "Hola Embiciate, quiero consultar por la Mountain Bike Pro."
+        },
+        {
+            etiqueta: "Ciudad",
+            modelo: "Urbana Classic",
+            precio: "$210.000",
+            imagen: "assets/urban.png",
+            specs: ["Rodado 28", "6 velocidades", "Estilo vintage"],
+            mensaje: "Hola Embiciate, quiero consultar por la Urbana Classic."
+        }
+    ],
+
     hero_titulo: "TU PRÓXIMA BICI<br><span class=\"text-accent\">ESTÁ ACÁ</span>",
     hero_subtitulo: "Las mejores marcas, los mejores precios<br>y la <span class=\"text-accent\">asesoría</span> que necesitás.",
 
