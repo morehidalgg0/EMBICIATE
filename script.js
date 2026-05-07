@@ -143,6 +143,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             bicicletasGrid.innerHTML = bikes.map((bike, index) => {
+                if (bike.deleted) return '';
                 const specs = Array.isArray(bike.specs) ? bike.specs : [];
                 const delay = index ? ` style="transition-delay: ${Math.min(index * 0.1, 0.3)}s;"` : '';
                 const mensaje = encodeURIComponent(bike.mensaje || `Hola Embiciate, quiero consultar por ${bike.modelo}.`);
@@ -269,7 +270,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         
         // 6. Hero Slider
-        if (CONFIG.hero_slider && CONFIG.hero_slider.length > 0) {
+        const sliderConfigArr = (typeof _siteCfg !== 'undefined' && _siteCfg.hero_slider) ? _siteCfg.hero_slider : CONFIG.hero_slider;
+        if (sliderConfigArr && sliderConfigArr.length > 0) {
             let currentIndex = 0;
             let sliderInterval;
             const heroBikeLayer = document.getElementById('hero-bike-layer');
@@ -304,12 +306,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                     sliderSpecs.innerHTML = bike.specs;
                 };
 
-                renderSlide(CONFIG.hero_slider[0]);
+                renderSlide(sliderConfigArr[0]);
 
                 const changeSlide = (direction) => {
                     // Calculamos el próximo índice
-                    currentIndex = (currentIndex + direction + CONFIG.hero_slider.length) % CONFIG.hero_slider.length;
-                    const nextBike = CONFIG.hero_slider[currentIndex];
+                    currentIndex = (currentIndex + direction + sliderConfigArr.length) % sliderConfigArr.length;
+                    const nextBike = sliderConfigArr[currentIndex];
 
                     // Efecto de desvanecimiento
                     heroBikeLayer.classList.add('fade-out');
@@ -332,7 +334,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 window.addEventListener('resize', () => {
                     clearTimeout(resizeTimeout);
                     resizeTimeout = setTimeout(() => {
-                        renderSlide(CONFIG.hero_slider[currentIndex]);
+                        renderSlide(sliderConfigArr[currentIndex]);
                     }, 150);
                 });
 
@@ -488,7 +490,7 @@ function openBikeModal(bike, images) {
         #_bm-badge{display:inline-block;background:rgba(255,85,0,.15);border:1px solid rgba(255,85,0,.3);color:#ff7733;font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.8px;padding:.2rem .7rem;border-radius:999px}
         #_bm-title{color:#fff;font-size:1.5rem;font-weight:900;margin:0;line-height:1.2}
         #_bm-price{color:#ff5500;font-size:1.8rem;font-weight:900;letter-spacing:-1px}
-        #_bm-cuotas{background:rgba(215,255,50,.07);border:1px solid rgba(215,255,50,.15);color:#d7ff32;font-size:.8rem;font-weight:700;padding:.45rem .9rem;border-radius:8px}
+        #_bm-cuotas{background:rgba(255,85,0,.07);border:1px solid rgba(255,85,0,.15);color:#ff5500;font-size:.8rem;font-weight:700;padding:.45rem .9rem;border-radius:8px}
         #_bm-specs{color:#aaa;font-size:.88rem;line-height:1.8;padding-left:1.2rem;margin:0}
         #_bm-specs li::marker{color:#ff5500}
         #_bm-wa{display:flex;align-items:center;gap:.6rem;background:#25D366;color:#fff;padding:.75rem 1.2rem;border-radius:10px;text-decoration:none;font-weight:700;font-size:.95rem;margin-top:auto;transition:background .2s;justify-content:center}

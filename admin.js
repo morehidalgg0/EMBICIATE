@@ -163,10 +163,13 @@
         const card = el('div', { class: '_adm-card', 'data-idx': idx });
 
         card.innerHTML = `
-            <div class="_adm-card-head">
-                <span class="_adm-num">#${idx + 1}</span>
-                <strong>${bike.modelo}</strong>
-                ${publishedImages.length > 0 ? `<span class="_adm-badge-pub">✅ ${publishedImages.length} foto${publishedImages.length > 1 ? 's' : ''} publicada${publishedImages.length > 1 ? 's' : ''}</span>` : '<span class="_adm-badge-none">Sin fotos</span>'}
+            <div class="_adm-card-head" style="display:flex;justify-content:space-between;align-items:center">
+                <div>
+                    <span class="_adm-num">#${idx + 1}</span>
+                    <strong>${bike.modelo}</strong>
+                    ${publishedImages.length > 0 ? `<span class="_adm-badge-pub">✅ ${publishedImages.length} foto${publishedImages.length > 1 ? 's' : ''}</span>` : '<span class="_adm-badge-none">Sin fotos</span>'}
+                </div>
+                <button class="_adm-del-btn" style="background:#222;border:1px solid #444;color:#f55;padding:.3rem .6rem;border-radius:6px;cursor:pointer;font-size:.8rem">🗑️ Ocultar</button>
             </div>`;
 
         // Zona de imágenes
@@ -298,6 +301,28 @@
         const zone     = card.querySelector('._adm-zone');
         const newFiles = zone ? zone.getNewFiles() : [];
 
+        // ── Delete logic
+        const delBtn = card.querySelector('._adm-del-btn');
+        if (delBtn) {
+            delBtn.onclick = async () => {
+                if (!confirm(`¿Estás seguro de que querés ocultar esta bici?`)) return;
+                const token = localStorage.getItem(TOKEN_KEY);
+                if (!token) return alert('⚠️ Falta Token');
+                progressEl.style.display = 'block'; progressEl.textContent = '⏳ Ocultando bici...';
+                try {
+                    const current = { ...(window.embiciateCatalog || {}) };
+                    current[idx] = { ...(current[idx] || {}), deleted: true };
+                    await ghCommitFile('catalog-data.json', btoa(unescape(encodeURIComponent(JSON.stringify(current,null,2)))), token, `admin: oculta bici #${idx+1}`, false);
+                    window.embiciateCatalog = current;
+                    card.style.opacity = '0.5';
+                    okEl.style.display = 'block'; okEl.textContent = '✅ Bici ocultada.';
+                    setTimeout(() => { okEl.style.display = 'none'; }, 3000);
+                } catch (e) {
+                    okEl.style.display = 'block'; okEl.style.color = '#f55'; okEl.textContent = '❌ Error: ' + e.message;
+                }
+            };
+        }
+
         progressEl.style.display = 'block';
         progressEl.textContent   = '⏳ Publicando cambios...';
         okEl.style.display       = 'none';
@@ -415,10 +440,19 @@
         const sliderWrap = el('div', {});
         sliderWrap.innerHTML = `<p class="_adm-pub-label" style="margin-bottom:.6rem">Imágenes del slider principal (${sliderCfg.length} slides)</p>`;
         sliderCfg.forEach((slide, i) => {
-            const row = el('div', { class: '_adm-slide-row' });
-            row.innerHTML = `<span class="_adm-num">#${i+1} ${esc(slide.modelo)}</span>`;
+            const row = el('div', { class: '_adm-slide-row', style: 'border:1px solid #333;padding:.8rem;border-radius:8px;margin-bottom:.8rem' });
+            row.innerHTML = `<span class="_adm-num" style="display:block;margin-bottom:.5rem">#${i+1} Slider</span>`;
             const zone = buildSingleImg(`hero-slide-${i}`, slide.imagen || '');
             row.appendChild(zone);
+            const fields = el('div', { class: '_adm-fields', style: 'margin-top:.6rem' }, `
+                <label>Modelo de Bici</label>
+                <input class="_adm-f _adm-slide-f" data-field="modelo" value="${esc(slide.modelo || '')}">
+                <label>Precio</label>
+                <input class="_adm-f _adm-slide-f" data-field="precio" value="${esc(slide.precio || '')}">
+                <label>Especificaciones</label>
+                <input class="_adm-f _adm-slide-f" data-field="specs" value="${esc(slide.specs || '')}">
+            `);
+            row.appendChild(fields);
             sliderWrap.appendChild(row);
         });
         wrap.appendChild(sliderWrap);
@@ -444,9 +478,14 @@
             wrap.querySelectorAll('[data-sfield]').forEach(inp => { overrides[inp.dataset.sfield] = inp.value.trim(); });
             // Slider images
             const newSlider = sliderCfg.map((slide, i) => ({ ...slide }));
-            const zones = sliderWrap.querySelectorAll('._adm-single-zone');
-            for (let i = 0; i < zones.length; i++) {
-                const f = zones[i].getFile ? zones[i].getFile() : null;
+            const rows = sliderWrap.querySelectorAll('._adm-slide-row');
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                row.querySelectorAll('._adm-slide-f').forEach(inp => {
+                    newSlider[i][inp.dataset.field] = inp.value.trim();
+                });
+                const zone = row.querySelector('._adm-single-zone');
+                const f = zone && zone.getFile ? zone.getFile() : null;
                 if (f) {
                     const ext  = f.name.split('.').pop() || 'jpg';
                     const path = `assets/hero-${i}.${ext}`;
@@ -638,6 +677,26 @@
         actions.appendChild(saveBtn); card.appendChild(actions);
         const prog = el('div', { class: '_adm-progress', style: 'display:none' });
         const ok   = el('div', { class: '_adm-ok-msg',  style: 'display:none' });
+        
+        const delBtn = el('button', { style: 'background:#222;border:1px solid #444;color:#f55;padding:.3rem .6rem;border-radius:6px;cursor:pointer;font-size:.8rem;margin-bottom:.5rem' }, '🗑️ Eliminar Bici Extra');
+        delBtn.onclick = async () => {
+            if (!confirm('¿Seguro que querés eliminar esta bici extra?')) return;
+            const token = localStorage.getItem(TOKEN_KEY);
+            if (!token) return alert('⚠️ Falta Token');
+            prog.style.display = 'block'; prog.textContent = '⏳ Eliminando...';
+            try {
+                allExtras.splice(extraIdx, 1);
+                const current = { ...(window.embiciateCatalog||{}) };
+                current.extra_bikes = allExtras;
+                await ghCommitFile('catalog-data.json', btoa(unescape(encodeURIComponent(JSON.stringify(current,null,2)))), token, `admin: elimina bici extra #${extraIdx+1}`, false);
+                window.embiciateCatalog = current;
+                card.remove();
+            } catch(e) {
+                ok.style.display='block'; ok.style.color='#f55'; ok.textContent = '❌ Error: '+e.message;
+            }
+        };
+        actions.prepend(delBtn);
+
         card.appendChild(prog); card.appendChild(ok);
         saveBtn.onclick = () => publishExtraBike(card, extraIdx, allExtras, prog, ok);
         return card;

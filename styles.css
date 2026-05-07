@@ -923,10 +923,10 @@ h1, h2, h3, h4 {
     z-index: 2;
     background: rgba(10,10,10,0.75);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(215,255,50,0.35);
+    border: 1px solid rgba(255,85,0,0.35);
     border-radius: 8px;
     padding: 0.35rem 0.9rem;
-    color: #d7ff32;
+    color: #ff5500;
     font-weight: 900;
     font-size: 1.15rem;
     line-height: 1;
@@ -974,9 +974,9 @@ h1, h2, h3, h4 {
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    background: rgba(215,255,50,0.12);
-    border: 1.5px solid rgba(215,255,50,0.4);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpolyline points='2,6 5,9 10,3' fill='none' stroke='%23d7ff32' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background: rgba(255,85,0,0.12);
+    border: 1.5px solid rgba(255,85,0,0.4);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpolyline points='2,6 5,9 10,3' fill='none' stroke='%23ff5500' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 10px;
