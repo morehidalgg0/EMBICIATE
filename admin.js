@@ -202,18 +202,29 @@
         let newFiles = [];
 
         // Fotos ya publicadas
+        let pubPrimaryIdx = 0;
         if (publishedImages.length > 0) {
             const pubSection = el('div', { class: '_adm-pub-section' });
-            pubSection.innerHTML = `<p class="_adm-pub-label">📡 Fotos publicadas actualmente:</p>`;
-            const thumbs = el('div', { class: '_adm-thumbs' });
-            publishedImages.forEach((url, i) => {
-                const w = el('div', { class: '_adm-thumb' + (i === 0 ? ' _adm-thumb-main' : '') },
-                    `<img src="${url}" alt="foto ${i+1}" onerror="this.style.opacity='.3'">
-                     ${i === 0 ? '<span class="_adm-label-main">Principal</span>' : ''}`);
-                thumbs.appendChild(w);
-            });
-            pubSection.appendChild(thumbs);
+            pubSection.innerHTML = `<p class="_adm-pub-label">📡 Fotos publicadas — clic para elegir la principal:</p>`;
+            const pubThumbsEl = el('div', { class: '_adm-thumbs' });
+            function renderPubThumbs() {
+                pubThumbsEl.innerHTML = '';
+                publishedImages.forEach((url, i) => {
+                    const w = el('div', { class: '_adm-thumb' + (i === pubPrimaryIdx ? ' _adm-thumb-main' : ''), title: i===pubPrimaryIdx?'Foto principal':'Clic para marcar como principal' },
+                        `<img src="${url}" alt="foto ${i+1}" onerror="this.style.opacity='.3'">
+                         <span class="${i===pubPrimaryIdx?'_adm-label-main':'_adm-label-set'}">${i===pubPrimaryIdx?'★ Principal':'Marcar principal'}</span>`);
+                    w.onclick = () => { pubPrimaryIdx = i; renderPubThumbs(); };
+                    pubThumbsEl.appendChild(w);
+                });
+            }
+            renderPubThumbs();
+            pubSection.appendChild(pubThumbsEl);
             zone.appendChild(pubSection);
+            zone.getPublishedImages = () => {
+                const arr = [...publishedImages];
+                if (pubPrimaryIdx > 0) arr.unshift(arr.splice(pubPrimaryIdx, 1)[0]);
+                return arr;
+            };
         }
 
         // Nuevas fotos a subir
@@ -290,7 +301,7 @@
 
         try {
             // 1. Subir imágenes nuevas si las hay
-            let imagenesFinales = currentImages;
+            let imagenesFinales = (zone && zone.getPublishedImages) ? zone.getPublishedImages() : currentImages;
             if (newFiles.length > 0) {
                 progressEl.textContent = `⏳ Subiendo ${newFiles.length} foto(s)...`;
                 imagenesFinales = [];
