@@ -250,7 +250,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 card.querySelector('.product-img-wrapper').style.cursor = 'zoom-in';
                 card.querySelector('.product-img-wrapper').addEventListener('click', e => {
                     if (e.target.closest('.pg-dots') || e.target.closest('.product-btn')) return;
-                    const imgs = bData._images.length ? bData._images
+                    const galleryImgs = getCardGalleryImages(card, bData);
+                    const imgs = galleryImgs.length ? galleryImgs
                         : [card.querySelector('.product-img')?.src].filter(Boolean);
                     openBikeModal(bData, imgs);
                 });
@@ -437,6 +438,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 });
 
+function getCardGalleryImages(card, bike) {
+    const configured = Array.isArray(bike._images) ? bike._images.filter(Boolean) : [];
+    const current = card.querySelector('.product-img')?.getAttribute('src');
+    return [...new Set([...configured, current].filter(Boolean))];
+}
+
 // ── Modal de detalle de bicicleta ─────────────────────────────────────────
 function openBikeModal(bike, images) {
     if (document.getElementById('_bm')) return;
@@ -445,7 +452,8 @@ function openBikeModal(bike, images) {
     const msg    = encodeURIComponent(bike.mensaje || `Hola, me interesa la ${bike.modelo}, ¿tienen stock?`);
     const waLink = numero ? `https://wa.me/${numero}?text=${msg}` : '#contacto';
     const specs  = Array.isArray(bike.specs) ? bike.specs : [];
-    const imgs   = images.length ? images : [''];
+    const imgs   = [...new Set((images || []).filter(Boolean))];
+    if (!imgs.length) imgs.push('');
     let cur      = 0;
 
     const waIcon = `<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>`;
@@ -459,7 +467,7 @@ function openBikeModal(bike, images) {
             <div id="_bm-gallery">
                 <div id="_bm-img-wrap">
                     <img id="_bm-img" src="${imgs[0]}" alt="${bike.modelo}">
-                    ${imgs.length > 1 ? '<button id="_bm-prev">&#8249;</button><button id="_bm-next">&#8250;</button>' : ''}
+                    ${imgs.length > 1 ? '<button id="_bm-prev" aria-label="Foto anterior">&#8249;</button><button id="_bm-next" aria-label="Foto siguiente">&#8250;</button>' : ''}
                 </div>
                 ${imgs.length > 1 ? `<div id="_bm-thumbs">${imgs.map((u,i)=>`<img class="_bm-th${i===0?' _bm-th-a':''}" data-i="${i}" src="${u}" alt="">`).join('')}</div>` : ''}
                 <div id="_bm-counter">${imgs.length > 1 ? `1 / ${imgs.length}` : ''}</div>
@@ -487,16 +495,16 @@ function openBikeModal(bike, images) {
         #_bm-x{position:absolute;top:12px;right:14px;z-index:10;width:34px;height:34px;background:rgba(0,0,0,.6);border:none;color:#fff;font-size:1.3rem;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
         #_bm-x:hover{background:#ff5500}
         #_bm-gallery{flex:0 0 55%;display:flex;flex-direction:column;background:#0a0a0a;position:relative}
-        #_bm-img-wrap{flex:1;position:relative;min-height:300px;display:flex;align-items:center;justify-content:center;overflow:hidden}
-        #_bm-img{max-width:100%;max-height:420px;object-fit:contain;transition:opacity .2s}
-        #_bm-prev,#_bm-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);border:none;color:#fff;font-size:2rem;width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:2}
-        #_bm-prev{left:8px} #_bm-next{right:8px}
-        #_bm-prev:hover,#_bm-next:hover{background:#ff5500}
+        #_bm-img-wrap{flex:1;position:relative;min-height:300px;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:pan-y;background:#050505}
+        #_bm-img{max-width:100%;max-height:420px;object-fit:contain;transition:opacity .2s;cursor:pointer}
+        #_bm-prev,#_bm-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.68);border:1px solid rgba(255,255,255,.18);color:#fff;font-size:2.4rem;width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s;z-index:2;line-height:1}
+        #_bm-prev{left:12px} #_bm-next{right:12px}
+        #_bm-prev:hover,#_bm-next:hover{background:#ff5500;transform:translateY(-50%) scale(1.05)}
         #_bm-thumbs{display:flex;gap:6px;padding:8px 12px;overflow-x:auto;scrollbar-width:none}
         #_bm-thumbs::-webkit-scrollbar{display:none}
         ._bm-th{width:56px;height:56px;object-fit:cover;border-radius:6px;border:2px solid transparent;cursor:pointer;transition:border-color .2s;opacity:.65;flex-shrink:0}
         ._bm-th-a{border-color:#ff5500;opacity:1}
-        #_bm-counter{text-align:center;color:#555;font-size:.75rem;padding:4px 0 8px}
+        #_bm-counter{text-align:center;color:#888;font-size:.78rem;font-weight:700;padding:4px 0 8px}
         #_bm-info{flex:1;padding:2rem 1.5rem;overflow-y:auto;display:flex;flex-direction:column;gap:.7rem}
         #_bm-badge{display:inline-block;background:rgba(255,85,0,.15);border:1px solid rgba(255,85,0,.3);color:#ff7733;font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.8px;padding:.2rem .7rem;border-radius:999px}
         #_bm-title{color:#fff;font-size:1.5rem;font-weight:900;margin:0;line-height:1.2}
@@ -509,7 +517,10 @@ function openBikeModal(bike, images) {
         @media(max-width:640px){
             #_bm-box{flex-direction:column;width:98vw;max-height:96vh}
             #_bm-gallery{flex:0 0 auto}
-            #_bm-img{max-height:260px}
+            #_bm-img-wrap{min-height:280px}
+            #_bm-img{max-height:280px}
+            #_bm-prev,#_bm-next{width:44px;height:44px;font-size:2.2rem}
+            ._bm-th{width:62px;height:62px}
             #_bm-info{padding:1.2rem 1rem}
             #_bm-title{font-size:1.2rem}
         }
@@ -535,9 +546,21 @@ function openBikeModal(bike, images) {
 
     const prevBtn = modal.querySelector('#_bm-prev');
     const nextBtn = modal.querySelector('#_bm-next');
-    if (prevBtn) prevBtn.onclick = () => setSlide(cur - 1);
-    if (nextBtn) nextBtn.onclick = () => setSlide(cur + 1);
+    if (prevBtn) prevBtn.onclick = (e) => { e.stopPropagation(); setSlide(cur - 1); };
+    if (nextBtn) nextBtn.onclick = (e) => { e.stopPropagation(); setSlide(cur + 1); };
     thumbs.forEach((t, i) => { t.onclick = () => setSlide(i); });
+    imgEl.onclick = () => { if (imgs.length > 1) setSlide(cur + 1); };
+
+    let touchX = null;
+    imgEl.parentElement.addEventListener('touchstart', e => {
+        touchX = e.touches[0]?.clientX ?? null;
+    }, { passive: true });
+    imgEl.parentElement.addEventListener('touchend', e => {
+        if (touchX === null || imgs.length < 2) return;
+        const dx = (e.changedTouches[0]?.clientX ?? touchX) - touchX;
+        if (Math.abs(dx) > 40) setSlide(cur + (dx < 0 ? 1 : -1));
+        touchX = null;
+    }, { passive: true });
 
     const close = () => {
         modal.remove();
