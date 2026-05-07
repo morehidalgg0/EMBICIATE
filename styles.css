@@ -2072,3 +2072,143 @@ h1, h2, h3, h4 {
         min-height: 0;
     }
 }
+
+/* =============================================
+   MEDIOS DE PAGO
+   ============================================= */
+.pagos-section {
+    background:
+        linear-gradient(180deg, rgba(255, 85, 0, 0.05) 0%, transparent 100%),
+        #0a0a0a;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 1.6rem 5%;
+}
+
+.pagos-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+/* Grupo individual (Visa+MC / Resto) */
+.pagos-group {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+/* Logos Visa + MC */
+.pagos-logos {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.pago-logo {
+    display: block;
+    object-fit: contain;
+    /* Fondo oscuro → filtro para hacer los logos visibles */
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+    transition: opacity 0.3s ease;
+}
+
+.pago-logo:hover {
+    opacity: 1;
+}
+
+.pago-logo--visa {
+    height: 22px;
+    width: auto;
+}
+
+.pago-logo--mc {
+    height: 32px;
+    width: auto;
+    /* Mastercard tiene sus propios colores; restauramos parcialmente */
+    filter: none;
+    opacity: 0.9;
+}
+
+/* Ícono tarjeta genérica */
+.pagos-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+}
+
+/* Info (badge + descripción) */
+.pagos-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.pagos-badge {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 0.22rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    white-space: nowrap;
+}
+
+.pagos-badge--highlight {
+    background: rgba(215, 255, 50, 0.12);
+    border: 1px solid rgba(215, 255, 50, 0.35);
+    color: #d7ff32;
+}
+
+.pagos-badge--secondary {
+    background: rgba(255, 85, 0, 0.12);
+    border: 1px solid rgba(255, 85, 0, 0.3);
+    color: var(--color-accent);
+}
+
+.pagos-desc {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    margin: 0;
+}
+
+/* Separador vertical desktop / horizontal mobile */
+.pagos-sep {
+    width: 1px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.12);
+    flex-shrink: 0;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 640px) {
+    .pagos-inner {
+        flex-direction: column;
+        gap: 1.4rem;
+        align-items: flex-start;
+    }
+
+    .pagos-sep {
+        width: 100%;
+        height: 1px;
+    }
+
+    .pagos-group {
+        width: 100%;
+    }
+}
