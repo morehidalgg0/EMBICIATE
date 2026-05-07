@@ -26,6 +26,19 @@
       "SHIMANO"
     ]
   },
+  "3": {
+    "modelo": "TopMega Thor",
+    "precio": "$599.900",
+    "etiqueta": "MTB",
+    "specs": [
+      "Rodado 29",
+      "21 velocidades",
+      "Cuadro aluminio"
+    ],
+    "imagenes": [
+      "assets/bici-3-0.jpeg"
+    ]
+  },
   "site": {
     "whatsapp_numero": "5492235505397",
     "whatsapp_mensaje": "Hola! Me interesa una bicicleta, ¿tienen stock disponible?",
