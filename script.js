@@ -25,7 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const bicicletasGrid = document.getElementById('bicicletas-destacadas');
         if (bicicletasGrid && Array.isArray(CONFIG.bicicletas_destacadas)) {
             const numero = CONFIG.whatsapp_numero ? CONFIG.whatsapp_numero.replace(/\D/g, '') : '';
-            const bikes = CONFIG.bicicletas_destacadas;
+            // Mezclar con overrides del panel admin (localStorage tiene prioridad)
+            const _overrides = JSON.parse(localStorage.getItem('embiciate_admin_overrides') || '{}');
+            const bikes = CONFIG.bicicletas_destacadas.map((bike, i) =>
+                _overrides[i] ? { ...bike, ..._overrides[i] } : bike
+            );
 
             bicicletasGrid.innerHTML = bikes.map((bike, index) => {
                 const specs = Array.isArray(bike.specs) ? bike.specs : [];
