@@ -15,6 +15,17 @@
       "assets/bici-0-4.webp"
     ]
   },
+  "2": {
+    "modelo": "Fiat 500",
+    "precio": "$289.900",
+    "etiqueta": "MTB",
+    "specs": [
+      "Rodado 29",
+      "24 velocidades",
+      "Frenos hidráulicos",
+      "SHIMANO"
+    ]
+  },
   "site": {
     "whatsapp_numero": "5492235505397",
     "whatsapp_mensaje": "Hola! Me interesa una bicicleta, ¿tienen stock disponible?",
