@@ -358,8 +358,8 @@
     // ── GitHub API ────────────────────────────────────────────────────────
     async function ghGetSha(path, token) {
         const res = await fetch(
-            `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}?ref=${GH_BRANCH}`,
-            { headers: { Authorization: `token ${token}` } }
+            `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}?ref=${GH_BRANCH}&t=${Date.now()}`,
+            { headers: { Authorization: `token ${token}`, 'If-None-Match': '', 'Cache-Control': 'no-cache' } }
         );
         if (res.status === 404) return null;
         if (!res.ok) throw new Error(`GitHub API ${res.status}`);
