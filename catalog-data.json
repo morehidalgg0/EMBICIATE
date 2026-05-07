@@ -77,6 +77,39 @@
     "pago_desc_1": "Con Visa y Mastercard",
     "pago_badge_2": "Resto de tarjetas",
     "pago_desc_2": "Hasta 12 cuotas fijas",
-    "pago_img_visa": "assets/pago-visa.png"
+    "pago_img_visa": "assets/pago-visa.png",
+    "urgencia_texto": "10% OFF TIEMPO LIMITADO",
+    "hero_h1": "",
+    "hero_precio_texto": "",
+    "hero_slider": [
+      {
+        "modelo": "FIREBIRD TURBO 2026>>",
+        "precio": "$269.900",
+        "specs": "RODADO 29' • 21 VELOCIDADES • FRENOS A DISCO",
+        "imagen": "assets/morena (2).png",
+        "imagen_mobile": "assets/morena (2).png"
+      },
+      {
+        "modelo": "FIAT 500 >>",
+        "precio": "$289.900",
+        "specs": "RODADO 29' • 21 VELOCIDADES • CUADRO ALUMINIO",
+        "imagen": "assets/nicol.png",
+        "imagen_mobile": "assets/nicol.png"
+      },
+      {
+        "modelo": "Topmega  Thor>>",
+        "precio": "$599.900",
+        "specs": "RODADO 29' • 24 VELOCIDADES • FRENOS HIDRÁULICOS",
+        "imagen": "assets/hero-2.jpeg",
+        "imagen_mobile": "assets/hero-2.jpeg"
+      },
+      {
+        "modelo": "Topmega magma>>",
+        "precio": "$799.900",
+        "specs": "RODADO 28' • 6 VELOCIDADES • ESTILO VINTAGE",
+        "imagen": "assets/hero-3.jpeg",
+        "imagen_mobile": "assets/hero-3.jpeg"
+      }
+    ]
   }
 }
