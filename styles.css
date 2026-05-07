@@ -997,9 +997,9 @@ h1, h2, h3, h4 {
     align-items: center;
     padding: 0.22rem 0.65rem;
     border-radius: 999px;
-    background: rgba(215, 255, 50, 0.1);
-    border: 1px solid rgba(215, 255, 50, 0.3);
-    color: #d7ff32;
+    background: rgba(255, 85, 0, 0.1);
+    border: 1px solid rgba(255, 85, 0, 0.3);
+    color: #ff5500;
     font-size: 0.72rem;
     font-weight: 900;
     text-transform: uppercase;
@@ -1530,23 +1530,7 @@ h1, h2, h3, h4 {
     }
 
     .slider-arrow {
-        top: auto;
-        bottom: 20px;
-        transform: none;
-        width: 40px;
-        height: 40px;
-    }
-
-    .slider-arrow:hover {
-        transform: scale(1.1);
-    }
-
-    .slider-arrow.prev {
-        left: 20%;
-    }
-
-    .slider-arrow.next {
-        right: 20%;
+        display: none; /* In case the new ones don't match exactly, just clear this out or let the new one override cleanly */
     }
 
     .hero-overlay {
@@ -2313,18 +2297,22 @@ h1, h2, h3, h4 {
 
 @media (max-width: 768px) {
     .slider-arrow {
-        top: 30%; /* Ajuste para mobile, sobre la imagen */
+        display: flex !important;
+        top: 35%; /* Ajuste para mobile, sobre la imagen */
+        bottom: auto;
+        transform: translateY(-50%);
         width: 40px;
         height: 40px;
     }
     .slider-arrow svg { width: 20px; height: 20px; }
     
-    .card-content .product-btn {
+    .product-btn {
         width: 100%;
-        padding: 0.8rem 1rem;
-        font-size: 0.95rem;
+        padding: 0.8rem 0.5rem;
+        font-size: 0.85rem;
         white-space: normal;
         text-align: center;
+        flex-wrap: wrap;
     }
     .pg-arrows { opacity: 1; /* Siempre visibles en mobile */ }
 }
