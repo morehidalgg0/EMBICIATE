@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const bicicletasGrid = document.getElementById('bicicletas-destacadas');
         if (bicicletasGrid && Array.isArray(CONFIG.bicicletas_destacadas)) {
             const numero = CONFIG.whatsapp_numero ? CONFIG.whatsapp_numero.replace(/\D/g, '') : '';
-            const bikes = CONFIG.bicicletas_destacadas.slice(0, 10);
+            const bikes = CONFIG.bicicletas_destacadas;
 
             bicicletasGrid.innerHTML = bikes.map((bike, index) => {
                 const specs = Array.isArray(bike.specs) ? bike.specs : [];
@@ -49,6 +49,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             <ul class="product-specs">
                                 ${specs.map(spec => `<li>${spec}</li>`).join('')}
                             </ul>
+                            <div class="product-cuotas">
+                                <span class="cuotas-badge">⚡ 3 cuotas sin interés</span>
+                                <span class="cuotas-sub">Visa y Mastercard</span>
+                            </div>
                             <div class="product-divider"></div>
                             <a href="${waLink}" target="_blank" rel="noopener" class="product-btn">
                                 ${waIcon}

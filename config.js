@@ -17,32 +17,104 @@ const CONFIG = {
     marca_color: "EM",
     marca_blanco: "BICIATE",
 
-    bicicletas_titulo: "Nuestras Bicis",
-    bicicletas_intro: "Modelos disponibles para consultar por WhatsApp. Te asesoramos con rodado, talle y forma de pago.",
+    bicicletas_titulo: "Nuestro Catálogo",
+    bicicletas_intro: "12 modelos disponibles. Consultanos por WhatsApp y te asesoramos con rodado, talle y forma de pago.",
     bicicletas_destacadas: [
         {
-            etiqueta: "Aluminio",
-            modelo: "Firebird Aluminio",
+            etiqueta: "MTB",
+            modelo: "Firebird Aluminio R29",
             precio: "$299.900",
-            imagen: "assets/morena (2).png",
+            imagen: "assets/bici-01.png",
             specs: ["Rodado 29", "21 velocidades", "Frenos a disco"],
-            mensaje: "Hola Embiciate! Me interesa la Firebird Aluminio ($299.900), ¿tienen stock disponible?"
+            mensaje: "Hola, me interesa la Firebird Aluminio R29, ¿tienen stock?"
         },
         {
             etiqueta: "MTB",
-            modelo: "Mountain Bike",
-            precio: "Desde $299.900",
-            imagen: "assets/mtb.png",
-            specs: ["Rodado 29", "Ideal para ciudad y aventura", "Hasta 12 cuotas"],
-            mensaje: "Hola Embiciate! Me interesa una Mountain Bike, ¿qué modelos tienen disponibles?"
+            modelo: "Topmega Vendetta R29",
+            precio: "$319.900",
+            imagen: "assets/bici-02.png",
+            specs: ["Rodado 29", "21 velocidades", "Frenos a disco hidráulico"],
+            mensaje: "Hola, me interesa la Topmega Vendetta R29, ¿tienen stock?"
+        },
+        {
+            etiqueta: "MTB",
+            modelo: "Raleigh Mojave 29",
+            precio: "$345.000",
+            imagen: "assets/bici-03.png",
+            specs: ["Rodado 29", "24 velocidades", "Frenos hidráulicos"],
+            mensaje: "Hola, me interesa la Raleigh Mojave 29, ¿tienen stock?"
+        },
+        {
+            etiqueta: "MTB",
+            modelo: "South XC 29",
+            precio: "$289.900",
+            imagen: "assets/bici-04.png",
+            specs: ["Rodado 29", "21 velocidades", "Cuadro aluminio"],
+            mensaje: "Hola, me interesa la South XC 29, ¿tienen stock?"
+        },
+        {
+            etiqueta: "MTB",
+            modelo: "Venzo Hydra R29",
+            precio: "$329.900",
+            imagen: "assets/bici-05.png",
+            specs: ["Rodado 29", "24 velocidades", "Frenos a disco"],
+            mensaje: "Hola, me interesa la Venzo Hydra R29, ¿tienen stock?"
+        },
+        {
+            etiqueta: "MTB",
+            modelo: "SLP Thunder R29",
+            precio: "$279.900",
+            imagen: "assets/bici-06.png",
+            specs: ["Rodado 29", "21 velocidades", "Frenos V-Brake"],
+            mensaje: "Hola, me interesa la SLP Thunder R29, ¿tienen stock?"
         },
         {
             etiqueta: "Urbana",
-            modelo: "Bicicleta Urbana",
-            precio: "Desde $189.900",
-            imagen: "assets/urban.png",
-            specs: ["Cómoda para uso diario", "Rodados disponibles", "Consultar stock"],
-            mensaje: "Hola Embiciate! Me interesa una Bicicleta Urbana, ¿qué modelos tienen disponibles?"
+            modelo: "Topmega City R28",
+            precio: "$219.900",
+            imagen: "assets/bici-07.png",
+            specs: ["Rodado 28", "7 velocidades", "Cuadro bajo dama"],
+            mensaje: "Hola, me interesa la Topmega City R28, ¿tienen stock?"
+        },
+        {
+            etiqueta: "Urbana",
+            modelo: "Raleigh Urban R28",
+            precio: "$239.900",
+            imagen: "assets/bici-08.png",
+            specs: ["Rodado 28", "6 velocidades", "Portaequipaje incluido"],
+            mensaje: "Hola, me interesa la Raleigh Urban R28, ¿tienen stock?"
+        },
+        {
+            etiqueta: "Urbana",
+            modelo: "South Paseo R26",
+            precio: "$189.900",
+            imagen: "assets/bici-09.png",
+            specs: ["Rodado 26", "6 velocidades", "Frenos V-Brake"],
+            mensaje: "Hola, me interesa la South Paseo R26, ¿tienen stock?"
+        },
+        {
+            etiqueta: "Rodado 24",
+            modelo: "Firebird Junior R24",
+            precio: "$199.900",
+            imagen: "assets/bici-10.png",
+            specs: ["Rodado 24", "21 velocidades", "Ideal juvenil"],
+            mensaje: "Hola, me interesa la Firebird Junior R24, ¿tienen stock?"
+        },
+        {
+            etiqueta: "Rodado 20",
+            modelo: "SLP Kids R20",
+            precio: "$149.900",
+            imagen: "assets/bici-11.png",
+            specs: ["Rodado 20", "1 velocidad", "Para niños 6-10 años"],
+            mensaje: "Hola, me interesa la SLP Kids R20, ¿tienen stock?"
+        },
+        {
+            etiqueta: "Fat Bike",
+            modelo: "Venzo Fat R26",
+            precio: "$389.900",
+            imagen: "assets/bici-12.png",
+            specs: ["Rodado 26 Fat", "21 velocidades", "Ruedas 4\" todo terreno"],
+            mensaje: "Hola, me interesa la Venzo Fat R26, ¿tienen stock?"
         }
     ],
 
