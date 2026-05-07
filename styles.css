@@ -235,6 +235,16 @@ h1, h2, h3, h4 {
     z-index: 1;
     transition: opacity 0.5s ease-in-out;
     pointer-events: none;
+
+    /* Difuminar bordes: la bici emerge del fondo sin corte duro */
+    mask-image:
+        linear-gradient(to bottom, black 60%, transparent 100%),
+        linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+    mask-composite: intersect;
+    -webkit-mask-image:
+        linear-gradient(to bottom, black 60%, transparent 100%),
+        linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+    -webkit-mask-composite: source-in;
 }
 
 /* Ocultar en desktop, solo se usa en mobile */
@@ -1295,6 +1305,26 @@ h1, h2, h3, h4 {
 .slider-arrow svg {
     width: 28px;
     height: 28px;
+}
+
+/* =============================================
+   HERO — DESKTOP SIZING (min-width: 1024px)
+   ============================================= */
+@media (min-width: 1024px) {
+    .hero {
+        min-height: 85vh;
+        padding-top: 90px;
+        padding-bottom: 2rem;
+    }
+
+    .hero h1 {
+        font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+    }
+
+    .hero-content {
+        margin-top: 4vh;
+        margin-bottom: 1.5rem;
+    }
 }
 
 /* Responsive */
