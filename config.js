@@ -17,32 +17,32 @@ const CONFIG = {
     marca_color: "EM",
     marca_blanco: "BICIATE",
 
-    bicicletas_titulo: "Bicicletas Destacadas",
-    bicicletas_intro: "Modelos listos para consultar por WhatsApp.",
+    bicicletas_titulo: "Nuestras Bicis",
+    bicicletas_intro: "Modelos disponibles para consultar por WhatsApp. Te asesoramos con rodado, talle y forma de pago.",
     bicicletas_destacadas: [
         {
-            etiqueta: "Desde",
-            modelo: "Modelo 1",
-            precio: "$269.900",
-            imagen: "assets/placeholder-bike.svg",
-            specs: ["Rodado 29", "21 velocidades", "Frenos a disco"],
-            mensaje: "Hola Embiciate, quiero consultar por el Modelo 1."
-        },
-        {
-            etiqueta: "Destacada",
-            modelo: "Modelo 2",
+            etiqueta: "Aluminio",
+            modelo: "Firebird Aluminio",
             precio: "$299.900",
-            imagen: "assets/placeholder-bike.svg",
+            imagen: "assets/morena (2).png",
             specs: ["Rodado 29", "21 velocidades", "Frenos a disco"],
-            mensaje: "Hola Embiciate, quiero consultar por el Modelo 2."
+            mensaje: "Hola Embiciate! Me interesa la Firebird Aluminio ($299.900), ¿tienen stock disponible?"
         },
         {
-            etiqueta: "Premium",
-            modelo: "Modelo 3",
-            precio: "$349.900",
-            imagen: "assets/placeholder-bike.svg",
-            specs: ["Rodado 29", "21 velocidades", "Frenos a disco"],
-            mensaje: "Hola Embiciate, quiero consultar por el Modelo 3."
+            etiqueta: "MTB",
+            modelo: "Mountain Bike",
+            precio: "Desde $299.900",
+            imagen: "assets/mtb.png",
+            specs: ["Rodado 29", "Ideal para ciudad y aventura", "Hasta 12 cuotas"],
+            mensaje: "Hola Embiciate! Me interesa una Mountain Bike, ¿qué modelos tienen disponibles?"
+        },
+        {
+            etiqueta: "Urbana",
+            modelo: "Bicicleta Urbana",
+            precio: "Desde $189.900",
+            imagen: "assets/urban.png",
+            specs: ["Cómoda para uso diario", "Rodados disponibles", "Consultar stock"],
+            mensaje: "Hola Embiciate! Me interesa una Bicicleta Urbana, ¿qué modelos tienen disponibles?"
         }
     ],
 
