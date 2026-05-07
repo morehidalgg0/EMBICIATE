@@ -80,7 +80,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // --- LÓGICA DE INYECCIÓN DE DATOS (CONFIG.JS) ---
     if (typeof CONFIG !== 'undefined') {
-        
+
+        // Aplicar overrides del panel admin sobre CONFIG (tiene prioridad el servidor)
+        const _siteCfg = (window.embiciateCatalog || {}).site || {};
+        if (Object.keys(_siteCfg).length > 0) Object.assign(CONFIG, _siteCfg);
+
         // 1. Reemplazar Textos
         const elementosTexto = document.querySelectorAll('[data-txt]');
         elementosTexto.forEach(el => {

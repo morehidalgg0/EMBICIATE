@@ -86,12 +86,21 @@
                         <button id="_adm-token-save">Guardar token</button>
                     </div>
                     <p id="_adm-token-help">
-                        Necesitás un <strong>Personal Access Token</strong> de GitHub con permiso de escritura en este repositorio.<br>
+                        Necesitás un <strong>Personal Access Token</strong> de GitHub con permiso de escritura.<br>
                         <a href="https://github.com/settings/tokens/new?description=Embiciate+Admin&scopes=repo" target="_blank" rel="noopener">👉 Crear token en GitHub</a>
-                        (seleccioná el permiso <strong>repo</strong> completo o <strong>Contents: Read & Write</strong>)
+                        (permiso <strong>repo</strong> completo)
                     </p>
                 </div>
-                <div id="_adm-grid"></div>
+                <div id="_adm-tabs-bar">
+                    <button class="_adm-tab active" data-tab="catalogo">🚲 Catálogo</button>
+                    <button class="_adm-tab" data-tab="hero">🏠 Hero</button>
+                    <button class="_adm-tab" data-tab="contacto">📞 Contacto</button>
+                    <button class="_adm-tab" data-tab="accesorios">🛡️ Accesorios</button>
+                </div>
+                <div id="_adm-tab-catalogo" class="_adm-tab-content"><div id="_adm-grid"></div></div>
+                <div id="_adm-tab-hero"     class="_adm-tab-content" style="display:none"></div>
+                <div id="_adm-tab-contacto" class="_adm-tab-content" style="display:none"></div>
+                <div id="_adm-tab-accesorios" class="_adm-tab-content" style="display:none"></div>
             </div>`);
         document.body.appendChild(panel);
 
@@ -110,12 +119,28 @@
             }
         };
 
+        // Tab switching
+        panel.querySelectorAll('._adm-tab').forEach(btn => {
+            btn.onclick = () => {
+                panel.querySelectorAll('._adm-tab').forEach(b => b.classList.remove('active'));
+                panel.querySelectorAll('._adm-tab-content').forEach(c => c.style.display = 'none');
+                btn.classList.add('active');
+                panel.querySelector('#_adm-tab-' + btn.dataset.tab).style.display = 'block';
+            };
+        });
+
         // Build bike cards
         const grid = panel.querySelector('#_adm-grid');
         bikes.forEach((bike, i) => {
             const merged = { ...bike, ...(serverData[i] || {}) };
             grid.appendChild(buildCard(i, merged, (serverData[i] || {}).imagenes || []));
         });
+
+        // Build other tabs
+        const site = serverData.site || {};
+        panel.querySelector('#_adm-tab-hero').appendChild(buildHeroTab(site));
+        panel.querySelector('#_adm-tab-contacto').appendChild(buildContactoTab(site));
+        panel.querySelector('#_adm-tab-accesorios').appendChild(buildAccesoriosTab(site));
     }
 
     // ── Card de bici en el panel ──────────────────────────────────────────
@@ -348,6 +373,179 @@
 
     function esc(str) { return (str || '').replace(/"/g, '&quot;'); }
 
+    // ── Tab: Hero ─────────────────────────────────────────────────────────
+    function buildHeroTab(site) {
+        const cfg   = typeof CONFIG !== 'undefined' ? CONFIG : {};
+        const wrap  = el('div', { class: '_adm-section' });
+        const prog  = el('div', { class: '_adm-progress', style: 'display:none' });
+        const ok    = el('div', { class: '_adm-ok-msg',  style: 'display:none' });
+
+        wrap.innerHTML = `<h3 class="_adm-section-title">🏠 Sección Hero</h3>`;
+
+        // Hero slider: images
+        const sliderCfg = site.hero_slider || cfg.hero_slider || [];
+        const sliderWrap = el('div', {});
+        sliderWrap.innerHTML = `<p class="_adm-pub-label" style="margin-bottom:.6rem">Imágenes del slider principal (${sliderCfg.length} slides)</p>`;
+        sliderCfg.forEach((slide, i) => {
+            const row = el('div', { class: '_adm-slide-row' });
+            row.innerHTML = `<span class="_adm-num">#${i+1} ${esc(slide.modelo)}</span>`;
+            const zone = buildSingleImg(`hero-slide-${i}`, slide.imagen || '');
+            row.appendChild(zone);
+            sliderWrap.appendChild(row);
+        });
+        wrap.appendChild(sliderWrap);
+
+        // Text fields
+        const fields = el('div', { class: '_adm-fields' }, `
+            <label>Banner de urgencia (franja superior)</label>
+            <input class="_adm-f" data-sfield="urgencia_texto" value="${esc(site.urgencia_texto || '')}" placeholder="⚡ Stock limitado — Consultá disponibilidad...">
+            <label>Título H1 del Hero</label>
+            <input class="_adm-f" data-sfield="hero_h1" value="${esc(site.hero_h1 || '')}" placeholder="LA BICI QUE BUSCÁS ESTÁ ACÁ">
+            <label>Texto de precio destacado</label>
+            <input class="_adm-f" data-sfield="hero_precio_texto" value="${esc(site.hero_precio_texto || '')}" placeholder="Bicicletas desde $269.900">
+        `);
+        wrap.appendChild(fields);
+
+        const btn = el('button', { class: '_adm-save', style: 'margin-top:.8rem' }, '🚀 Publicar cambios del Hero');
+        wrap.appendChild(btn);
+        wrap.appendChild(prog);
+        wrap.appendChild(ok);
+
+        btn.onclick = async () => {
+            const overrides = {};
+            wrap.querySelectorAll('[data-sfield]').forEach(inp => { overrides[inp.dataset.sfield] = inp.value.trim(); });
+            // Slider images
+            const newSlider = sliderCfg.map((slide, i) => ({ ...slide }));
+            const zones = sliderWrap.querySelectorAll('._adm-single-zone');
+            for (let i = 0; i < zones.length; i++) {
+                const f = zones[i].getFile ? zones[i].getFile() : null;
+                if (f) {
+                    const ext  = f.name.split('.').pop() || 'jpg';
+                    const path = `assets/hero-${i}.${ext}`;
+                    const b64  = (await blobToBase64(f)).split(',')[1];
+                    prog.style.display = 'block'; prog.textContent = `⏳ Subiendo imagen ${i+1}...`;
+                    await ghCommitFile(path, b64, localStorage.getItem(TOKEN_KEY), `admin: hero slide ${i}`, true);
+                    newSlider[i].imagen = path; newSlider[i].imagen_mobile = path;
+                }
+            }
+            if (newSlider.length) overrides.hero_slider = newSlider;
+            await publishSiteSection(overrides, prog, ok);
+        };
+        return wrap;
+    }
+
+    // ── Tab: Contacto ─────────────────────────────────────────────────────
+    function buildContactoTab(site) {
+        const cfg  = typeof CONFIG !== 'undefined' ? CONFIG : {};
+        const wrap = el('div', { class: '_adm-section' });
+        const prog = el('div', { class: '_adm-progress', style: 'display:none' });
+        const ok   = el('div', { class: '_adm-ok-msg',  style: 'display:none' });
+        wrap.innerHTML = `<h3 class="_adm-section-title">📞 Contacto y Datos</h3>`;
+        const fields = el('div', { class: '_adm-fields' }, `
+            <label>Número de WhatsApp (con código de país, ej: 5492230000000)</label>
+            <input class="_adm-f" data-sfield="whatsapp_numero" value="${esc(site.whatsapp_numero||cfg.whatsapp_numero||'')}" placeholder="5492230000000">
+            <label>Mensaje predeterminado de WhatsApp</label>
+            <input class="_adm-f" data-sfield="whatsapp_mensaje" value="${esc(site.whatsapp_mensaje||cfg.whatsapp_mensaje||'')}" placeholder="Hola! quiero consultar...">
+            <label>Dirección</label>
+            <input class="_adm-f" data-sfield="direccion" value="${esc(site.direccion||cfg.direccion||'')}" placeholder="Güemes 1234, Mar del Plata">
+            <label>Horarios</label>
+            <input class="_adm-f" data-sfield="horarios" value="${esc(site.horarios||cfg.horarios||'')}" placeholder="Lunes a Sábados: 09:00 a 21:00 hs">
+            <label>URL de ubicación (Google Maps)</label>
+            <input class="_adm-f" data-sfield="ubicacion_url" value="${esc(site.ubicacion_url||cfg.ubicacion_url||'')}" placeholder="https://share.google/...">
+            <label>Texto de la sección contacto</label>
+            <textarea class="_adm-f _adm-ta" data-sfield="contacto_texto" rows="3" placeholder="Vení a conocer todos nuestros modelos...">${esc(site.contacto_texto||cfg.contacto_texto||'')}</textarea>
+        `);
+        wrap.appendChild(fields);
+        const btn = el('button', { class: '_adm-save', style: 'margin-top:.8rem' }, '🚀 Publicar cambios de Contacto');
+        wrap.appendChild(btn); wrap.appendChild(prog); wrap.appendChild(ok);
+        btn.onclick = async () => {
+            const overrides = {};
+            wrap.querySelectorAll('[data-sfield]').forEach(inp => { overrides[inp.dataset.sfield] = inp.value.trim(); });
+            await publishSiteSection(overrides, prog, ok);
+        };
+        return wrap;
+    }
+
+    // ── Tab: Accesorios ───────────────────────────────────────────────────
+    function buildAccesoriosTab(site) {
+        const cfg  = typeof CONFIG !== 'undefined' ? CONFIG : {};
+        const wrap = el('div', { class: '_adm-section' });
+        const prog = el('div', { class: '_adm-progress', style: 'display:none' });
+        const ok   = el('div', { class: '_adm-ok-msg',  style: 'display:none' });
+        wrap.innerHTML = `<h3 class="_adm-section-title">🛡️ Sección Accesorios</h3>`;
+        const imgZone = buildSingleImg('accesorios', (site.accesorios_imagen || (cfg.imagenes||{}).accesorios || ''));
+        wrap.appendChild(imgZone);
+        const fields = el('div', { class: '_adm-fields' }, `
+            <label>Palabra en color del título (ej: Premium)</label>
+            <input class="_adm-f" data-sfield="accs_titulo_color" value="${esc(site.accs_titulo_color||cfg.accs_titulo_color||'Premium')}">
+            <label>Descripción</label>
+            <textarea class="_adm-f _adm-ta" data-sfield="accs_descripcion" rows="4">${esc(site.accs_descripcion||cfg.accs_descripcion||'')}</textarea>
+        `);
+        wrap.appendChild(fields);
+        const btn = el('button', { class: '_adm-save', style: 'margin-top:.8rem' }, '🚀 Publicar cambios de Accesorios');
+        wrap.appendChild(btn); wrap.appendChild(prog); wrap.appendChild(ok);
+        btn.onclick = async () => {
+            const overrides = {};
+            wrap.querySelectorAll('[data-sfield]').forEach(inp => { overrides[inp.dataset.sfield] = inp.value.trim(); });
+            const f = imgZone.getFile ? imgZone.getFile() : null;
+            if (f) {
+                const ext  = f.name.split('.').pop() || 'jpg';
+                const path = `assets/accesorios-admin.${ext}`;
+                const b64  = (await blobToBase64(f)).split(',')[1];
+                prog.style.display = 'block'; prog.textContent = '⏳ Subiendo imagen...';
+                await ghCommitFile(path, b64, localStorage.getItem(TOKEN_KEY), 'admin: accesorios imagen', true);
+                overrides.accesorios_imagen = path;
+                overrides['imagenes.accesorios'] = path;
+            }
+            await publishSiteSection(overrides, prog, ok);
+        };
+        return wrap;
+    }
+
+    // ── Upload zona de imagen simple (una sola foto) ───────────────────────
+    function buildSingleImg(key, currentUrl) {
+        const zone = el('div', { class: '_adm-zone _adm-single-zone', style: 'margin-bottom:.6rem' });
+        let file = null;
+        zone.innerHTML = `
+            <p class="_adm-pub-label">Imagen actual:</p>
+            <div style="display:flex;align-items:center;gap:.8rem;flex-wrap:wrap">
+                <img class="_adm-single-preview" src="${currentUrl}" alt="" style="height:72px;width:auto;border-radius:6px;border:1px solid #333;object-fit:cover" onerror="this.style.opacity='.2'">
+                <label class="_adm-add-btn">📁 Cambiar imagen<input type="file" accept="image/*" style="display:none"></label>
+            </div>`;
+        zone.querySelector('input').onchange = e => {
+            file = e.target.files[0];
+            if (file) { zone.querySelector('._adm-single-preview').src = URL.createObjectURL(file); }
+            e.target.value = '';
+        };
+        zone.getFile = () => file;
+        return zone;
+    }
+
+    // ── Publicar datos de sitio en catalog-data.json["site"] ──────────────
+    async function publishSiteSection(overrides, progressEl, okEl) {
+        const token = localStorage.getItem(TOKEN_KEY);
+        if (!token) { alert('⚠️ Configurá el Token de GitHub primero.'); return; }
+        progressEl.style.display = 'block';
+        progressEl.textContent   = '⏳ Actualizando sitio en GitHub...';
+        okEl.style.display = 'none';
+        try {
+            const current = { ...(window.embiciateCatalog || {}) };
+            current.site  = { ...(current.site || {}), ...overrides };
+            const json    = JSON.stringify(current, null, 2);
+            await ghCommitFile('catalog-data.json', btoa(unescape(encodeURIComponent(json))),
+                token, 'admin: actualiza configuración del sitio', false);
+            window.embiciateCatalog = current;
+            progressEl.style.display = 'none';
+            okEl.style.display = 'block';
+            okEl.innerHTML = '✅ ¡Publicado! Visible en todos los dispositivos en <strong>~1–2 minutos</strong>.';
+            setTimeout(() => { okEl.style.display = 'none'; }, 6000);
+        } catch(err) {
+            progressEl.style.display = 'none';
+            okEl.style.display = 'block'; okEl.style.color = '#f55';
+            okEl.textContent = '❌ Error: ' + err.message;
+        }
+    }
+
     // ── Estilos ───────────────────────────────────────────────────────────
     function injectStyles() {
         if (document.getElementById('_adm-css')) return;
@@ -430,11 +628,19 @@
         .pg-dot.active{background:#fff;transform:scale(1.3)}
         .product-img-wrapper{cursor:pointer}
 
+        #_adm-tabs-bar{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem}
+        ._adm-tab{padding:.45rem 1rem;border-radius:8px;border:1px solid #2a2a2a;background:#141414;color:#888;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+        ._adm-tab.active,._adm-tab:hover{background:#ff5500;color:#fff;border-color:#ff5500}
+        ._adm-tab-content{}
+        ._adm-section{background:#141414;border:1px solid #222;border-radius:12px;padding:1.2rem;max-width:700px}
+        ._adm-section-title{color:#fff;font-size:1rem;margin:0 0 1rem;font-weight:800}
+        ._adm-slide-row{background:#0e0e0e;border:1px solid #222;border-radius:8px;padding:.7rem;margin-bottom:.6rem}
+        ._adm-slide-row ._adm-num{display:block;margin-bottom:.4rem}
         @media(max-width:600px){
             #_adm-body{padding:.8rem}
             #_adm-grid{grid-template-columns:1fr}
             #_adm-header{padding:.8rem 1rem}
-        }`;
+        }`;;
         document.head.appendChild(s);
     }
 })();
