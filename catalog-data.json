@@ -12,6 +12,9 @@
     ],
     "modelo": "Firebird Turbo R29"
   },
+  "1": {
+    "deleted": true
+  },
   "2": {
     "modelo": "Fiat 500",
     "precio": "$289.900",
