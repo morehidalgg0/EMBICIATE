@@ -136,6 +136,18 @@
             grid.appendChild(buildCard(i, merged, (serverData[i] || {}).imagenes || []));
         });
 
+        // Extra bikes (admin-added)
+        const extraBikes = serverData.extra_bikes || [];
+        extraBikes.forEach((eb, i) => grid.appendChild(buildExtraBikeCard(i, eb, extraBikes)));
+        const addBikeBtn = el('button', { class: '_adm-add-bike-btn' }, '➕ Agregar nueva bici');
+        panel.querySelector('#_adm-tab-catalogo').appendChild(addBikeBtn);
+        addBikeBtn.onclick = () => {
+            const i = extraBikes.length;
+            extraBikes.push({});
+            grid.appendChild(buildExtraBikeCard(i, {}, extraBikes));
+            addBikeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        };
+
         // Build other tabs
         const site = serverData.site || {};
         panel.querySelector('#_adm-tab-hero').appendChild(buildHeroTab(site));
@@ -159,6 +171,8 @@
 
         // Campos de texto
         const fields = el('div', { class: '_adm-fields' }, `
+            <label>Nombre del modelo</label>
+            <input class="_adm-f" data-field="modelo" value="${esc(bike.modelo||'')}" placeholder="Firebird Aluminio R29">
             <label>Precio</label>
             <input class="_adm-f" data-field="precio" value="${esc(bike.precio)}" placeholder="$299.900">
             <label>Etiqueta / Badge</label>
@@ -456,11 +470,41 @@
             <textarea class="_adm-f _adm-ta" data-sfield="contacto_texto" rows="3" placeholder="Vení a conocer todos nuestros modelos...">${esc(site.contacto_texto||cfg.contacto_texto||'')}</textarea>
         `);
         wrap.appendChild(fields);
+        // Extra contact items
+        let extraContacts = [...(site.contacto_extra || [])];
+        const ecSection = el('div', { class: '_adm-fields', style: 'margin-top:.8rem' });
+        ecSection.innerHTML = `<span style="color:#ff7733;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Datos adicionales de contacto</span>`;
+        const ecList = el('div', {});
+        function renderEC() {
+            ecList.innerHTML = '';
+            extraContacts.forEach((item, i) => {
+                const row = el('div', { style: 'display:flex;gap:.4rem;margin-bottom:.4rem;align-items:center' });
+                row.innerHTML = `
+                    <input class="_adm-f" style="flex:0 0 52px;text-align:center" data-ec="icon-${i}" placeholder="📍" value="${esc(item.icon||'')}">
+                    <input class="_adm-f" style="flex:1" data-ec="label-${i}" placeholder="Etiqueta" value="${esc(item.label||'')}">
+                    <input class="_adm-f" style="flex:2" data-ec="val-${i}" placeholder="Valor" value="${esc(item.value||'')}">
+                    <button data-ec-del="${i}" style="flex-shrink:0;background:#1a1a1a;border:1px solid #444;color:#f66;border-radius:6px;padding:.4rem .6rem;cursor:pointer">×</button>`;
+                row.querySelector(`[data-ec-del="${i}"]`).onclick = () => { extraContacts.splice(i,1); renderEC(); };
+                ecList.appendChild(row);
+            });
+        }
+        renderEC();
+        ecSection.appendChild(ecList);
+        const addEcBtn = el('button', { style: 'width:100%;margin-top:.4rem;padding:.5rem;background:#1a1a1a;border:1px dashed #444;color:#888;border-radius:8px;cursor:pointer;font-family:inherit;font-size:.82rem' }, '➕ Agregar dato de contacto');
+        addEcBtn.onclick = () => { extraContacts.push({ icon:'📍', label:'', value:'' }); renderEC(); };
+        ecSection.appendChild(addEcBtn);
+        wrap.appendChild(ecSection);
+
         const btn = el('button', { class: '_adm-save', style: 'margin-top:.8rem' }, '🚀 Publicar cambios de Contacto');
         wrap.appendChild(btn); wrap.appendChild(prog); wrap.appendChild(ok);
         btn.onclick = async () => {
             const overrides = {};
             wrap.querySelectorAll('[data-sfield]').forEach(inp => { overrides[inp.dataset.sfield] = inp.value.trim(); });
+            overrides.contacto_extra = extraContacts.map((_,i) => ({
+                icon:  ecList.querySelector(`[data-ec="icon-${i}"]`)?.value?.trim()  || '📍',
+                label: ecList.querySelector(`[data-ec="label-${i}"]`)?.value?.trim() || '',
+                value: ecList.querySelector(`[data-ec="val-${i}"]`)?.value?.trim()   || ''
+            })).filter(c => c.label || c.value);
             await publishSiteSection(overrides, prog, ok);
         };
         return wrap;
@@ -500,6 +544,72 @@
             await publishSiteSection(overrides, prog, ok);
         };
         return wrap;
+    }
+
+    // ── Nueva bici (extra) ────────────────────────────────────────────────
+    function buildExtraBikeCard(extraIdx, bike, allExtras) {
+        const card = el('div', { class: '_adm-card', 'data-extra-idx': extraIdx });
+        card.innerHTML = `<div class="_adm-card-head"><span class="_adm-num">NUEVA #${extraIdx+1}</span><strong>${esc(bike.modelo||'Nueva bici')}</strong><span class="_adm-badge-none">Extra</span></div>`;
+        card.appendChild(buildImageZone('extra-' + extraIdx, bike.imagenes || []));
+        const fields = el('div', { class: '_adm-fields' }, `
+            <label>Nombre del modelo</label>
+            <input class="_adm-f" data-field="modelo" value="${esc(bike.modelo||'')}" placeholder="Nombre del modelo">
+            <label>Precio</label>
+            <input class="_adm-f" data-field="precio" value="${esc(bike.precio||'')}" placeholder="$299.900">
+            <label>Etiqueta / Badge</label>
+            <input class="_adm-f" data-field="etiqueta" value="${esc(bike.etiqueta||'')}" placeholder="MTB">
+            <label>Especificaciones (una por línea)</label>
+            <textarea class="_adm-f _adm-ta" data-field="specs" rows="3">${Array.isArray(bike.specs)?bike.specs.join('\n'):''}</textarea>`);
+        card.appendChild(fields);
+        const actions = el('div', { class: '_adm-actions' });
+        const saveBtn = el('button', { class: '_adm-save' }, '🚀 Publicar bici');
+        actions.appendChild(saveBtn); card.appendChild(actions);
+        const prog = el('div', { class: '_adm-progress', style: 'display:none' });
+        const ok   = el('div', { class: '_adm-ok-msg',  style: 'display:none' });
+        card.appendChild(prog); card.appendChild(ok);
+        saveBtn.onclick = () => publishExtraBike(card, extraIdx, allExtras, prog, ok);
+        return card;
+    }
+
+    async function publishExtraBike(card, extraIdx, allExtras, progressEl, okEl) {
+        const token = localStorage.getItem(TOKEN_KEY);
+        if (!token) { alert('⚠️ Configurá el Token de GitHub primero.'); return; }
+        const zone     = card.querySelector('._adm-zone');
+        const newFiles = zone ? zone.getNewFiles() : [];
+        progressEl.style.display = 'block'; progressEl.textContent = '⏳ Publicando...';
+        okEl.style.display = 'none';
+        try {
+            let imagenes = (allExtras[extraIdx] || {}).imagenes || [];
+            if (newFiles.length > 0) {
+                imagenes = [];
+                for (let i = 0; i < newFiles.length; i++) {
+                    const f = newFiles[i], ext = f.name.split('.').pop()||'jpg';
+                    const path = `assets/extra-${extraIdx}-${i}.${ext}`;
+                    progressEl.textContent = `⏳ Subiendo foto ${i+1}/${newFiles.length}...`;
+                    await ghCommitFile(path, (await blobToBase64(f)).split(',')[1], token, `admin: extra bike ${extraIdx} img ${i}`, true);
+                    imagenes.push(path);
+                }
+            }
+            const fields = {};
+            card.querySelectorAll('._adm-f').forEach(inp => {
+                const k = inp.dataset.field;
+                fields[k] = k==='specs' ? inp.value.split('\n').map(s=>s.trim()).filter(Boolean) : inp.value.trim();
+            });
+            if (imagenes.length) fields.imagenes = imagenes;
+            fields.mensaje = `Hola, me interesa la ${fields.modelo||'bici'}, ¿tienen stock?`;
+            allExtras[extraIdx] = fields;
+            const current = { ...(window.embiciateCatalog||{}) };
+            current.extra_bikes = allExtras;
+            progressEl.textContent = '⏳ Actualizando catálogo...';
+            await ghCommitFile('catalog-data.json', btoa(unescape(encodeURIComponent(JSON.stringify(current,null,2)))), token, `admin: extra bici #${extraIdx+1}`, false);
+            window.embiciateCatalog = current;
+            progressEl.style.display = 'none';
+            okEl.style.display = 'block'; okEl.innerHTML = '✅ ¡Publicado! Visible en ~1-2 minutos.';
+            setTimeout(() => { okEl.style.display='none'; }, 5000);
+        } catch(err) {
+            progressEl.style.display='none'; okEl.style.display='block';
+            okEl.style.color='#f55'; okEl.textContent='❌ Error: '+err.message;
+        }
     }
 
     // ── Upload zona de imagen simple (una sola foto) ───────────────────────
@@ -636,6 +746,8 @@
         ._adm-section-title{color:#fff;font-size:1rem;margin:0 0 1rem;font-weight:800}
         ._adm-slide-row{background:#0e0e0e;border:1px solid #222;border-radius:8px;padding:.7rem;margin-bottom:.6rem}
         ._adm-slide-row ._adm-num{display:block;margin-bottom:.4rem}
+        ._adm-add-bike-btn{display:block;width:100%;margin-top:1rem;padding:.7rem;background:transparent;border:2px dashed #333;color:#888;border-radius:10px;cursor:pointer;font-family:inherit;font-size:.9rem;font-weight:700;transition:all .2s}
+        ._adm-add-bike-btn:hover{border-color:#ff5500;color:#ff5500}
         @media(max-width:600px){
             #_adm-body{padding:.8rem}
             #_adm-grid{grid-template-columns:1fr}
