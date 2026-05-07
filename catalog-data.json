@@ -1,4 +1,20 @@
 {
+  "0": {
+    "precio": "$269.900",
+    "etiqueta": "MTB",
+    "specs": [
+      "Rodado 29",
+      "21 velocidades",
+      "Frenos a disco"
+    ],
+    "imagenes": [
+      "assets/bici-0-0.webp",
+      "assets/bici-0-1.webp",
+      "assets/bici-0-2.webp",
+      "assets/bici-0-3.webp",
+      "assets/bici-0-4.webp"
+    ]
+  },
   "site": {
     "whatsapp_numero": "5492235505397",
     "whatsapp_mensaje": "Hola! Me interesa una bicicleta, ¿tienen stock disponible?",
