@@ -132,14 +132,14 @@ h1, h2, h3, h4 {
 /* Urgencia Banner */
 .urgencia-banner {
     background-color: #0d0d0d;
-    color: #d7ff32;
+    color: #ff5500;
     text-align: center;
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
-    border-bottom: 1px solid rgba(215, 255, 50, 0.2);
+    border-bottom: 1px solid rgba(255, 85, 0, 0.2);
 }
 
 /* Navbar */
@@ -322,9 +322,9 @@ h1, h2, h3, h4 {
     font-size: 0.72rem;
     font-weight: 900;
     letter-spacing: 2px;
-    color: #d7ff32;
-    background: rgba(215, 255, 50, 0.12);
-    border: 1px solid rgba(215, 255, 50, 0.3);
+    color: #ff5500;
+    background: rgba(255, 85, 0, 0.12);
+    border: 1px solid rgba(255, 85, 0, 0.3);
     border-radius: 999px;
     padding: 0.2rem 0.75rem;
     margin-bottom: 0.4rem;
@@ -333,17 +333,17 @@ h1, h2, h3, h4 {
 }
 
 @keyframes pricePulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(215, 255, 50, 0); }
-    50% { box-shadow: 0 0 12px 3px rgba(215, 255, 50, 0.2); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 85, 0, 0); }
+    50% { box-shadow: 0 0 12px 3px rgba(255, 85, 0, 0.2); }
 }
 
 .hero-price-highlight span {
-    color: #d7ff32;
+    color: #ff5500;
     font-size: clamp(3rem, 9vw, 6.5rem);
     font-weight: 900;
     letter-spacing: -2px;
     line-height: 0.9;
-    text-shadow: 0 0 40px rgba(215, 255, 50, 0.35), 0 4px 20px rgba(0,0,0,0.6);
+    text-shadow: 0 0 40px rgba(255, 85, 0, 0.35), 0 4px 20px rgba(0,0,0,0.6);
     display: block;
 }
 
@@ -575,7 +575,7 @@ h1, h2, h3, h4 {
 
 .contador-numero {
     font-size: 2rem;
-    color: #d7ff32;
+    color: #ff5500;
 }
 
 .contador-texto {
@@ -2200,9 +2200,9 @@ h1, h2, h3, h4 {
 }
 
 .pagos-badge--highlight {
-    background: rgba(215, 255, 50, 0.12);
-    border: 1px solid rgba(215, 255, 50, 0.35);
-    color: #d7ff32;
+    background: rgba(255, 85, 0, 0.12);
+    border: 1px solid rgba(255, 85, 0, 0.35);
+    color: #ff5500;
 }
 
 .pagos-badge--secondary {
@@ -2243,4 +2243,88 @@ h1, h2, h3, h4 {
     .pagos-group {
         width: 100%;
     }
+}
+
+/* ---- FLECHAS DEL SLIDER HERO ---- */
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(10, 10, 10, 0.7);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+}
+.slider-arrow:hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    transform: translateY(-50%) scale(1.1);
+}
+.slider-arrow.prev { left: 2%; }
+.slider-arrow.next { right: 2%; }
+
+.slider-arrow svg { width: 24px; height: 24px; }
+
+/* ---- FLECHAS DE GALERÍA (TARJETAS) ---- */
+.pg-arrows {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.5rem;
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.product-img-wrapper:hover .pg-arrows {
+    opacity: 1;
+}
+.pg-arrow {
+    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s, transform 0.2s;
+}
+.pg-arrow:hover {
+    background: var(--color-accent);
+    transform: scale(1.1);
+}
+.pg-arrow svg { width: 18px; height: 18px; }
+
+@media (max-width: 768px) {
+    .slider-arrow {
+        top: 30%; /* Ajuste para mobile, sobre la imagen */
+        width: 40px;
+        height: 40px;
+    }
+    .slider-arrow svg { width: 20px; height: 20px; }
+    
+    .card-content .product-btn {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        font-size: 0.95rem;
+        white-space: normal;
+        text-align: center;
+    }
+    .pg-arrows { opacity: 1; /* Siempre visibles en mobile */ }
 }

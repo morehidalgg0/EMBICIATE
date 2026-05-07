@@ -59,8 +59,18 @@ window.embiciateDB = (() => {
             img.src = urls[i];
             dots.querySelectorAll('.pg-dot').forEach((d, j) => d.classList.toggle('active', j === i));
         }
+        const arrows = document.createElement('div');
+        arrows.className = 'pg-arrows';
+        arrows.innerHTML = `
+            <button class="pg-arrow pg-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+            <button class="pg-arrow pg-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+        `;
+        wrapper.appendChild(arrows);
+        arrows.querySelector('.pg-prev').addEventListener('click', (e) => { e.stopPropagation(); setSlide((cur - 1 + urls.length) % urls.length); });
+        arrows.querySelector('.pg-next').addEventListener('click', (e) => { e.stopPropagation(); setSlide((cur + 1) % urls.length); });
+
         wrapper.addEventListener('click', (e) => {
-            if (e.target.closest('.pg-dots') || e.target.closest('.product-badge') || e.target.closest('.product-price-overlay')) return;
+            if (e.target.closest('.pg-dots') || e.target.closest('.pg-arrows') || e.target.closest('.product-badge') || e.target.closest('.product-price-overlay')) return;
             setSlide((cur + 1) % urls.length);
         });
     }
