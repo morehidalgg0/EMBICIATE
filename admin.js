@@ -96,11 +96,13 @@
                     <button class="_adm-tab" data-tab="hero">🏠 Hero</button>
                     <button class="_adm-tab" data-tab="contacto">📞 Contacto</button>
                     <button class="_adm-tab" data-tab="accesorios">🛡️ Accesorios</button>
+                    <button class="_adm-tab" data-tab="pagos">💳 Pagos</button>
                 </div>
                 <div id="_adm-tab-catalogo" class="_adm-tab-content"><div id="_adm-grid"></div></div>
                 <div id="_adm-tab-hero"     class="_adm-tab-content" style="display:none"></div>
                 <div id="_adm-tab-contacto" class="_adm-tab-content" style="display:none"></div>
                 <div id="_adm-tab-accesorios" class="_adm-tab-content" style="display:none"></div>
+                <div id="_adm-tab-pagos" class="_adm-tab-content" style="display:none"></div>
             </div>`);
         document.body.appendChild(panel);
 
@@ -153,6 +155,7 @@
         panel.querySelector('#_adm-tab-hero').appendChild(buildHeroTab(site));
         panel.querySelector('#_adm-tab-contacto').appendChild(buildContactoTab(site));
         panel.querySelector('#_adm-tab-accesorios').appendChild(buildAccesoriosTab(site));
+        panel.querySelector('#_adm-tab-pagos').appendChild(buildPagosTab(site));
     }
 
     // ── Card de bici en el panel ──────────────────────────────────────────
@@ -552,6 +555,64 @@
                 overrides.accesorios_imagen = path;
                 overrides['imagenes.accesorios'] = path;
             }
+            await publishSiteSection(overrides, prog, ok);
+        };
+        return wrap;
+    }
+
+    // ── Tab: Pagos ────────────────────────────────────────────────────────
+    function buildPagosTab(site) {
+        const wrap = el('div', { class: '_adm-section' });
+        const prog = el('div', { class: '_adm-progress', style: 'display:none' });
+        const ok   = el('div', { class: '_adm-ok-msg',  style: 'display:none' });
+        wrap.innerHTML = `<h3 class="_adm-section-title">💳 Sección de Pagos</h3>`;
+        
+        const imgVisa = buildSingleImg('pago-visa', site.pago_img_visa || 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg');
+        const imgMc = buildSingleImg('pago-mc', site.pago_img_mc || 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg');
+        wrap.appendChild(el('div', {style:'margin-bottom:.5rem;color:#888;font-size:.8rem;font-weight:700'}, 'Logo Visa'));
+        wrap.appendChild(imgVisa);
+        wrap.appendChild(el('div', {style:'margin-bottom:.5rem;color:#888;font-size:.8rem;font-weight:700'}, 'Logo Mastercard'));
+        wrap.appendChild(imgMc);
+
+        const fields = el('div', { class: '_adm-fields' }, `
+            <label>Badge destacado (ej: ⚡ 3 cuotas sin interés)</label>
+            <input class="_adm-f" data-sfield="pago_badge_1" value="${esc(site.pago_badge_1||'⚡ 3 cuotas sin interés')}">
+            <label>Descripción destacado (ej: Con Visa y Mastercard)</label>
+            <input class="_adm-f" data-sfield="pago_desc_1" value="${esc(site.pago_desc_1||'Con Visa y Mastercard')}">
+            <label>Badge resto de tarjetas (ej: Resto de tarjetas)</label>
+            <input class="_adm-f" data-sfield="pago_badge_2" value="${esc(site.pago_badge_2||'Resto de tarjetas')}">
+            <label>Descripción resto (ej: Hasta 12 cuotas fijas)</label>
+            <input class="_adm-f" data-sfield="pago_desc_2" value="${esc(site.pago_desc_2||'Hasta 12 cuotas fijas')}">
+        `);
+        wrap.appendChild(fields);
+
+        const btn = el('button', { class: '_adm-save', style: 'margin-top:.8rem' }, '🚀 Publicar cambios de Pagos');
+        wrap.appendChild(btn); wrap.appendChild(prog); wrap.appendChild(ok);
+        
+        btn.onclick = async () => {
+            const overrides = {};
+            wrap.querySelectorAll('[data-sfield]').forEach(inp => { overrides[inp.dataset.sfield] = inp.value.trim(); });
+            
+            // Subir logos si se cambiaron
+            const fVisa = imgVisa.getFile ? imgVisa.getFile() : null;
+            if (fVisa) {
+                const ext  = fVisa.name.split('.').pop() || 'png';
+                const path = `assets/pago-visa.${ext}`;
+                const b64  = (await blobToBase64(fVisa)).split(',')[1];
+                prog.style.display = 'block'; prog.textContent = '⏳ Subiendo logo Visa...';
+                await ghCommitFile(path, b64, localStorage.getItem(TOKEN_KEY), 'admin: logo pago visa', true);
+                overrides.pago_img_visa = path;
+            }
+            const fMc = imgMc.getFile ? imgMc.getFile() : null;
+            if (fMc) {
+                const ext  = fMc.name.split('.').pop() || 'png';
+                const path = `assets/pago-mc.${ext}`;
+                const b64  = (await blobToBase64(fMc)).split(',')[1];
+                prog.style.display = 'block'; prog.textContent = '⏳ Subiendo logo Mastercard...';
+                await ghCommitFile(path, b64, localStorage.getItem(TOKEN_KEY), 'admin: logo pago mc', true);
+                overrides.pago_img_mc = path;
+            }
+            
             await publishSiteSection(overrides, prog, ok);
         };
         return wrap;

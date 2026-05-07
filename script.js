@@ -96,6 +96,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                 d.innerHTML = `<span class="icon">${item.icon||'📍'}</span><p>${item.value||''}</p>`;
                 if (contactInfo) contactInfo.appendChild(d);
             });
+            
+            // Pagos
+            const visa = document.querySelector('.pago-logo--visa');
+            const mc = document.querySelector('.pago-logo--mc');
+            const badges = document.querySelectorAll('.pagos-badge');
+            const descs = document.querySelectorAll('.pagos-desc');
+            
+            if (visa && _siteCfg.pago_img_visa) visa.src = _siteCfg.pago_img_visa;
+            if (mc && _siteCfg.pago_img_mc) mc.src = _siteCfg.pago_img_mc;
+            if (badges.length > 0 && _siteCfg.pago_badge_1) badges[0].innerHTML = _siteCfg.pago_badge_1;
+            if (descs.length > 0 && _siteCfg.pago_desc_1) descs[0].innerHTML = _siteCfg.pago_desc_1;
+            if (badges.length > 1 && _siteCfg.pago_badge_2) badges[1].innerHTML = _siteCfg.pago_badge_2;
+            if (descs.length > 1 && _siteCfg.pago_desc_2) descs[1].innerHTML = _siteCfg.pago_desc_2;
+            
         }, 200);
 
         // 1. Reemplazar Textos
