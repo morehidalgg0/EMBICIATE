@@ -12,7 +12,7 @@
     const GH_OWNER       = 'morehidalgg0';
     const GH_REPO        = 'EMBICIATE';
     const GH_BRANCH      = 'main';
-    const GH_API_BASE    = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents`;
+    const GH_API_BASE    = `${location.origin}/api/github`;
     const GH_HEADERS     = {
         Accept: 'application/vnd.github+json'
     };
@@ -421,7 +421,7 @@
 
     // ── GitHub API ────────────────────────────────────────────────────────
     async function ghGetSha(path, token) {
-        const res = await ghFetch(`${GH_API_BASE}/${encodePath(path)}?ref=${encodeURIComponent(GH_BRANCH)}&t=${Date.now()}`, token, {
+        const res = await ghFetch(ghContentsUrl(path, { ref: GH_BRANCH, t: Date.now() }), token, {
             headers: { 'If-None-Match': '', 'Cache-Control': 'no-cache' }
         });
         if (res.status === 404) return null;
@@ -436,7 +436,7 @@
         const sha  = await ghGetSha(path, token);
         const body = { message, content: base64Content, branch: GH_BRANCH };
         if (sha) body.sha = sha;
-        const res = await ghFetch(`${GH_API_BASE}/${encodePath(path)}`, token, {
+        const res = await ghFetch(ghContentsUrl(path), token, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
@@ -494,6 +494,12 @@
 
     function encodePath(path) {
         return path.split('/').map(encodeURIComponent).join('/');
+    }
+
+    function ghContentsUrl(path, params = {}) {
+        const qs = new URLSearchParams({ path });
+        Object.entries(params).forEach(([key, value]) => qs.set(key, value));
+        return `${GH_API_BASE}?${qs.toString()}`;
     }
 
     function normalizeGitHubToken(token) {
