@@ -14,8 +14,7 @@
     const GH_BRANCH      = 'main';
     const GH_API_BASE    = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents`;
     const GH_HEADERS     = {
-        Accept: 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28'
+        Accept: 'application/vnd.github+json'
     };
 
     let authenticated = sessionStorage.getItem(SESSION_KEY) === '1';
@@ -89,7 +88,9 @@
                     <div id="_adm-token-row">
                         <input id="_adm-token-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" value="${token}" autocomplete="off">
                         <button id="_adm-token-save">Guardar token</button>
+                        <button id="_adm-token-test" type="button">Probar conexión</button>
                     </div>
+                    <div id="_adm-token-test-result" style="display:none"></div>
                     <p id="_adm-token-help">
                         Necesitás un <strong>Personal Access Token</strong> de GitHub con permiso de escritura.<br>
                         <a href="https://github.com/settings/tokens/new?description=Embiciate+Admin&scopes=repo" target="_blank" rel="noopener">👉 Crear token en GitHub</a>
@@ -115,14 +116,41 @@
 
         // Token management
         panel.querySelector('#_adm-token-save').onclick = () => {
-            const val = panel.querySelector('#_adm-token-input').value.trim();
+            const val = normalizeGitHubToken(panel.querySelector('#_adm-token-input').value);
             if (val) {
                 localStorage.setItem(TOKEN_KEY, val);
+                panel.querySelector('#_adm-token-input').value = val;
                 panel.querySelector('#_adm-token-status').textContent = '✅ Configurado';
                 panel.querySelector('#_adm-token-status').style.color = '#25D366';
             } else {
                 localStorage.removeItem(TOKEN_KEY);
                 panel.querySelector('#_adm-token-status').textContent = '⚠️ No configurado';
+            }
+        };
+
+        panel.querySelector('#_adm-token-test').onclick = async () => {
+            const result = panel.querySelector('#_adm-token-test-result');
+            const tokenInput = panel.querySelector('#_adm-token-input');
+            const token = normalizeGitHubToken(tokenInput.value || localStorage.getItem(TOKEN_KEY) || '');
+            result.style.display = 'block';
+            result.style.color = '#888';
+            result.textContent = '⏳ Probando conexión con GitHub...';
+            if (!token) {
+                result.style.color = '#f55';
+                result.textContent = '❌ Pegá y guardá un token primero.';
+                return;
+            }
+            try {
+                localStorage.setItem(TOKEN_KEY, token);
+                tokenInput.value = token;
+                await ghGetSha('catalog-data.json', token);
+                panel.querySelector('#_adm-token-status').textContent = '✅ Conexión OK';
+                panel.querySelector('#_adm-token-status').style.color = '#25D366';
+                result.style.color = '#25D366';
+                result.textContent = '✅ Conexión OK. El token puede leer el catálogo; ya podés publicar cambios.';
+            } catch (err) {
+                result.style.color = '#f55';
+                result.textContent = '❌ ' + friendlyGitHubError(err);
             }
         };
 
@@ -421,7 +449,7 @@
     }
 
     async function ghFetch(url, token, options = {}) {
-        const cleanToken = (token || '').trim();
+        const cleanToken = normalizeGitHubToken(token);
         if (!cleanToken) throw new Error('Falta Token de GitHub');
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), 20000);
@@ -444,6 +472,15 @@
 
     function encodePath(path) {
         return path.split('/').map(encodeURIComponent).join('/');
+    }
+
+    function normalizeGitHubToken(token) {
+        return (token || '')
+            .replace(/^Bearer\s+/i, '')
+            .replace(/^token\s+/i, '')
+            .replace(/^["']|["']$/g, '')
+            .replace(/\s+/g, '')
+            .trim();
     }
 
     function githubStatusMessage(status, message) {
@@ -876,6 +913,9 @@
         #_adm-token-input:focus{border-color:#ff5500}
         #_adm-token-save{padding:.5rem 1rem;background:#ff5500;color:#fff;border:none;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s;white-space:nowrap}
         #_adm-token-save:hover{background:#ff7733}
+        #_adm-token-test{padding:.5rem 1rem;background:#1a1a1a;color:#ddd;border:1px solid #333;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
+        #_adm-token-test:hover{border-color:#ff7733;color:#fff}
+        #_adm-token-test-result{font-size:.75rem;margin:.55rem 0 0;line-height:1.5}
         #_adm-token-help{color:#666;font-size:.75rem;margin:.5rem 0 0;line-height:1.6}
         #_adm-token-help strong{color:#aaa}
         #_adm-token-help a{color:#ff7733;text-decoration:none}
