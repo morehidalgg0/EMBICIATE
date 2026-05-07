@@ -453,21 +453,43 @@
         if (!cleanToken) throw new Error('Falta Token de GitHub');
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), 20000);
+        const requestOptions = {
+            ...options,
+            signal: controller.signal,
+            headers: {
+                ...GH_HEADERS,
+                Authorization: `Bearer ${cleanToken}`,
+                ...(options.headers || {})
+            }
+        };
         try {
-            return await fetch(url, {
-                ...options,
-                signal: controller.signal,
-                headers: {
-                    ...GH_HEADERS,
-                    Authorization: `Bearer ${cleanToken}`,
-                    ...(options.headers || {})
-                }
-            });
+            return await fetch(url, requestOptions);
         } catch (err) {
-            throw new Error(friendlyGitHubError(err));
+            try {
+                return await ghXhr(url, requestOptions);
+            } catch (xhrErr) {
+                throw new Error(friendlyGitHubError(xhrErr, err));
+            }
         } finally {
             clearTimeout(timer);
         }
+    }
+
+    function ghXhr(url, options) {
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open(options.method || 'GET', url, true);
+            xhr.timeout = 20000;
+            Object.entries(options.headers || {}).forEach(([key, value]) => xhr.setRequestHeader(key, value));
+            xhr.onload = () => resolve({
+                status: xhr.status,
+                ok: xhr.status >= 200 && xhr.status < 300,
+                json: async () => xhr.responseText ? JSON.parse(xhr.responseText) : {}
+            });
+            xhr.onerror = () => reject(new Error('XHR network error'));
+            xhr.ontimeout = () => reject(new Error('XHR timeout'));
+            xhr.send(options.body || null);
+        });
     }
 
     function encodePath(path) {
@@ -492,10 +514,14 @@
         return message || `GitHub error ${status}`;
     }
 
-    function friendlyGitHubError(err) {
-        if (err.name === 'AbortError') return 'GitHub tardó demasiado en responder. Revisá la conexión e intentá de nuevo.';
+    function friendlyGitHubError(err, originalErr) {
+        if (err.name === 'AbortError' || /timeout/i.test(err.message || '')) return 'GitHub tardó demasiado en responder. Revisá la conexión e intentá de nuevo.';
         if (/Failed to fetch|NetworkError|Load failed/i.test(err.message || '')) {
-            return 'No se pudo conectar con GitHub. Revisá internet, bloqueadores/extensiones del navegador o probá abrir la web desde https://, no desde un archivo local.';
+            return `No se pudo conectar con GitHub desde ${location.protocol}//${location.host || 'archivo local'}. Probá en Chrome/Safari normal, sin modo privado ni bloqueadores, y abrí la web desde https://.`;
+        }
+        if (/XHR network error/i.test(err.message || '')) {
+            const fetchMsg = originalErr && originalErr.message ? ` Fetch: ${originalErr.message}.` : '';
+            return `El navegador bloqueó la conexión autenticada con GitHub desde ${location.protocol}//${location.host || 'archivo local'}.${fetchMsg} Probá desactivar bloqueadores/protección del navegador o usar Chrome/Safari normal.`;
         }
         return err.message || String(err);
     }
