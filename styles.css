@@ -2316,3 +2316,79 @@ h1, h2, h3, h4 {
     }
     .pg-arrows { opacity: 1; /* Siempre visibles en mobile */ }
 }
+
+/* Admin polish fixes: pagos + mobile layout */
+.pagos-logos {
+    min-height: 38px;
+}
+
+.pago-logo {
+    filter: none;
+}
+
+.pago-logo--visa,
+.pago-logo--mc {
+    width: 72px;
+    height: 34px;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .urgencia-banner {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10000;
+        min-height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.45rem 0.75rem;
+        line-height: 1.15;
+    }
+
+    .navbar {
+        top: 32px;
+        min-height: 62px;
+    }
+
+    .hero {
+        padding-top: 104px;
+    }
+
+    .hero-container {
+        min-height: calc(100svh - 104px);
+    }
+
+    .slider-arrow {
+        top: 56% !important;
+    }
+
+    .product-btn {
+        min-height: 46px;
+        padding: 0.72rem 0.7rem;
+        gap: 0.4rem;
+        line-height: 1.15;
+        overflow: visible;
+        white-space: normal;
+        word-break: normal;
+    }
+}
+
+@media (max-width: 520px) {
+    .product-card {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .product-img-wrapper {
+        height: 210px;
+        min-height: 0;
+    }
+
+    .product-content {
+        padding: 1rem;
+    }
+}

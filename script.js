@@ -79,7 +79,7 @@ window.embiciateDB = (() => {
 
 // Carga catalog-data.json desde el servidor y lo expone globalmente
 window.embiciateCatalog = {};
-(async () => {
+window.embiciateCatalogReady = (async () => {
     try {
         const r = await fetch('catalog-data.json?v=' + Date.now());
         if (r.ok) window.embiciateCatalog = await r.json();
@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // --- LÓGICA DE INYECCIÓN DE DATOS (CONFIG.JS) ---
     if (typeof CONFIG !== 'undefined') {
+        await (window.embiciateCatalogReady || Promise.resolve());
 
         // Aplicar overrides del panel admin sobre CONFIG (tiene prioridad el servidor)
         const _siteCfg = (window.embiciateCatalog || {}).site || {};
