@@ -12,6 +12,11 @@
     const GH_OWNER       = 'morehidalgg0';
     const GH_REPO        = 'EMBICIATE';
     const GH_BRANCH      = 'main';
+    const GH_API_BASE    = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents`;
+    const GH_HEADERS     = {
+        Accept: 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28'
+    };
 
     let authenticated = sessionStorage.getItem(SESSION_KEY) === '1';
 
@@ -198,6 +203,8 @@
         const okMsg = el('div', { class: '_adm-ok-msg', style: 'display:none' }, '');
         card.appendChild(okMsg);
 
+        const delBtn = card.querySelector('._adm-del-btn');
+        if (delBtn) delBtn.onclick = () => hideBike(card, idx, progress, okMsg);
         saveBtn.onclick = () => publishCard(card, idx, bike.modelo, publishedImages, progress, okMsg);
         return card;
     }
@@ -301,28 +308,6 @@
         const zone     = card.querySelector('._adm-zone');
         const newFiles = zone ? zone.getNewFiles() : [];
 
-        // ── Delete logic
-        const delBtn = card.querySelector('._adm-del-btn');
-        if (delBtn) {
-            delBtn.onclick = async () => {
-                if (!confirm(`¿Estás seguro de que querés ocultar esta bici?`)) return;
-                const token = localStorage.getItem(TOKEN_KEY);
-                if (!token) return alert('⚠️ Falta Token');
-                progressEl.style.display = 'block'; progressEl.textContent = '⏳ Ocultando bici...';
-                try {
-                    const current = { ...(window.embiciateCatalog || {}) };
-                    current[idx] = { ...(current[idx] || {}), deleted: true };
-                    await ghCommitFile('catalog-data.json', btoa(unescape(encodeURIComponent(JSON.stringify(current,null,2)))), token, `admin: oculta bici #${idx+1}`, false);
-                    window.embiciateCatalog = current;
-                    card.style.opacity = '0.5';
-                    okEl.style.display = 'block'; okEl.textContent = '✅ Bici ocultada.';
-                    setTimeout(() => { okEl.style.display = 'none'; }, 3000);
-                } catch (e) {
-                    okEl.style.display = 'block'; okEl.style.color = '#f55'; okEl.textContent = '❌ Error: ' + e.message;
-                }
-            };
-        }
-
         progressEl.style.display = 'block';
         progressEl.textContent   = '⏳ Publicando cambios...';
         okEl.style.display       = 'none';
@@ -380,14 +365,42 @@
         }
     }
 
+    async function hideBike(card, idx, progressEl, okEl) {
+        if (!confirm(`¿Estás seguro de que querés ocultar esta bici?`)) return;
+        const token = localStorage.getItem(TOKEN_KEY);
+        if (!token) return alert('⚠️ Falta Token');
+        progressEl.style.display = 'block';
+        progressEl.textContent = '⏳ Ocultando bici...';
+        okEl.style.display = 'none';
+        try {
+            const current = { ...(window.embiciateCatalog || {}) };
+            current[idx] = { ...(current[idx] || {}), deleted: true };
+            await ghCommitFile('catalog-data.json', btoa(unescape(encodeURIComponent(JSON.stringify(current, null, 2)))), token, `admin: oculta bici #${idx + 1}`, false);
+            window.embiciateCatalog = current;
+            card.style.opacity = '0.5';
+            progressEl.style.display = 'none';
+            okEl.style.display = 'block';
+            okEl.style.color = '#25D366';
+            okEl.textContent = '✅ Bici ocultada.';
+            setTimeout(() => { okEl.style.display = 'none'; }, 3000);
+        } catch (e) {
+            progressEl.style.display = 'none';
+            okEl.style.display = 'block';
+            okEl.style.color = '#f55';
+            okEl.textContent = '❌ Error: ' + friendlyGitHubError(e);
+        }
+    }
+
     // ── GitHub API ────────────────────────────────────────────────────────
     async function ghGetSha(path, token) {
-        const res = await fetch(
-            `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}?ref=${GH_BRANCH}&t=${Date.now()}`,
-            { headers: { Authorization: `token ${token}`, 'If-None-Match': '', 'Cache-Control': 'no-cache' } }
-        );
+        const res = await ghFetch(`${GH_API_BASE}/${encodePath(path)}?ref=${encodeURIComponent(GH_BRANCH)}&t=${Date.now()}`, token, {
+            headers: { 'If-None-Match': '', 'Cache-Control': 'no-cache' }
+        });
         if (res.status === 404) return null;
-        if (!res.ok) throw new Error(`GitHub API ${res.status}`);
+        if (!res.ok) {
+            const data = await res.json().catch(() => ({}));
+            throw new Error(githubStatusMessage(res.status, data.message));
+        }
         return (await res.json()).sha;
     }
 
@@ -395,16 +408,59 @@
         const sha  = await ghGetSha(path, token);
         const body = { message, content: base64Content, branch: GH_BRANCH };
         if (sha) body.sha = sha;
-        const res = await fetch(
-            `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}`,
-            { method: 'PUT', headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
-              body: JSON.stringify(body) }
-        );
+        const res = await ghFetch(`${GH_API_BASE}/${encodePath(path)}`, token, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
         if (!res.ok) {
             const data = await res.json().catch(() => ({}));
-            throw new Error(data.message || `GitHub error ${res.status}`);
+            throw new Error(githubStatusMessage(res.status, data.message));
         }
         return res.json();
+    }
+
+    async function ghFetch(url, token, options = {}) {
+        const cleanToken = (token || '').trim();
+        if (!cleanToken) throw new Error('Falta Token de GitHub');
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 20000);
+        try {
+            return await fetch(url, {
+                ...options,
+                signal: controller.signal,
+                headers: {
+                    ...GH_HEADERS,
+                    Authorization: `Bearer ${cleanToken}`,
+                    ...(options.headers || {})
+                }
+            });
+        } catch (err) {
+            throw new Error(friendlyGitHubError(err));
+        } finally {
+            clearTimeout(timer);
+        }
+    }
+
+    function encodePath(path) {
+        return path.split('/').map(encodeURIComponent).join('/');
+    }
+
+    function githubStatusMessage(status, message) {
+        if (status === 401) return 'Token inválido o vencido. Generá uno nuevo y pegalo nuevamente.';
+        if (status === 403) return 'GitHub rechazó el cambio. Revisá que el token tenga permiso de escritura sobre Contents/repositorio.';
+        if (status === 404) return `No encontré el repo ${GH_OWNER}/${GH_REPO} o el archivo indicado.`;
+        if (status === 409) return 'El archivo cambió en GitHub mientras editabas. Recargá la página e intentá de nuevo.';
+        if (status === 422) return 'GitHub no aceptó el contenido enviado. Probá recargar la página y publicar otra vez.';
+        return message || `GitHub error ${status}`;
+    }
+
+    function friendlyGitHubError(err) {
+        if (err.name === 'AbortError') return 'GitHub tardó demasiado en responder. Revisá la conexión e intentá de nuevo.';
+        if (/Failed to fetch|NetworkError|Load failed/i.test(err.message || '')) {
+            return 'No se pudo conectar con GitHub. Revisá internet, bloqueadores/extensiones del navegador o probá abrir la web desde https://, no desde un archivo local.';
+        }
+        return err.message || String(err);
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────
