@@ -116,6 +116,13 @@
         "imagen": "assets/hero-3.jpeg",
         "imagen_mobile": "assets/hero-3.jpeg"
       }
+    ],
+    "contacto_extra": [
+      {
+        "icon": "📍",
+        "label": "Carrefour",
+        "value": "CONSTITUCION 7598"
+      }
     ]
   }
 }
