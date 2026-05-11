@@ -129,6 +129,10 @@
         "label": "Carrefour",
         "value": "CONSTITUCION 7598"
       }
-    ]
+    ],
+    "accs_titulo_color": "Premium",
+    "accs_descripcion": "Contamos con la mejor calidad en cascos, luces traseras y delanteras, y sistemas de seguridad antirrobo. No dejes nada al azar a la hora de pedalear seguro.",
+    "accesorios_imagen": "assets/accesorios-admin.jpeg",
+    "imagenes.accesorios": "assets/accesorios-admin.jpeg"
   }
 }
