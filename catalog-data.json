@@ -41,11 +41,17 @@
     "etiqueta": "MTB",
     "specs": [
       "Rodado 29",
-      "21 velocidades",
-      "Cuadro aluminio"
+      "24 velocidades",
+      "Frenos a disco mecanico",
+      "Equipamento full shimano tourney"
     ],
     "imagenes": [
-      "assets/bici-3-0.jpeg"
+      "assets/bici-3-0.jpeg",
+      "assets/bici-3-1.webp",
+      "assets/bici-3-2.jpeg",
+      "assets/bici-3-3.jpeg",
+      "assets/bici-3-4.jpeg",
+      "assets/bici-3-5.jpeg"
     ]
   },
   "4": {
