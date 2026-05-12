@@ -638,6 +638,10 @@
             <input class="_adm-f" data-sfield="whatsapp_numero" value="${esc(site.whatsapp_numero||cfg.whatsapp_numero||'')}" placeholder="5492230000000">
             <label>Mensaje predeterminado de WhatsApp</label>
             <input class="_adm-f" data-sfield="whatsapp_mensaje" value="${esc(site.whatsapp_mensaje||cfg.whatsapp_mensaje||'')}" placeholder="Hola! quiero consultar...">
+            <label>Mensaje WhatsApp barra de navegación</label>
+            <input class="_adm-f" data-sfield="whatsapp_mensaje_nav" value="${esc(site.whatsapp_mensaje_nav||cfg.whatsapp_mensaje_nav||'')}" placeholder="Hola! Vengo de la página web...">
+            <label>Mensaje WhatsApp sección Accesorios</label>
+            <input class="_adm-f" data-sfield="whatsapp_mensaje_accesorios" value="${esc(site.whatsapp_mensaje_accesorios||cfg.whatsapp_mensaje_accesorios||'')}" placeholder="Hola! Me interesa accesorios...">
             <label>Dirección</label>
             <input class="_adm-f" data-sfield="direccion" value="${esc(site.direccion||cfg.direccion||'')}" placeholder="Güemes 1234, Mar del Plata">
             <label>Horarios</label>

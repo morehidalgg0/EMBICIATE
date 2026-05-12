@@ -86,6 +86,38 @@ window.embiciateCatalogReady = (async () => {
     } catch(e) {}
 })();
 
+// ── Expande claves con puntos (ej: "imagenes.accesorios") a objetos anidados ─
+function expandDottedKeys(obj) {
+    const out = {};
+    for (const key of Object.keys(obj)) {
+        if (key.includes('.')) {
+            const parts = key.split('.');
+            let cur = out;
+            for (let i = 0; i < parts.length - 1; i++) {
+                if (!cur[parts[i]] || typeof cur[parts[i]] !== 'object' || Array.isArray(cur[parts[i]]))
+                    cur[parts[i]] = {};
+                cur = cur[parts[i]];
+            }
+            cur[parts[parts.length - 1]] = obj[key];
+        } else {
+            out[key] = obj[key];
+        }
+    }
+    return out;
+}
+
+function deepAssign(target, source) {
+    for (const key of Object.keys(source)) {
+        if (source[key] !== null && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+            if (!target[key] || typeof target[key] !== 'object' || Array.isArray(target[key]))
+                target[key] = {};
+            deepAssign(target[key], source[key]);
+        } else {
+            target[key] = source[key];
+        }
+    }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     
     // --- LÓGICA DE INYECCIÓN DE DATOS (CONFIG.JS) ---
@@ -94,7 +126,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Aplicar overrides del panel admin sobre CONFIG (tiene prioridad el servidor)
         const _siteCfg = (window.embiciateCatalog || {}).site || {};
-        if (Object.keys(_siteCfg).length > 0) Object.assign(CONFIG, _siteCfg);
+        if (Object.keys(_siteCfg).length > 0) deepAssign(CONFIG, expandDottedKeys(_siteCfg));
 
         // Datos de contacto extra del panel admin
         setTimeout(() => {
@@ -279,6 +311,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             const waLink = `https://wa.me/${numero}?text=${mensaje}`;
             if (btnWa) btnWa.href = waLink;
             if (btnWaHero) btnWaHero.href = waLink;
+
+            // Botón nav-mobile
+            const btnNavMobile = document.getElementById('btn-nav-mobile');
+            if (btnNavMobile) {
+                const msgNav = encodeURIComponent(CONFIG.whatsapp_mensaje_nav || 'Hola! Vengo de la página web, quiero hacer una consulta.');
+                btnNavMobile.href = `https://wa.me/${numero}?text=${msgNav}`;
+            }
+
+            // Botón accesorios
+            const btnWaAcc = document.getElementById('btn-whatsapp-accesorios');
+            if (btnWaAcc) {
+                const msgAcc = encodeURIComponent(CONFIG.whatsapp_mensaje_accesorios || 'Hola! Me interesa accesorios para bicicleta, ¿tienen stock disponible?');
+                btnWaAcc.href = `https://wa.me/${numero}?text=${msgAcc}`;
+            }
         }
         
         // 6. Hero Slider

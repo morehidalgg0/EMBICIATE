@@ -152,6 +152,8 @@ const CONFIG = {
     // y tu código de área + número completo (sin el 15 y sin espacios/guiones).
     whatsapp_numero: "5492230000000",
     whatsapp_mensaje: "Hola! Me interesa una bicicleta, ¿tienen stock disponible?",
+    whatsapp_mensaje_nav: "Hola! Vengo de la página web, quiero hacer una consulta.",
+    whatsapp_mensaje_accesorios: "Hola! Me interesa accesorios para bicicleta, ¿tienen stock disponible?",
 
     // ---------------------------------------------------------------------
     // 5. IMÁGENES Y FOTOS
