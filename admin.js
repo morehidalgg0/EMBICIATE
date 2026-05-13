@@ -194,6 +194,7 @@
     // ── Card de bici en el panel ──────────────────────────────────────────
     function buildCard(idx, bike, publishedImages) {
         const card = el('div', { class: '_adm-card', 'data-idx': idx });
+        const isDeleted = bike.deleted === true;
 
         card.innerHTML = `
             <div class="_adm-card-head" style="display:flex;justify-content:space-between;align-items:center">
@@ -202,8 +203,9 @@
                     <strong>${bike.modelo}</strong>
                     ${publishedImages.length > 0 ? `<span class="_adm-badge-pub">✅ ${publishedImages.length} foto${publishedImages.length > 1 ? 's' : ''}</span>` : '<span class="_adm-badge-none">Sin fotos</span>'}
                 </div>
-                <button class="_adm-del-btn" style="background:#222;border:1px solid #444;color:#f55;padding:.3rem .6rem;border-radius:6px;cursor:pointer;font-size:.8rem">🗑️ Ocultar</button>
+                <button class="_adm-del-btn" style="background:#222;border:1px solid #444;color:#f55;padding:.3rem .6rem;border-radius:6px;cursor:pointer;font-size:.8rem">${isDeleted ? '👁️ Mostrar' : '🗑️ Ocultar'}</button>
             </div>`;
+        if (isDeleted) card.style.opacity = '0.5';
 
         // Zona de imágenes
         card.appendChild(buildImageZone(idx, publishedImages));
@@ -232,7 +234,9 @@
         card.appendChild(okMsg);
 
         const delBtn = card.querySelector('._adm-del-btn');
-        if (delBtn) delBtn.onclick = () => hideBike(card, idx, progress, okMsg);
+        if (delBtn) {
+            delBtn.onclick = () => isDeleted ? showBike(card, idx, progress, okMsg) : hideBike(card, idx, progress, okMsg);
+        }
         saveBtn.onclick = () => publishCard(card, idx, bike.modelo, publishedImages, progress, okMsg);
         return card;
     }
@@ -406,10 +410,46 @@
             await ghCommitFile('catalog-data.json', btoa(unescape(encodeURIComponent(JSON.stringify(current, null, 2)))), token, `admin: oculta bici #${idx + 1}`, false);
             window.embiciateCatalog = current;
             card.style.opacity = '0.5';
+            const btn = card.querySelector('._adm-del-btn');
+            if (btn) { btn.innerHTML = '👁️ Mostrar'; btn.onclick = () => showBike(card, idx, progressEl, okEl); }
             progressEl.style.display = 'none';
             okEl.style.display = 'block';
             okEl.style.color = '#25D366';
             okEl.textContent = '✅ Bici ocultada.';
+            setTimeout(() => { okEl.style.display = 'none'; }, 3000);
+        } catch (e) {
+            progressEl.style.display = 'none';
+            okEl.style.display = 'block';
+            okEl.style.color = '#f55';
+            okEl.textContent = '❌ Error: ' + friendlyGitHubError(e);
+        }
+    }
+
+    async function showBike(card, idx, progressEl, okEl) {
+        if (!confirm(`¿Mostrar esta bici de nuevo en la página?`)) return;
+        const token = localStorage.getItem(TOKEN_KEY);
+        if (!token) return alert('⚠️ Falta Token');
+        progressEl.style.display = 'block';
+        progressEl.textContent = '⏳ Mostrando bici...';
+        okEl.style.display = 'none';
+        try {
+            const current = { ...(window.embiciateCatalog || {}) };
+            const entry = { ...(current[idx] || {}) };
+            delete entry.deleted;
+            if (Object.keys(entry).length === 0) {
+                delete current[idx];
+            } else {
+                current[idx] = entry;
+            }
+            await ghCommitFile('catalog-data.json', btoa(unescape(encodeURIComponent(JSON.stringify(current, null, 2)))), token, `admin: muestra bici #${idx + 1}`, false);
+            window.embiciateCatalog = current;
+            card.style.opacity = '1';
+            const btn = card.querySelector('._adm-del-btn');
+            if (btn) { btn.innerHTML = '🗑️ Ocultar'; btn.onclick = () => hideBike(card, idx, progressEl, okEl); }
+            progressEl.style.display = 'none';
+            okEl.style.display = 'block';
+            okEl.style.color = '#25D366';
+            okEl.textContent = '✅ Bici visible de nuevo.';
             setTimeout(() => { okEl.style.display = 'none'; }, 3000);
         } catch (e) {
             progressEl.style.display = 'none';
