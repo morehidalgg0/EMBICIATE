@@ -19,7 +19,22 @@
     "modelo": "Firebird Turbo R29"
   },
   "1": {
-    "deleted": true
+    "deleted": true,
+    "modelo": "Firebird Aluminio",
+    "precio": "$299.900",
+    "etiqueta": "MTB",
+    "specs": [
+      "Rodado 29",
+      "21 velocidades",
+      "Frenos a disco mecanico",
+      "Cuadro de aluminio"
+    ],
+    "imagenes": [
+      "assets/bici-1-0.jpeg",
+      "assets/bici-1-1.jpeg",
+      "assets/bici-1-2.jpeg",
+      "assets/bici-1-3.jpeg"
+    ]
   },
   "2": {
     "modelo": "Fiat 500",
