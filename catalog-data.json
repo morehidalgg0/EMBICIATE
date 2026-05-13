@@ -70,7 +70,22 @@
     ]
   },
   "4": {
-    "deleted": true
+    "deleted": true,
+    "modelo": "Topmega Magma",
+    "precio": "$799.900",
+    "etiqueta": "MTB",
+    "specs": [
+      "Rodado 29",
+      "Sistema de transmision a monoplato",
+      "Suspension con bloqueo",
+      "Cuadro de aluminio",
+      "Equipamento Shimano ESSA"
+    ],
+    "imagenes": [
+      "assets/bici-4-0.jpeg",
+      "assets/bici-4-1.jpeg",
+      "assets/bici-4-2.jpeg"
+    ]
   },
   "5": {
     "deleted": true
