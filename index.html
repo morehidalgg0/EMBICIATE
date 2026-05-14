@@ -213,5 +213,16 @@
 
     <!-- Panel Admin (acceso: Ctrl+Shift+A) -->
     <script src="admin.js"></script>
+
+    <script>
+  document.querySelectorAll('a[href*="wa.me"]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      gtag('event', 'click_whatsapp', {
+        'event_category': 'conversion',
+        'event_label': 'boton_whatsapp'
+      });
+    });
+  });
+</script>
 </body>
 </html>
