@@ -8,7 +8,15 @@ function money(value) {
 export default function ProductCard({ product }) {
   return (
     <article className="product-card">
-      <img src={product.imagen} alt={product.nombre} className="product-image" />
+      <img
+        src={product.imagen}
+        alt={product.nombre}
+        className="product-image"
+        loading="lazy"
+        onError={(e) => {
+          e.currentTarget.src = '/assets/placeholder-bike.svg'
+        }}
+      />
       <div className="product-body">
         <h3>{product.nombre}</h3>
         <p className="price">{money(product.precio)}</p>

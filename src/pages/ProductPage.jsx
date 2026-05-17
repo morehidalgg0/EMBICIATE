@@ -34,7 +34,13 @@ export default function ProductPage() {
         ← Volver al inicio
       </Link>
       <div className="product-detail">
-        <img src={product.imagen} alt={product.nombre} />
+        <img
+          src={product.imagen}
+          alt={product.nombre}
+          onError={(e) => {
+            e.currentTarget.src = '/assets/placeholder-bike.svg'
+          }}
+        />
         <div>
           <h1>{product.nombre}</h1>
           <p className="price">{money(product.precio)}</p>
