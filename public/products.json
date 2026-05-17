@@ -1,0 +1,41 @@
+[
+  {
+    "id": "firebird-r29",
+    "nombre": "Firebird Rodado 29",
+    "slug": "firebird-rodado-29",
+    "precio": 269900,
+    "descripcion": "MTB versatil para ciudad y terreno mixto. Cuadro resistente, postura comoda y excelente respuesta de frenado.",
+    "imagen": "/assets/bici-0-0.jpeg",
+    "velocidades": 21,
+    "rodado": 29,
+    "frenos": "disco mecanico",
+    "cuotas": { "cantidad": 3, "valor": 89967 },
+    "activo": true
+  },
+  {
+    "id": "fiat-500-r29",
+    "nombre": "Fiat 500 Rodado 29",
+    "slug": "fiat-500-rodado-29",
+    "precio": 289900,
+    "descripcion": "Bicicleta deportiva con gran estabilidad y cambios suaves, ideal para entrenar y pasear.",
+    "imagen": "/assets/bici-2-0.jpeg",
+    "velocidades": 24,
+    "rodado": 29,
+    "frenos": "disco hidraulico",
+    "cuotas": { "cantidad": 3, "valor": 96633 },
+    "activo": true
+  },
+  {
+    "id": "topmega-thor",
+    "nombre": "TopMega Thor",
+    "slug": "topmega-thor",
+    "precio": 599900,
+    "descripcion": "Cuadro de aluminio, componentes confiables y geometria agresiva para exigencia premium.",
+    "imagen": "/assets/bici-3-0.jpeg",
+    "velocidades": 21,
+    "rodado": 29,
+    "frenos": "disco hidraulico",
+    "cuotas": { "cantidad": 6, "valor": 99983 },
+    "activo": true
+  }
+]

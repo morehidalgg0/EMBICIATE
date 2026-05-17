@@ -1,228 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Embiciate | Tu rodado en Mar del Plata</title>
-    <meta name="description" content="Embiciate es tu tienda de bicicletas y accesorios en Mar del Plata. Encontrá tu rodado perfecto con diseño premium.">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <meta
+      name="description"
+      content="Embiciate es tu tienda de bicicletas y accesorios en Mar del Plata. Encontrá tu rodado perfecto con diseño premium."
+    />
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap"
+      rel="stylesheet"
+    />
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-5L223ZR2');</script>
-    <!-- End Google Tag Manager -->
-</head>
-<body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5L223ZR2"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    <!-- Urgencia Banner -->
-    <div class="urgencia-banner">
-        ⚡ Stock limitado — Consultá disponibilidad antes de que se agote
-    </div>
-
-    <!-- Navbar -->
-    <nav class="navbar" id="navbar">
-        <a href="#hero" class="logo">
-            <img src="assets/logo.png" alt="Embiciate Logo" style="height: 180px; width: auto;">
-        </a>
-        <ul class="nav-links">
-            <li><a href="#hero">Inicio</a></li>
-
-            <li><a href="#bicicletas">Bicicletas</a></li>
-            <li><a href="#accesorios">Accesorios</a></li>
-            <li><a href="#contacto" class="btn-outline">Contacto</a></li>
-        </ul>
-        <a href="https://wa.me/5492235505397?text=Hola!%20Vengo%20de%20la%20página%20web,%20quiero%20hacer%20una%20consulta." target="_blank" id="btn-nav-mobile" class="btn-nav-mobile" style="display: none;">
-            <svg viewBox="0 0 24 24" fill="white" width="16" height="16" style="margin-right: 5px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-            ESCRIBINOS
-        </a>
-
-        <div class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header id="hero" class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-bike-layer" id="hero-bike-layer"></div>
-        
-        <!-- Flechas del Slider -->
-        <button class="slider-arrow prev" id="slider-prev" aria-label="Anterior">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        </button>
-        <button class="slider-arrow next" id="slider-next" aria-label="Siguiente">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </button>
-
-        <div class="container hero-container">
-            <div class="hero-content fade-in-up">
-                <h1 data-txt="hero_titulo">LA BICI<br><span class="text-accent">QUE BUSCÁS</span><br>ESTÁ ACÁ</h1>
-                <div data-txt="hero_precio_principal" class="hero-price-highlight">Bicicletas desde <span>$269.900</span></div>
-                
-                <a href="#" target="_blank" id="btn-whatsapp-hero" class="btn-whatsapp-hero btn-full-width-mobile mt-2">
-                    <span class="wa-icon">
-                        <svg viewBox="0 0 24 24" fill="white" width="32" height="32"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                    </span>
-                    <div class="btn-text-content">
-                        <strong>ESCRIBINOS POR WHATSAPP</strong>
-                        <span>Y LLEVÁTELA HOY</span>
-                    </div>
-                </a>
-
-                <!-- Imagen real de la bici para la vista celular -->
-                <div class="hero-bike-mobile-wrapper">
-                    <img id="hero-bike-img-mobile" src="" alt="Bicicleta" class="hero-bike-img-mobile slider-fade">
-                </div>
-
-                <div class="hero-features mt-2">
-                    <div class="feature">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                        <span>HASTA <strong class="text-accent">12</strong><br>CUOTAS FIJAS</span>
-                    </div>
-                    <div class="feature">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-                        <span>ENVÍOS A<br><strong class="text-accent">TODO</strong> EL PAÍS</span>
-                    </div>
-                    <div class="feature">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
-                        <span>GARANTÍA<br>Y SERVICIO <strong class="text-accent">TÉCNICO</strong></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Price Card -->
-            <div class="hero-price-card fade-in-up" id="hero-price-card" style="transition-delay: 0.2s;">
-                <div class="price-left">
-                    <span class="bike-model text-accent" id="slider-modelo">FIREBIRD ALUMINIO &gt;&gt;</span>
-                    <div class="price" id="slider-precio">$299.900</div>
-                    <div class="bike-specs" id="slider-specs">RODADO 29' &bull; 21 VELOCIDADES &bull; FRENOS A DISCO</div>
-                </div>
-                <div class="price-divider"></div>
-                <div class="price-right">
-                    <span class="hasta">HASTA</span>
-                    <div class="cuotas">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" width="32" height="32"><rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                        <span class="num text-accent">12</span>
-                        <span class="text">CUOTAS<br>FIJAS</span>
-                    </div>
-                    <span class="con-todas">CON TODAS LAS TARJETAS</span>
-                </div>
-            </div>
-            
-            <div class="hero-brands fade-in-up" style="transition-delay: 0.4s;">
-                <span>TOPMEGA</span>
-                <span>FIREBIRD</span>
-                <span>RALEIGH</span>
-                <span>SOUTH</span>
-                <span>VENZO</span>
-                <span>SLP</span>
-            </div>
-        </div>
-    </header>
-
-
-
-    <!-- Bicicletas Section -->
-    <section id="bicicletas" class="section">
-        <div class="container">
-            <div class="section-heading fade-in-up">
-                <h2 class="section-title" data-txt="bicicletas_titulo">Bicicletas Destacadas</h2>
-                <p class="section-intro" data-txt="bicicletas_intro">Modelos listos para consultar por WhatsApp.</p>
-            </div>
-            <div class="product-grid" id="bicicletas-destacadas"></div>
-        </div>
-    </section>
-
-    <!-- Accesorios Section -->
-    <section id="accesorios" class="section bg-darker">
-        <div class="container">
-            <div class="grid grid-single">
-                <div class="card grid-row-card fade-in-up">
-                    <div class="card-img-wrapper">
-                        <img src="assets/accs.png" data-img="accesorios" alt="Accesorios para bicicleta" class="card-img">
-                    </div>
-                    <div class="card-content flex-center">
-                        <div>
-                            <h2 class="section-title text-left">Equipamiento<br><span class="text-accent" data-txt="accs_titulo_color">Premium</span></h2>
-                            <p class="description-text" data-txt="accs_descripcion">Contamos con la mejor calidad en cascos, luces traseras y delanteras, y sistemas de seguridad antirrobo. No dejes nada al azar a la hora de pedalear seguro.</p>
-                            <a href="#" target="_blank" rel="noopener" class="btn-outline mt-2" id="btn-whatsapp-accesorios">Consultar Stock</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contacto Section -->
-    <section id="contacto" class="section">
-        <div class="container text-center fade-in-up">
-            <h2 class="section-title">Estamos Cerca Tuyo</h2>
-            <div class="contact-box">
-                <p class="mb-2" data-txt="contacto_texto">Vení a conocer todos nuestros modelos en vivo en nuestro local ubicado en <strong>Mar del Plata</strong>. Te asesoraremos para que encuentres la bicicleta perfecta para vos.</p>
-                <div class="contact-info">
-                    <div class="info-item">
-                        <span class="icon">📍</span>
-                        <p data-txt="direccion">Güemes 1234, Mar del Plata, Argentina</p>
-                    </div>
-                    <div class="info-item">
-                        <span class="icon">🕒</span>
-                        <p data-txt="horarios">Lunes a Sábados: 09:00 a 20:00 hs</p>
-                    </div>
-                </div>
-                <div class="contact-cta mt-2">
-                    <a href="https://share.google/kyp1uH8sStsCnTlP2" target="_blank" rel="noopener" id="btn-ubicacion" class="btn-outline btn-location w-full max-w-sm">
-                        Ver ubicacion
-                    </a>
-                    <!-- WhatsApp Link generated by JS -->
-                    <a href="#" target="_blank" id="btn-whatsapp" class="btn-primary w-full max-w-sm">
-                        📲 Consultar por WhatsApp
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-logo">
-                <img src="assets/logo.png" alt="Embiciate Logo" style="height: 120px; width: auto; margin: 0 auto;">
-            </div>
-            <p>&copy; 2026 Embiciate. Pasión por las bicicletas. Todos los derechos reservados.</p>
-        </div>
-    </footer>
-
-    <!-- Archivo de Configuración de Usuario -->
-    <script src="config.js"></script>
-    
-    <!-- Scripts Funcionales -->
-    <script src="script.js"></script>
-
-    <!-- Panel Admin (acceso: Ctrl+Shift+A) -->
-    <script src="admin.js"></script>
-
     <script>
-  document.querySelectorAll('a[href*="wa.me"]').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      gtag('event', 'click_whatsapp', {
-        'event_category': 'conversion',
-        'event_label': 'boton_whatsapp'
-      });
-    });
-  });
-</script>
-</body>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || []
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : ''
+        j.async = true
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
+        f.parentNode.insertBefore(j, f)
+      })(window, document, 'script', 'dataLayer', 'GTM-5L223ZR2')
+    </script>
+    <!-- End Google Tag Manager -->
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-5L223ZR2"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
