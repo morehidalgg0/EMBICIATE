@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <rect width="600" height="400" fill="#0d0d0d"/>
+  <rect width="600" height="400" fill="url(#grad)"/>
+  <defs>
+    <radialGradient id="grad" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#d7ff32" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#0d0d0d" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Rueda trasera -->
+  <circle cx="190" cy="262" r="88" fill="none" stroke="#333" stroke-width="3"/>
+  <circle cx="190" cy="262" r="70" fill="none" stroke="#2a2a2a" stroke-width="1.5"/>
+  <circle cx="190" cy="262" r="12" fill="#444"/>
+  <!-- Radios traseros -->
+  <line x1="190" y1="174" x2="190" y2="350" stroke="#2e2e2e" stroke-width="1.5"/>
+  <line x1="102" y1="262" x2="278" y2="262" stroke="#2e2e2e" stroke-width="1.5"/>
+  <line x1="128" y1="196" x2="252" y2="328" stroke="#2e2e2e" stroke-width="1.5"/>
+  <line x1="252" y1="196" x2="128" y2="328" stroke="#2e2e2e" stroke-width="1.5"/>
+  <!-- Rueda delantera -->
+  <circle cx="410" cy="262" r="88" fill="none" stroke="#333" stroke-width="3"/>
+  <circle cx="410" cy="262" r="70" fill="none" stroke="#2a2a2a" stroke-width="1.5"/>
+  <circle cx="410" cy="262" r="12" fill="#444"/>
+  <!-- Radios delanteros -->
+  <line x1="410" y1="174" x2="410" y2="350" stroke="#2e2e2e" stroke-width="1.5"/>
+  <line x1="322" y1="262" x2="498" y2="262" stroke="#2e2e2e" stroke-width="1.5"/>
+  <line x1="348" y1="196" x2="472" y2="328" stroke="#2e2e2e" stroke-width="1.5"/>
+  <line x1="472" y1="196" x2="348" y2="328" stroke="#2e2e2e" stroke-width="1.5"/>
+  <!-- Cuadro de la bici -->
+  <polygon points="190,262 270,130 340,130 410,262" fill="none" stroke="#555" stroke-width="3" stroke-linejoin="round"/>
+  <line x1="270" y1="130" x2="190" y2="262" stroke="#666" stroke-width="3"/>
+  <line x1="340" y1="130" x2="410" y2="262" stroke="#666" stroke-width="3"/>
+  <line x1="270" y1="130" x2="340" y2="130" stroke="#888" stroke-width="3"/>
+  <!-- Manillar -->
+  <line x1="380" y1="130" x2="430" y2="120" stroke="#d7ff32" stroke-width="3" stroke-linecap="round"/>
+  <line x1="430" y1="120" x2="435" y2="145" stroke="#d7ff32" stroke-width="3" stroke-linecap="round"/>
+  <!-- Sillín -->
+  <line x1="270" y1="130" x2="265" y2="108" stroke="#888" stroke-width="3" stroke-linecap="round"/>
+  <rect x="248" y="100" width="34" height="8" rx="4" fill="#d7ff32"/>
+  <!-- Pedal -->
+  <circle cx="295" cy="262" r="14" fill="none" stroke="#555" stroke-width="2"/>
+  <line x1="286" y1="270" x2="304" y2="254" stroke="#444" stroke-width="2"/>
+  <!-- Texto -->
+  <text x="300" y="360" text-anchor="middle" font-family="'Outfit', Arial, sans-serif" font-size="13" font-weight="700" fill="#555" letter-spacing="4" text-transform="uppercase">FOTO PRÓXIMAMENTE</text>
+</svg>

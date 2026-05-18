@@ -7,21 +7,36 @@ const KV_KEY = 'embiciate:products'
 const hasKvConfig = Boolean(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN)
 
 async function readProducts() {
+  const seed = await readSeedProducts()
+
   if (hasKvConfig) {
     const fromKv = await kv.get(KV_KEY)
-    if (Array.isArray(fromKv)) return fromKv
+    if (Array.isArray(fromKv)) {
+      const merged = mergeSeedProducts(fromKv, seed)
+      if (merged.length !== fromKv.length) await kv.set(KV_KEY, merged)
+      return merged
+    }
   }
 
+  if (hasKvConfig && seed.length) await kv.set(KV_KEY, seed)
+  return seed
+}
+
+async function readSeedProducts() {
   try {
     const raw = await fs.readFile(FILE_PATH, 'utf-8')
     const parsed = JSON.parse(raw)
-    if (Array.isArray(parsed) && hasKvConfig) {
-      await kv.set(KV_KEY, parsed)
-    }
     return Array.isArray(parsed) ? parsed : []
   } catch {
     return []
   }
+}
+
+function mergeSeedProducts(products, seed) {
+  if (!Array.isArray(seed) || seed.length === 0) return products
+  const currentIds = new Set(products.map((product) => product.id))
+  const missing = seed.filter((product) => product.id && !currentIds.has(product.id))
+  return missing.length ? [...products, ...missing] : products
 }
 
 async function writeProducts(products) {
