@@ -40,6 +40,19 @@
     return true
   }
 
+  async function uploadProductImage(file) {
+    const ext = file.name.split('.').pop() || 'jpg'
+    const path = `productos/${crypto.randomUUID()}.${ext.toLowerCase()}`
+    const { error } = await client.storage.from('product-images').upload(path, file, {
+      cacheControl: '31536000',
+      upsert: false
+    })
+    if (error) throw error
+
+    const { data } = client.storage.from('product-images').getPublicUrl(path)
+    return data.publicUrl
+  }
+
   async function updateConfig(config) {
     const rows = Object.entries(config).map(([clave, valor]) => ({ clave, valor }))
     const { data, error } = await client.from('config').upsert(rows, { onConflict: 'clave' }).select()
@@ -61,6 +74,7 @@
     createProducto,
     updateProducto,
     deleteProducto,
+    uploadProductImage,
     updateConfig,
     getOrdenes
   }
