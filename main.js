@@ -29,6 +29,15 @@ function normalize(value) {
   return String(value || '').trim().toLowerCase()
 }
 
+function escapeHtml(value) {
+  return String(value || '').replace(/[&<>"]/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;'
+  })[char])
+}
+
 function whatsappNumber() {
   return String(state.config.whatsapp || '5492235505397').replace(/\D/g, '')
 }
@@ -53,16 +62,19 @@ function productEmoji(producto) {
 function productCard(producto) {
   const category = normalize(producto.categoria)
   const brand = normalize(producto.marca)
+  const nombre = escapeHtml(producto.nombre)
+  const descripcion = escapeHtml(specsText(producto))
+  const imagenUrl = escapeHtml(producto.imagen_url)
   const image = producto.imagen_url
-    ? `<img src="${producto.imagen_url}" alt="${producto.nombre}" loading="lazy" style="width:100%;height:210px;object-fit:cover;display:block;">`
+    ? `<img src="${imagenUrl}" alt="${nombre}" loading="lazy" style="width:100%;height:210px;object-fit:cover;display:block;">`
     : productEmoji(producto)
 
   return `
-    <article class="product" data-category="${category}" data-brand="${brand}">
+    <article class="product" data-category="${escapeHtml(category)}" data-brand="${escapeHtml(brand)}">
       <div class="placeholder">${image}</div>
       <div class="product-info">
-        <h3>${producto.nombre}</h3>
-        <p class="specs">${specsText(producto)}</p>
+        <h3>${nombre}</h3>
+        <p class="specs">${descripcion}</p>
         <p class="price">${formatPrice(producto.precio)}</p>
         <a class="product-wa" href="${whatsappHref(`Hola, quiero consultar por ${producto.nombre}`)}" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a>
       </div>
@@ -92,7 +104,7 @@ function renderBrandFilters() {
   const brands = [...new Set(state.productos.map((p) => p.marca).filter(Boolean))]
   container.innerHTML = [
     '<button class="filter brand-filter active" data-brand="todos" type="button">Todas las marcas</button>',
-    ...brands.map((brand) => `<button class="filter brand-filter" data-brand="${normalize(brand)}" type="button">${brand}</button>`)
+    ...brands.map((brand) => `<button class="filter brand-filter" data-brand="${escapeHtml(normalize(brand))}" type="button">${escapeHtml(brand)}</button>`)
   ].join('')
 }
 
