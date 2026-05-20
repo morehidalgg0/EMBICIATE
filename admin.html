@@ -72,10 +72,11 @@
           <label>Filtro/categoría<select id="categoria"><option>MTB</option><option>Urbana</option><option>Electrica</option></select><span class="hint">Define en qué filtro aparece.</span></label>
           <label>Marca para filtro<input id="marca" placeholder="Firebird"><span class="hint">Crea el botón de marca automáticamente.</span></label>
           <label>Stock interno<input id="stock" type="number" value="0"><span class="hint">Por ahora solo se ve en el admin.</span></label>
-          <label>Imagen desde galería/cámara<input id="imagen_file" type="file" accept="image/*"><span class="hint">Usá esto para subir desde computadora o celular.</span></label>
-          <label>URL final de imagen<input id="imagen_url" placeholder="Se completa al subir una imagen"><span class="hint">Normalmente no hace falta tocarlo.</span></label>
+          <label>Imágenes desde galería/cámara<input id="imagen_file" type="file" accept="image/*" multiple><span class="hint">Podés elegir más de una imagen desde computadora o celular.</span></label>
+          <label>Imagen principal URL<input id="imagen_url" placeholder="Se completa al subir una imagen"><span class="hint">Es la primera imagen que se ve en la tarjeta.</span></label>
           <label class="full">Texto corto visible<textarea id="descripcion"></textarea><span class="hint">Se ve debajo del nombre de la bici.</span></label>
-          <label class="full">Datos técnicos opcionales<textarea id="specs" placeholder='{"rodado":"29","velocidades":"21"}'>{}</textarea><span class="hint">Usalo solo si querés guardar datos estructurados. Si hay texto corto, el sitio muestra ese texto.</span></label>
+          <label class="full">URLs de imágenes adicionales<textarea id="imagenes_urls" placeholder="Una URL por línea"></textarea><span class="hint">Se muestran dentro de la ficha del producto junto con la imagen principal.</span></label>
+          <label class="full">Datos técnicos visibles en ficha<textarea id="specs" placeholder='{"rodado":"29","velocidades":"21","cuadro":"Aluminio"}'>{}</textarea><span class="hint">Agregá o eliminá los datos que quieras. Se ven al tocar "Ver ficha".</span></label>
           <label><input id="activo" type="checkbox" checked style="width:auto"> Mostrar en la web</label>
           <div class="actions full"><button class="primary" type="submit">Guardar producto</button><button class="ghost" type="button" id="clear-product">Limpiar</button></div>
         </form>
@@ -90,8 +91,16 @@
         <form id="config-form" class="grid">
           <label>Logo del sitio URL<input id="cfg-logo_url"><span class="hint">Reservado para logo si después lo conectamos al diseño.</span></label>
           <label>Imagen principal URL<input id="cfg-hero_imagen"><span class="hint">Reservado para imagen de portada si después la conectamos.</span></label>
+          <label>Texto chico sobre el título<input id="cfg-hero_eyebrow"><span class="hint">Ejemplo: Bicicletería en Mar del Plata.</span></label>
           <label class="full">Título principal de portada<input id="cfg-hero_titulo"><span class="hint">Es el texto grande arriba del sitio. Puede incluir &lt;span&gt; para remarcar una parte.</span></label>
           <label class="full">Subtítulo de portada<textarea id="cfg-hero_subtitulo"></textarea><span class="hint">Texto debajo del título principal.</span></label>
+          <label class="full">Beneficios debajo del botón<textarea id="cfg-hero_badges" placeholder="💳 12 Cuotas Fijas&#10;🚛 Envíos a Todo el País&#10;✅ Garantía Oficial"></textarea><span class="hint">Uno por línea. Podés agregar o borrar los que quieras.</span></label>
+          <label>Ficha destacada título<input id="cfg-hero_card_titulo"><span class="hint">Texto chico de la tarjeta destacada del Hero.</span></label>
+          <label>Ficha destacada precio<input id="cfg-hero_card_precio"><span class="hint">Ejemplo: $299.900.</span></label>
+          <label class="full">Ficha destacada texto<textarea id="cfg-hero_card_texto"></textarea><span class="hint">Descripción corta de esa tarjeta.</span></label>
+          <label>Beneficio destacado título<input id="cfg-hero_card_sec_titulo"><span class="hint">Ejemplo: Hasta.</span></label>
+          <label>Beneficio destacado valor<input id="cfg-hero_card_sec_valor"><span class="hint">Ejemplo: 12.</span></label>
+          <label class="full">Beneficio destacado texto<textarea id="cfg-hero_card_sec_texto"></textarea><span class="hint">Ejemplo: cuotas fijas con todas las tarjetas.</span></label>
           <label>Dirección visible<input id="cfg-direccion"><span class="hint">Aparece en la zona de contacto/local.</span></label>
           <label>Horarios visibles<input id="cfg-horarios"><span class="hint">Aparece junto a la dirección.</span></label>
           <label>Número de WhatsApp<input id="cfg-whatsapp"><span class="hint">Usalo con código país, sin +. Ejemplo: 5492235505397.</span></label>
@@ -109,8 +118,8 @@
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/config.js?v=20260520-4"></script>
-  <script src="/supabase-client.js?v=20260520-4"></script>
+  <script src="/config.js?v=20260520-5"></script>
+  <script src="/supabase-client.js?v=20260520-5"></script>
   <script>
     const db = window.EmbiciateDB;
     const loginView = document.getElementById('login-view');
@@ -155,6 +164,7 @@
       try { specs = JSON.parse(document.getElementById('specs').value || '{}'); } catch { specs = {}; }
       const precio = Number(document.getElementById('precio').value || 0);
       if (precio > 2000000) throw new Error('El precio máximo permitido es $2.000.000.');
+      specs.imagenes = document.getElementById('imagenes_urls').value.split('\n').map((url) => url.trim()).filter(Boolean);
       return {
         nombre: document.getElementById('nombre').value,
         descripcion: document.getElementById('descripcion').value,
@@ -176,9 +186,12 @@
       document.getElementById('categoria').value = product.categoria || 'MTB';
       document.getElementById('marca').value = product.marca || '';
       document.getElementById('imagen_url').value = product.imagen_url || '';
+      document.getElementById('imagenes_urls').value = (product.specs?.imagenes || []).join('\n');
       document.getElementById('stock').value = product.stock || 0;
       document.getElementById('activo').checked = product.activo !== false;
-      document.getElementById('specs').value = JSON.stringify(product.specs || {}, null, 2);
+      const specs = { ...(product.specs || {}) };
+      delete specs.imagenes;
+      document.getElementById('specs').value = JSON.stringify(specs, null, 2);
       document.getElementById('imagen_file').value = '';
     }
 
@@ -216,10 +229,13 @@
       const msg = document.getElementById('productos-msg');
       try {
         const payload = getProductForm();
-        const imageFile = document.getElementById('imagen_file').files[0];
-        if (imageFile) {
-          msg.textContent = 'Subiendo imagen...';
-          payload.imagen_url = await db.uploadProductImage(imageFile);
+        const imageFiles = Array.from(document.getElementById('imagen_file').files);
+        if (imageFiles.length) {
+          msg.textContent = 'Subiendo imágenes...';
+          const uploadedUrls = [];
+          for (const file of imageFiles) uploadedUrls.push(await db.uploadProductImage(file));
+          if (!payload.imagen_url) payload.imagen_url = uploadedUrls[0];
+          payload.specs.imagenes = [...new Set([...payload.specs.imagenes, ...uploadedUrls])];
         }
         msg.textContent = 'Guardando producto...';
         if (id) await db.updateProducto(id, payload);
@@ -237,7 +253,7 @@
 
     async function loadConfig() {
       const config = await db.getConfig();
-      ['logo_url','hero_titulo','hero_subtitulo','hero_imagen','direccion','horarios','whatsapp'].forEach((key) => {
+      ['logo_url','hero_titulo','hero_subtitulo','hero_imagen','hero_eyebrow','hero_badges','hero_card_titulo','hero_card_precio','hero_card_texto','hero_card_sec_titulo','hero_card_sec_valor','hero_card_sec_texto','direccion','horarios','whatsapp'].forEach((key) => {
         const input = document.getElementById(`cfg-${key}`);
         if (input) input.value = config[key] || '';
       });
@@ -246,7 +262,7 @@
     document.getElementById('config-form').onsubmit = async (event) => {
       event.preventDefault();
       const config = {};
-      ['logo_url','hero_titulo','hero_subtitulo','hero_imagen','direccion','horarios','whatsapp'].forEach((key) => config[key] = document.getElementById(`cfg-${key}`).value);
+      ['logo_url','hero_titulo','hero_subtitulo','hero_imagen','hero_eyebrow','hero_badges','hero_card_titulo','hero_card_precio','hero_card_texto','hero_card_sec_titulo','hero_card_sec_valor','hero_card_sec_texto','direccion','horarios','whatsapp'].forEach((key) => config[key] = document.getElementById(`cfg-${key}`).value);
       await db.updateConfig(config);
       document.getElementById('config-msg').textContent = 'Config guardada.';
     };

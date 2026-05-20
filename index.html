@@ -95,7 +95,25 @@
     .product h3 { font-family: var(--display); font-size: 1.8rem; text-transform: uppercase; }
     .specs { color: var(--muted); min-height: 48px; margin: .35rem 0 .7rem; }
     .price { font-family: var(--display); color: var(--orange); font-size: 2.1rem; font-weight: 800; }
+    .product-actions { display: grid; gap: .55rem; margin-top: .8rem; }
+    .product-detail { cursor: pointer; width: 100%; justify-content: center; background: transparent; color: #fff; border: 1px solid var(--line); border-radius: 12px; padding: .85rem; font-weight: 900; text-transform: uppercase; }
     .product-wa { margin-top: .8rem; display: inline-flex; width: 100%; justify-content: center; background: var(--green-wa); color: #07190d; border-radius: 12px; padding: .85rem; font-weight: 900; }
+
+    .modal { position: fixed; inset: 0; z-index: 120; display: none; align-items: center; justify-content: center; padding: 1rem; background: rgba(0,0,0,.78); }
+    .modal.open { display: flex; }
+    .modal-card { width: min(920px, 100%); max-height: 92svh; overflow: auto; background: #151515; border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); }
+    .modal-head { display: flex; justify-content: space-between; gap: 1rem; align-items: start; padding: 1rem; border-bottom: 1px solid var(--line); }
+    .modal-head h2 { font-family: var(--display); font-size: clamp(2rem, 6vw, 3.5rem); line-height: .9; text-transform: uppercase; }
+    .modal-close { background: #242424; color: #fff; border: 1px solid var(--line); border-radius: 10px; padding: .5rem .7rem; cursor: pointer; }
+    .modal-body { display: grid; gap: 1rem; padding: 1rem; }
+    .gallery-main { min-height: 280px; border-radius: 16px; background: #222; display: grid; place-items: center; overflow: hidden; font-size: 5rem; }
+    .gallery-main img { width: 100%; height: 100%; max-height: 440px; object-fit: cover; display: block; }
+    .gallery-thumbs { display: flex; gap: .5rem; overflow-x: auto; }
+    .gallery-thumbs button { flex: 0 0 76px; height: 62px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #222; cursor: pointer; }
+    .gallery-thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .spec-list { display: grid; gap: .5rem; margin: 1rem 0; }
+    .spec-row { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--line); padding-bottom: .45rem; color: var(--muted); }
+    .spec-row strong { color: #fff; }
 
     .offer { padding: 0; }
     .offer-box { background: linear-gradient(135deg, var(--orange), #111 68%); border: 1px solid rgba(255,255,255,.14); border-radius: 26px; padding: clamp(1.4rem, 5vw, 3rem); display: grid; gap: .6rem; box-shadow: var(--shadow); }
@@ -125,6 +143,7 @@
       .deal { grid-template-columns: 1.2fr .8fr; }
       .brand-row { grid-template-columns: repeat(6, 1fr); }
       .products { grid-template-columns: repeat(2, 1fr); }
+      .modal-body { grid-template-columns: 1.1fr .9fr; }
       .why { grid-template-columns: repeat(4, 1fr); }
       .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; }
     }
@@ -156,24 +175,24 @@
     <section class="hero" id="inicio" aria-label="Inicio Embiciate">
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <span class="eyebrow">Bicicletería en Mar del Plata</span>
+          <span class="eyebrow" data-config="hero_eyebrow">Bicicletería en Mar del Plata</span>
           <h1 data-config="hero_titulo">La bici <span>que buscás</span> está acá</h1>
           <p data-config="hero_subtitulo">Rodados, accesorios, financiación y asesoramiento real para que salgas pedaleando con la bici correcta.</p>
           <div class="cta-row">
             <a class="btn-main" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20bicicletas" target="_blank" rel="noopener noreferrer">💬 Consultar por WhatsApp</a>
             <a class="btn-ghost" href="#bicicletas">Ver catálogo</a>
           </div>
-          <div class="badges">
+          <div class="badges" id="hero-badges">
             <div class="badge">💳 12 Cuotas Fijas</div>
             <div class="badge">🚛 Envíos a Todo el País</div>
             <div class="badge">✅ Garantía Oficial</div>
           </div>
         </div>
         <div class="hero-card" aria-label="Producto destacado">
-          <div class="bike-visual" aria-hidden="true">🚲</div>
+          <div class="bike-visual" id="hero-visual" aria-hidden="true">🚲</div>
           <div class="deal">
-            <div class="deal-box"><small>Firebird aluminio</small><strong>$299.900</strong><p>Rodado 29 · 21 velocidades · Frenos a disco</p></div>
-            <div class="deal-box"><small>Hasta</small><strong>12</strong><p>cuotas fijas con todas las tarjetas</p></div>
+            <div class="deal-box"><small data-config="hero_card_titulo">Firebird aluminio</small><strong data-config="hero_card_precio">$299.900</strong><p data-config="hero_card_texto">Rodado 29 · 21 velocidades · Frenos a disco</p></div>
+            <div class="deal-box"><small data-config="hero_card_sec_titulo">Hasta</small><strong data-config="hero_card_sec_valor">12</strong><p data-config="hero_card_sec_texto">cuotas fijas con todas las tarjetas</p></div>
           </div>
         </div>
       </div>
@@ -222,9 +241,16 @@
 
   <a class="whatsapp-fab" data-whatsapp-link href="https://wa.me/5492235505397" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">💬</a>
 
+  <div class="modal" id="product-modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-head"><h2 id="modal-title"></h2><button class="modal-close" type="button" id="modal-close">Cerrar</button></div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <script src="/config.js?v=20260520-4" defer></script>
-  <script src="/supabase-client.js?v=20260520-4" defer></script>
-  <script src="/main.js?v=20260520-4" defer></script>
+  <script src="/config.js?v=20260520-5" defer></script>
+  <script src="/supabase-client.js?v=20260520-5" defer></script>
+  <script src="/main.js?v=20260520-5" defer></script>
 </body>
 </html>

@@ -46,10 +46,23 @@ function whatsappHref(message) {
   return `https://wa.me/${whatsappNumber()}?text=${encodeURIComponent(message)}`
 }
 
+function listFromConfig(value) {
+  if (Array.isArray(value)) return value
+  return String(value || '').split('\n').map((item) => item.trim()).filter(Boolean)
+}
+
+function imageUrls(producto) {
+  const fromSpecs = Array.isArray(producto.specs?.imagenes) ? producto.specs.imagenes : []
+  return [...new Set([producto.imagen_url, ...fromSpecs].map((url) => String(url || '').trim()).filter(Boolean))]
+}
+
 function specsText(producto) {
   if (producto.descripcion) return producto.descripcion
   if (!producto.specs || typeof producto.specs !== 'object') return ''
-  return Object.values(producto.specs).filter(Boolean).join(' | ')
+  return Object.entries(producto.specs)
+    .filter(([key, value]) => key !== 'imagenes' && value)
+    .map(([, value]) => typeof value === 'object' ? JSON.stringify(value) : value)
+    .join(' | ')
 }
 
 function productEmoji(producto) {
@@ -64,8 +77,9 @@ function productCard(producto) {
   const brand = normalize(producto.marca)
   const nombre = escapeHtml(producto.nombre)
   const descripcion = escapeHtml(specsText(producto))
-  const imagenUrl = escapeHtml(producto.imagen_url)
-  const image = producto.imagen_url
+  const images = imageUrls(producto)
+  const imagenUrl = escapeHtml(images[0])
+  const image = images[0]
     ? `<img src="${imagenUrl}" alt="${nombre}" loading="lazy" style="width:100%;height:210px;object-fit:cover;display:block;">`
     : productEmoji(producto)
 
@@ -76,7 +90,10 @@ function productCard(producto) {
         <h3>${nombre}</h3>
         <p class="specs">${descripcion}</p>
         <p class="price">${formatPrice(producto.precio)}</p>
-        <a class="product-wa" href="${whatsappHref(`Hola, quiero consultar por ${producto.nombre}`)}" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a>
+        <div class="product-actions">
+          <button class="product-detail" data-product-detail="${escapeHtml(producto.id || producto.nombre)}" type="button">Ver ficha</button>
+          <a class="product-wa" href="${whatsappHref(`Hola, quiero consultar por ${producto.nombre}`)}" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a>
+        </div>
       </div>
     </article>
   `
@@ -93,9 +110,65 @@ function applyConfig() {
   if (address && state.config.direccion) address.textContent = state.config.direccion
   if (hours && state.config.horarios) hours.textContent = state.config.horarios
 
+  document.querySelectorAll('[data-config]').forEach((node) => {
+    const key = node.dataset.config
+    if (['hero_titulo', 'hero_subtitulo', 'direccion', 'horarios'].includes(key)) return
+    if (state.config[key]) node.textContent = state.config[key]
+  })
+
+  const badges = document.getElementById('hero-badges')
+  const heroBadges = listFromConfig(state.config.hero_badges)
+  if (badges && heroBadges.length) {
+    badges.innerHTML = heroBadges.map((badge) => `<div class="badge">${escapeHtml(badge)}</div>`).join('')
+  }
+
+  const visual = document.getElementById('hero-visual')
+  if (visual && state.config.hero_imagen) {
+    visual.innerHTML = `<img src="${escapeHtml(state.config.hero_imagen)}" alt="Bicicleta destacada" loading="eager" style="width:100%;height:100%;min-height:260px;object-fit:cover;display:block;border-radius:20px;">`
+  }
+
   document.querySelectorAll('[data-whatsapp-link]').forEach((link) => {
     link.href = whatsappHref('Hola, quiero consultar por bicicletas')
   })
+}
+
+function productSpecsRows(producto) {
+  const hiddenKeys = ['imagenes']
+  return Object.entries(producto.specs || {})
+    .filter(([key, value]) => !hiddenKeys.includes(key) && value !== null && value !== '')
+    .map(([key, value]) => `<div class="spec-row"><strong>${escapeHtml(key)}</strong><span>${escapeHtml(typeof value === 'object' ? JSON.stringify(value) : value)}</span></div>`)
+    .join('')
+}
+
+function openProductModal(producto) {
+  const modal = document.getElementById('product-modal')
+  const title = document.getElementById('modal-title')
+  const body = document.getElementById('modal-body')
+  if (!modal || !title || !body) return
+  const images = imageUrls(producto)
+  const firstImage = images[0]
+  title.textContent = producto.nombre || 'Producto'
+  body.innerHTML = `
+    <div>
+      <div class="gallery-main" id="gallery-main">${firstImage ? `<img src="${escapeHtml(firstImage)}" alt="${escapeHtml(producto.nombre)}">` : productEmoji(producto)}</div>
+      ${images.length > 1 ? `<div class="gallery-thumbs">${images.map((url) => `<button type="button" data-gallery-image="${escapeHtml(url)}"><img src="${escapeHtml(url)}" alt=""></button>`).join('')}</div>` : ''}
+    </div>
+    <div>
+      <p class="price">${formatPrice(producto.precio)}</p>
+      <p class="specs">${escapeHtml(specsText(producto))}</p>
+      <div class="spec-list">${productSpecsRows(producto) || '<p class="specs">Sin datos técnicos cargados.</p>'}</div>
+      <a class="product-wa" href="${whatsappHref(`Hola, quiero consultar por ${producto.nombre}`)}" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a>
+    </div>
+  `
+  modal.classList.add('open')
+  modal.setAttribute('aria-hidden', 'false')
+}
+
+function closeProductModal() {
+  const modal = document.getElementById('product-modal')
+  if (!modal) return
+  modal.classList.remove('open')
+  modal.setAttribute('aria-hidden', 'true')
 }
 
 function renderBrandFilters() {
@@ -139,6 +212,22 @@ function bindFilters() {
     button.classList.add('active')
     state.marca = button.dataset.brand
     renderProductos()
+  })
+
+  document.getElementById('productos-grid')?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-product-detail]')
+    if (!button) return
+    const product = state.productos.find((item) => String(item.id || item.nombre) === button.dataset.productDetail)
+    if (product) openProductModal(product)
+  })
+
+  document.getElementById('modal-close')?.addEventListener('click', closeProductModal)
+  document.getElementById('product-modal')?.addEventListener('click', (event) => {
+    if (event.target.id === 'product-modal') closeProductModal()
+    const imageButton = event.target.closest('[data-gallery-image]')
+    if (!imageButton) return
+    const main = document.getElementById('gallery-main')
+    if (main) main.innerHTML = `<img src="${escapeHtml(imageButton.dataset.galleryImage)}" alt="">`
   })
 }
 
