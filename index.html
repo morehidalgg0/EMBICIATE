@@ -157,8 +157,8 @@
       <div class="wrap hero-grid">
         <div class="hero-copy">
           <span class="eyebrow">Bicicletería en Mar del Plata</span>
-          <h1>La bici <span>que buscás</span> está acá</h1>
-          <p>Rodados, accesorios, financiación y asesoramiento real para que salgas pedaleando con la bici correcta.</p>
+          <h1 data-config="hero_titulo">La bici <span>que buscás</span> está acá</h1>
+          <p data-config="hero_subtitulo">Rodados, accesorios, financiación y asesoramiento real para que salgas pedaleando con la bici correcta.</p>
           <div class="cta-row">
             <a class="btn-main" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20bicicletas" target="_blank" rel="noopener noreferrer">💬 Consultar por WhatsApp</a>
             <a class="btn-ghost" href="#bicicletas">Ver catálogo</a>
@@ -185,10 +185,11 @@
 
     <section id="bicicletas" class="wrap" aria-label="Catálogo de bicicletas">
       <div class="section-title"><div><h2>Bicicletas destacadas</h2><p>Filtrá por categoría y consultá stock directo por WhatsApp.</p></div></div>
-      <div class="filters" role="group" aria-label="Filtrar productos">
+      <div class="filters" role="group" aria-label="Filtrar productos por categoría">
         <button class="filter active" data-filter="todos" type="button">Todos</button><button class="filter" data-filter="mtb" type="button">MTB</button><button class="filter" data-filter="urbana" type="button">Urbanas</button><button class="filter" data-filter="electrica" type="button">Eléctricas</button>
       </div>
-      <div class="products">
+      <div class="filters brand-filters" role="group" aria-label="Filtrar productos por marca" id="brand-filters"></div>
+      <div class="products" id="productos-grid" aria-live="polite">
         <article class="product" data-category="mtb"><div class="placeholder">🚵</div><div class="product-info"><h3>MTB Rodado 29 Aluminio</h3><p class="specs">Cuadro Aluminio 6061 | 21 Vel</p><p class="price">$269.900</p><a class="product-wa" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20MTB%20Rodado%2029%20Aluminio" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a></div></article>
         <article class="product" data-category="mtb"><div class="placeholder">🚲</div><div class="product-info"><h3>Topmega MTB Pro</h3><p class="specs">Frenos Disco Hidráulico</p><p class="price">$389.900</p><a class="product-wa" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20Topmega%20MTB%20Pro" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a></div></article>
         <article class="product" data-category="urbana"><div class="placeholder">🚲</div><div class="product-info"><h3>Urbana Paseo Vintage</h3><p class="specs">Con canasto y portaequipaje</p><p class="price">$215.000</p><a class="product-wa" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20Urbana%20Paseo%20Vintage" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a></div></article>
@@ -213,27 +214,17 @@
 
   <footer id="contacto">
     <div class="wrap footer-grid">
-      <div class="footer-card"><h3>Embiciate</h3><p>Rivadavia 3050 Subsuelo (Los Gallegos), Mar del Plata</p><p><a href="https://wa.me/5492235505397">WhatsApp: 223 550 5397</a></p></div>
-      <div class="footer-card"><h3>Horarios</h3><p>Lun a Vie 09:00-19:00hs</p><p>Sáb 09:00-13:00hs</p></div>
+      <div class="footer-card"><h3>Embiciate</h3><p data-config="direccion">Rivadavia 3050 Subsuelo (Los Gallegos), Mar del Plata</p><p><a data-whatsapp-link href="https://wa.me/5492235505397">WhatsApp: 223 550 5397</a></p></div>
+      <div class="footer-card"><h3>Horarios</h3><p data-config="horarios">Lun a Vie 09:00-19:00hs | Sáb 09:00-13:00hs</p></div>
       <div class="footer-card"><h3>Medios de pago</h3><p>Visa, Mastercard, Mercado Pago</p><div class="payments"><span>Visa</span><span>Mastercard</span><span>Mercado Pago</span></div></div>
     </div>
   </footer>
 
-  <a class="whatsapp-fab" href="https://wa.me/5492235505397" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">💬</a>
+  <a class="whatsapp-fab" data-whatsapp-link href="https://wa.me/5492235505397" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">💬</a>
 
-  <script>
-    const filters = document.querySelectorAll('.filter');
-    const products = document.querySelectorAll('.product');
-    filters.forEach((button) => {
-      button.addEventListener('click', () => {
-        filters.forEach((item) => item.classList.remove('active'));
-        button.classList.add('active');
-        const selected = button.dataset.filter;
-        products.forEach((product) => {
-          product.classList.toggle('hidden', selected !== 'todos' && product.dataset.category !== selected);
-        });
-      });
-    });
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="/config.js" defer></script>
+  <script src="/supabase-client.js" defer></script>
+  <script src="/main.js" defer></script>
 </body>
 </html>

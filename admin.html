@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Embiciate</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; background: #0f0f0f; color: #fff; }
+    header { padding: 1rem; border-bottom: 1px solid #333; display: flex; justify-content: space-between; gap: 1rem; align-items: center; }
+    main { width: min(1180px, calc(100% - 24px)); margin: 1rem auto 3rem; }
+    input, textarea, select, button { font: inherit; }
+    input, textarea, select { width: 100%; padding: .65rem; border-radius: 8px; border: 1px solid #333; background: #151515; color: #fff; }
+    textarea { min-height: 80px; resize: vertical; }
+    button { cursor: pointer; border: 0; border-radius: 8px; padding: .65rem .9rem; font-weight: 700; }
+    .primary { background: #f97316; color: #fff; }
+    .ghost { background: #222; color: #fff; border: 1px solid #444; }
+    .danger { background: #7f1d1d; color: #fff; }
+    .ok { background: #166534; color: #fff; }
+    .login, .panel, .card { background: #171717; border: 1px solid #333; border-radius: 12px; padding: 1rem; }
+    .login { max-width: 420px; margin: 4rem auto; display: grid; gap: .75rem; }
+    .tabs { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .tab.active { background: #f97316; color: #fff; }
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+    .full { grid-column: 1 / -1; }
+    .list { display: grid; gap: .75rem; margin-top: 1rem; }
+    .product-row { display: grid; grid-template-columns: 80px 1fr auto; gap: .75rem; align-items: center; }
+    .thumb { width: 80px; height: 64px; object-fit: cover; border-radius: 8px; background: #222; }
+    .actions { display: flex; gap: .4rem; flex-wrap: wrap; }
+    .hidden { display: none !important; }
+    .msg { color: #fbbf24; margin: .75rem 0; }
+    table { width: 100%; border-collapse: collapse; background: #171717; border-radius: 12px; overflow: hidden; }
+    th, td { padding: .75rem; border-bottom: 1px solid #333; text-align: left; }
+    @media (max-width: 760px) { .grid, .product-row { grid-template-columns: 1fr; } .actions { width: 100%; } }
+  </style>
+</head>
+<body>
+  <section class="login" id="login-view">
+    <h1>Admin Embiciate</h1>
+    <p>Ingresá con email y contraseña de Supabase Auth.</p>
+    <input id="login-email" type="email" placeholder="Email">
+    <input id="login-pass" type="password" placeholder="Contraseña">
+    <button class="primary" id="login-btn">Ingresar</button>
+    <p class="msg" id="login-msg"></p>
+  </section>
+
+  <section class="hidden" id="admin-view">
+    <header>
+      <div><strong>Embiciate Admin</strong><br><small id="user-email"></small></div>
+      <button class="ghost" id="logout-btn">Salir</button>
+    </header>
+
+    <main>
+      <div class="tabs">
+        <button class="tab active" data-tab="productos">Productos</button>
+        <button class="tab" data-tab="config">Config</button>
+        <button class="tab" data-tab="ordenes">Órdenes</button>
+      </div>
+
+      <section class="panel" id="tab-productos">
+        <h2>Productos</h2>
+        <form id="producto-form" class="grid">
+          <input type="hidden" id="producto-id">
+          <label>Nombre<input id="nombre" required></label>
+          <label>Precio<input id="precio" type="number" required></label>
+          <label>Categoría<select id="categoria"><option>MTB</option><option>Urbana</option><option>Electrica</option></select></label>
+          <label>Marca<input id="marca" placeholder="Firebird"></label>
+          <label>Stock<input id="stock" type="number" value="0"></label>
+          <label>Imagen URL<input id="imagen_url" placeholder="https://res.cloudinary.com/..."></label>
+          <label class="full">Descripción<textarea id="descripcion"></textarea></label>
+          <label class="full">Specs JSON<textarea id="specs" placeholder='{"rodado":"29","velocidades":"21"}'>{}</textarea></label>
+          <label><input id="activo" type="checkbox" checked style="width:auto"> Activo</label>
+          <div class="actions full"><button class="primary" type="submit">Guardar producto</button><button class="ghost" type="button" id="clear-product">Limpiar</button></div>
+        </form>
+        <p class="msg" id="productos-msg"></p>
+        <div class="list" id="productos-list"></div>
+      </section>
+
+      <section class="panel hidden" id="tab-config">
+        <h2>Config</h2>
+        <form id="config-form" class="grid">
+          <label>Logo URL<input id="cfg-logo_url"></label>
+          <label>Hero imagen<input id="cfg-hero_imagen"></label>
+          <label class="full">Hero título<input id="cfg-hero_titulo"></label>
+          <label class="full">Hero subtítulo<textarea id="cfg-hero_subtitulo"></textarea></label>
+          <label>Dirección<input id="cfg-direccion"></label>
+          <label>Horarios<input id="cfg-horarios"></label>
+          <label>WhatsApp<input id="cfg-whatsapp"></label>
+          <button class="primary full" type="submit">Guardar config</button>
+        </form>
+        <p class="msg" id="config-msg"></p>
+      </section>
+
+      <section class="panel hidden" id="tab-ordenes">
+        <h2>Órdenes</h2>
+        <table><thead><tr><th>Cliente</th><th>Teléfono</th><th>Total</th><th>Estado</th><th>Fecha</th></tr></thead><tbody id="ordenes-body"></tbody></table>
+      </section>
+    </main>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/config.js"></script>
+  <script src="/supabase-client.js"></script>
+  <script>
+    const db = window.EmbiciateDB;
+    const loginView = document.getElementById('login-view');
+    const adminView = document.getElementById('admin-view');
+
+    async function showAdmin(session) {
+      loginView.classList.add('hidden');
+      adminView.classList.remove('hidden');
+      document.getElementById('user-email').textContent = session.user.email;
+      await loadAll();
+    }
+
+    async function checkSession() {
+      const { data } = await db.client.auth.getSession();
+      if (data.session) showAdmin(data.session);
+    }
+
+    document.getElementById('login-btn').onclick = async () => {
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-pass').value;
+      const { data, error } = await db.client.auth.signInWithPassword({ email, password });
+      if (error) return document.getElementById('login-msg').textContent = error.message;
+      showAdmin(data.session);
+    };
+
+    document.getElementById('logout-btn').onclick = async () => {
+      await db.client.auth.signOut();
+      location.reload();
+    };
+
+    document.querySelectorAll('.tab').forEach((btn) => {
+      btn.onclick = () => {
+        document.querySelectorAll('.tab').forEach((b) => b.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach((p) => p.classList.add('hidden'));
+        btn.classList.add('active');
+        document.getElementById(`tab-${btn.dataset.tab}`).classList.remove('hidden');
+      };
+    });
+
+    function getProductForm() {
+      let specs = {};
+      try { specs = JSON.parse(document.getElementById('specs').value || '{}'); } catch { specs = {}; }
+      return {
+        nombre: document.getElementById('nombre').value,
+        descripcion: document.getElementById('descripcion').value,
+        precio: Number(document.getElementById('precio').value || 0),
+        categoria: document.getElementById('categoria').value,
+        marca: document.getElementById('marca').value,
+        specs,
+        imagen_url: document.getElementById('imagen_url').value,
+        stock: Number(document.getElementById('stock').value || 0),
+        activo: document.getElementById('activo').checked
+      };
+    }
+
+    function setProductForm(product = {}) {
+      document.getElementById('producto-id').value = product.id || '';
+      document.getElementById('nombre').value = product.nombre || '';
+      document.getElementById('descripcion').value = product.descripcion || '';
+      document.getElementById('precio').value = product.precio || 0;
+      document.getElementById('categoria').value = product.categoria || 'MTB';
+      document.getElementById('marca').value = product.marca || '';
+      document.getElementById('imagen_url').value = product.imagen_url || '';
+      document.getElementById('stock').value = product.stock || 0;
+      document.getElementById('activo').checked = product.activo !== false;
+      document.getElementById('specs').value = JSON.stringify(product.specs || {}, null, 2);
+    }
+
+    async function loadProductos() {
+      const productos = await db.getProductos();
+      const list = document.getElementById('productos-list');
+      list.innerHTML = productos.map((p) => `
+        <article class="card product-row">
+          <img class="thumb" src="${p.imagen_url || ''}" alt="" onerror="this.style.display='none'">
+          <div><strong>${p.nombre}</strong><br><small>${p.categoria || ''} · ${p.marca || ''} · Stock: ${p.stock || 0} · ${p.activo ? 'Activo' : 'Inactivo'}</small></div>
+          <div class="actions">
+            <button class="ghost" data-edit="${p.id}">Editar</button>
+            <button class="${p.activo ? 'ghost' : 'ok'}" data-toggle="${p.id}">${p.activo ? 'Ocultar' : 'Mostrar'}</button>
+            <button class="danger" data-delete="${p.id}">Eliminar</button>
+          </div>
+        </article>
+      `).join('');
+
+      list.querySelectorAll('[data-edit]').forEach((btn) => btn.onclick = () => setProductForm(productos.find((p) => p.id === btn.dataset.edit)));
+      list.querySelectorAll('[data-toggle]').forEach((btn) => btn.onclick = async () => {
+        const product = productos.find((p) => p.id === btn.dataset.toggle);
+        await db.updateProducto(product.id, { activo: !product.activo });
+        loadProductos();
+      });
+      list.querySelectorAll('[data-delete]').forEach((btn) => btn.onclick = async () => {
+        if (!confirm('¿Eliminar producto?')) return;
+        await db.deleteProducto(btn.dataset.delete);
+        loadProductos();
+      });
+    }
+
+    document.getElementById('producto-form').onsubmit = async (event) => {
+      event.preventDefault();
+      const id = document.getElementById('producto-id').value;
+      const payload = getProductForm();
+      if (id) await db.updateProducto(id, payload);
+      else await db.createProducto(payload);
+      setProductForm();
+      document.getElementById('productos-msg').textContent = 'Producto guardado.';
+      loadProductos();
+    };
+    document.getElementById('clear-product').onclick = () => setProductForm();
+
+    async function loadConfig() {
+      const config = await db.getConfig();
+      ['logo_url','hero_titulo','hero_subtitulo','hero_imagen','direccion','horarios','whatsapp'].forEach((key) => {
+        const input = document.getElementById(`cfg-${key}`);
+        if (input) input.value = config[key] || '';
+      });
+    }
+
+    document.getElementById('config-form').onsubmit = async (event) => {
+      event.preventDefault();
+      const config = {};
+      ['logo_url','hero_titulo','hero_subtitulo','hero_imagen','direccion','horarios','whatsapp'].forEach((key) => config[key] = document.getElementById(`cfg-${key}`).value);
+      await db.updateConfig(config);
+      document.getElementById('config-msg').textContent = 'Config guardada.';
+    };
+
+    async function loadOrdenes() {
+      const ordenes = await db.getOrdenes();
+      document.getElementById('ordenes-body').innerHTML = ordenes.map((o) => `
+        <tr><td>${o.cliente_nombre || ''}</td><td>${o.cliente_telefono || ''}</td><td>${o.total || 0}</td><td>${o.estado || ''}</td><td>${new Date(o.created_at).toLocaleString('es-AR')}</td></tr>
+      `).join('') || '<tr><td colspan="5">Todavía no hay órdenes.</td></tr>';
+    }
+
+    async function loadAll() {
+      await Promise.all([loadProductos(), loadConfig(), loadOrdenes()]);
+    }
+
+    checkSession();
+  </script>
+</body>
+</html>
