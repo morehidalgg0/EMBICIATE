@@ -29,6 +29,8 @@
     .actions { display: flex; gap: .4rem; flex-wrap: wrap; }
     .hidden { display: none !important; }
     .msg { color: #fbbf24; margin: .75rem 0; }
+    .help { color: #cbd5e1; line-height: 1.45; }
+    .section-title { margin-bottom: .35rem; }
     table { width: 100%; border-collapse: collapse; background: #171717; border-radius: 12px; overflow: hidden; }
     th, td { padding: .75rem; border-bottom: 1px solid #333; text-align: left; }
     @media (max-width: 760px) { .grid, .product-row { grid-template-columns: 1fr; } .actions { width: 100%; } }
@@ -58,7 +60,8 @@
       </div>
 
       <section class="panel" id="tab-productos">
-        <h2>Productos</h2>
+        <h2 class="section-title">Productos de la tienda</h2>
+        <p class="help">Acá modificás las bicicletas que aparecen en la página principal. Si subís una imagen desde tu galería, se guarda en Supabase y se usa automáticamente.</p>
         <form id="producto-form" class="grid">
           <input type="hidden" id="producto-id">
           <label>Nombre<input id="nombre" required></label>
@@ -78,7 +81,8 @@
       </section>
 
       <section class="panel hidden" id="tab-config">
-        <h2>Config</h2>
+        <h2 class="section-title">Textos y datos generales</h2>
+        <p class="help">Acá modificás textos de la portada, dirección, horarios y WhatsApp. No cambia productos individuales.</p>
         <form id="config-form" class="grid">
           <label>Logo URL<input id="cfg-logo_url"></label>
           <label>Hero imagen<input id="cfg-hero_imagen"></label>
@@ -93,15 +97,16 @@
       </section>
 
       <section class="panel hidden" id="tab-ordenes">
-        <h2>Órdenes</h2>
+        <h2 class="section-title">Órdenes futuras</h2>
+        <p class="help">Esta sección queda preparada para carrito y MercadoPago. Por ahora solo muestra órdenes cuando exista ecommerce.</p>
         <table><thead><tr><th>Cliente</th><th>Teléfono</th><th>Total</th><th>Estado</th><th>Fecha</th></tr></thead><tbody id="ordenes-body"></tbody></table>
       </section>
     </main>
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/config.js"></script>
-  <script src="/supabase-client.js"></script>
+  <script src="/config.js?v=20260520-2"></script>
+  <script src="/supabase-client.js?v=20260520-2"></script>
   <script>
     const db = window.EmbiciateDB;
     const loginView = document.getElementById('login-view');
