@@ -30,6 +30,8 @@
     .hidden { display: none !important; }
     .msg { color: #fbbf24; margin: .75rem 0; }
     .help { color: #cbd5e1; line-height: 1.45; }
+    .hint { color: #94a3b8; display: block; font-size: .82rem; margin-top: .25rem; }
+    .where { background: #111827; border: 1px solid #334155; border-radius: 10px; color: #dbeafe; margin: .8rem 0 1rem; padding: .75rem; }
     .section-title { margin-bottom: .35rem; }
     table { width: 100%; border-collapse: collapse; background: #171717; border-radius: 12px; overflow: hidden; }
     th, td { padding: .75rem; border-bottom: 1px solid #333; text-align: left; }
@@ -49,31 +51,32 @@
   <section class="hidden" id="admin-view">
     <header>
       <div><strong>Embiciate Admin</strong><br><small id="user-email"></small></div>
-      <button class="ghost" id="logout-btn">Salir</button>
+      <div class="actions"><a class="ghost" href="/" target="_blank" style="text-decoration:none">Ver sitio</a><button class="ghost" id="logout-btn">Salir</button></div>
     </header>
 
     <main>
       <div class="tabs">
-        <button class="tab active" data-tab="productos">Productos</button>
-        <button class="tab" data-tab="config">Config</button>
-        <button class="tab" data-tab="ordenes">Órdenes</button>
+        <button class="tab active" data-tab="productos">Bicicletas del catálogo</button>
+        <button class="tab" data-tab="config">Portada y contacto</button>
+        <button class="tab" data-tab="ordenes">Ventas futuras</button>
       </div>
 
       <section class="panel" id="tab-productos">
         <h2 class="section-title">Productos de la tienda</h2>
         <p class="help">Acá modificás las bicicletas que aparecen en la página principal. Si subís una imagen desde tu galería, se guarda en Supabase y se usa automáticamente.</p>
+        <div class="where"><strong>Dónde se ve:</strong> sección "Bicicletas destacadas" del sitio público.</div>
         <form id="producto-form" class="grid">
           <input type="hidden" id="producto-id">
-          <label>Nombre<input id="nombre" required></label>
-          <label>Precio<input id="precio" type="number" required></label>
-          <label>Categoría<select id="categoria"><option>MTB</option><option>Urbana</option><option>Electrica</option></select></label>
-          <label>Marca<input id="marca" placeholder="Firebird"></label>
-          <label>Stock<input id="stock" type="number" value="0"></label>
-          <label>Subir imagen<input id="imagen_file" type="file" accept="image/*"></label>
-          <label>Imagen URL<input id="imagen_url" placeholder="Se completa al subir una imagen"></label>
-          <label class="full">Descripción<textarea id="descripcion"></textarea></label>
-          <label class="full">Specs JSON<textarea id="specs" placeholder='{"rodado":"29","velocidades":"21"}'>{}</textarea></label>
-          <label><input id="activo" type="checkbox" checked style="width:auto"> Activo</label>
+          <label>Nombre visible de la bici<input id="nombre" required><span class="hint">Se ve como título de la tarjeta del producto.</span></label>
+          <label>Precio visible<input id="precio" type="number" required><span class="hint">Se muestra debajo de la descripción.</span></label>
+          <label>Filtro/categoría<select id="categoria"><option>MTB</option><option>Urbana</option><option>Electrica</option></select><span class="hint">Define en qué filtro aparece.</span></label>
+          <label>Marca para filtro<input id="marca" placeholder="Firebird"><span class="hint">Crea el botón de marca automáticamente.</span></label>
+          <label>Stock interno<input id="stock" type="number" value="0"><span class="hint">Por ahora solo se ve en el admin.</span></label>
+          <label>Imagen desde galería/cámara<input id="imagen_file" type="file" accept="image/*"><span class="hint">Usá esto para subir desde computadora o celular.</span></label>
+          <label>URL final de imagen<input id="imagen_url" placeholder="Se completa al subir una imagen"><span class="hint">Normalmente no hace falta tocarlo.</span></label>
+          <label class="full">Texto corto visible<textarea id="descripcion"></textarea><span class="hint">Se ve debajo del nombre de la bici.</span></label>
+          <label class="full">Datos técnicos opcionales<textarea id="specs" placeholder='{"rodado":"29","velocidades":"21"}'>{}</textarea><span class="hint">Usalo solo si querés guardar datos estructurados. Si hay texto corto, el sitio muestra ese texto.</span></label>
+          <label><input id="activo" type="checkbox" checked style="width:auto"> Mostrar en la web</label>
           <div class="actions full"><button class="primary" type="submit">Guardar producto</button><button class="ghost" type="button" id="clear-product">Limpiar</button></div>
         </form>
         <p class="msg" id="productos-msg"></p>
@@ -83,15 +86,16 @@
       <section class="panel hidden" id="tab-config">
         <h2 class="section-title">Textos y datos generales</h2>
         <p class="help">Acá modificás textos de la portada, dirección, horarios y WhatsApp. No cambia productos individuales.</p>
+        <div class="where"><strong>Dónde se ve:</strong> portada superior, botones de WhatsApp y bloque de contacto del sitio público.</div>
         <form id="config-form" class="grid">
-          <label>Logo URL<input id="cfg-logo_url"></label>
-          <label>Hero imagen<input id="cfg-hero_imagen"></label>
-          <label class="full">Hero título<input id="cfg-hero_titulo"></label>
-          <label class="full">Hero subtítulo<textarea id="cfg-hero_subtitulo"></textarea></label>
-          <label>Dirección<input id="cfg-direccion"></label>
-          <label>Horarios<input id="cfg-horarios"></label>
-          <label>WhatsApp<input id="cfg-whatsapp"></label>
-          <button class="primary full" type="submit">Guardar config</button>
+          <label>Logo del sitio URL<input id="cfg-logo_url"><span class="hint">Reservado para logo si después lo conectamos al diseño.</span></label>
+          <label>Imagen principal URL<input id="cfg-hero_imagen"><span class="hint">Reservado para imagen de portada si después la conectamos.</span></label>
+          <label class="full">Título principal de portada<input id="cfg-hero_titulo"><span class="hint">Es el texto grande arriba del sitio. Puede incluir &lt;span&gt; para remarcar una parte.</span></label>
+          <label class="full">Subtítulo de portada<textarea id="cfg-hero_subtitulo"></textarea><span class="hint">Texto debajo del título principal.</span></label>
+          <label>Dirección visible<input id="cfg-direccion"><span class="hint">Aparece en la zona de contacto/local.</span></label>
+          <label>Horarios visibles<input id="cfg-horarios"><span class="hint">Aparece junto a la dirección.</span></label>
+          <label>Número de WhatsApp<input id="cfg-whatsapp"><span class="hint">Usalo con código país, sin +. Ejemplo: 5492235505397.</span></label>
+          <button class="primary full" type="submit">Guardar portada y contacto</button>
         </form>
         <p class="msg" id="config-msg"></p>
       </section>
@@ -105,8 +109,8 @@
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/config.js?v=20260520-2"></script>
-  <script src="/supabase-client.js?v=20260520-2"></script>
+  <script src="/config.js?v=20260520-3"></script>
+  <script src="/supabase-client.js?v=20260520-3"></script>
   <script>
     const db = window.EmbiciateDB;
     const loginView = document.getElementById('login-view');
