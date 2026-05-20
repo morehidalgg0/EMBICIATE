@@ -51,8 +51,8 @@
     .menu a:hover { color: var(--orange); }
     .header-wa { display: none; align-items: center; gap: .45rem; background: var(--green-wa); color: #04150a; padding: .75rem 1.15rem; border-radius: 12px; font-weight: 900; text-transform: uppercase; box-shadow: 0 10px 24px rgba(37,211,102,.18); }
 
-    .hero { position: relative; min-height: calc(100svh - 112px); display: grid; align-items: center; padding: 3rem 0 2rem; isolation: isolate; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; z-index: -2; background: radial-gradient(circle at 78% 34%, rgba(132,204,22,.28), transparent 20rem), radial-gradient(circle at 52% 18%, rgba(249,115,22,.32), transparent 22rem), linear-gradient(110deg, rgba(0,0,0,.98) 0%, rgba(0,0,0,.9) 42%, rgba(0,0,0,.45) 100%); }
+    .hero { --hero-bg-image: none; position: relative; min-height: calc(100svh - 112px); display: grid; align-items: center; padding: 3rem 0 2rem; isolation: isolate; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; z-index: -2; background: radial-gradient(circle at 78% 34%, rgba(132,204,22,.28), transparent 20rem), radial-gradient(circle at 52% 18%, rgba(249,115,22,.32), transparent 22rem), linear-gradient(110deg, rgba(0,0,0,.98) 0%, rgba(0,0,0,.9) 42%, rgba(0,0,0,.45) 100%), var(--hero-bg-image); background-size: auto, auto, auto, cover; background-position: center; }
     .hero::after { content: '🚲'; position: absolute; right: -5rem; bottom: -5rem; z-index: -1; font-size: clamp(18rem, 45vw, 38rem); opacity: .09; filter: grayscale(1); transform: rotate(-9deg); }
     .hero-grid { display: grid; gap: 2rem; align-items: center; }
     .hero-copy { max-width: 720px; }
@@ -249,8 +249,8 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <script src="/config.js?v=20260520-5" defer></script>
-  <script src="/supabase-client.js?v=20260520-5" defer></script>
-  <script src="/main.js?v=20260520-5" defer></script>
+  <script src="/config.js?v=20260520-6" defer></script>
+  <script src="/supabase-client.js?v=20260520-6" defer></script>
+  <script src="/main.js?v=20260520-6" defer></script>
 </body>
 </html>

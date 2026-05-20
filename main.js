@@ -127,6 +127,11 @@ function applyConfig() {
     visual.innerHTML = `<img src="${escapeHtml(state.config.hero_imagen)}" alt="Bicicleta destacada" loading="eager" style="width:100%;height:100%;min-height:260px;object-fit:cover;display:block;border-radius:20px;">`
   }
 
+  const hero = document.getElementById('inicio')
+  if (hero && state.config.hero_fondo_imagen) {
+    hero.style.setProperty('--hero-bg-image', `url("${state.config.hero_fondo_imagen.replace(/"/g, '%22')}")`)
+  }
+
   document.querySelectorAll('[data-whatsapp-link]').forEach((link) => {
     link.href = whatsappHref('Hola, quiero consultar por bicicletas')
   })
