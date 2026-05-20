@@ -43,6 +43,7 @@
     header { position: sticky; top: 0; z-index: 50; background: rgba(15,15,15,.86); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
     .nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
     .logo { display: flex; align-items: center; gap: .55rem; font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 5vw, 3rem); line-height: 1; letter-spacing: -.03em; font-style: italic; }
+    .logo-img { display: block; width: auto; height: 58px; max-width: 190px; object-fit: contain; }
     .logo-mark { width: 44px; height: 44px; border: 4px solid #fff; border-radius: 50%; display: grid; place-items: center; color: var(--orange); box-shadow: inset 0 0 0 3px #000; }
     .logo strong { color: #fff; text-shadow: 0 2px 0 #000; }
     .logo strong span { color: var(--orange); }
@@ -125,6 +126,9 @@
     .why-card span { font-size: 2rem; }
     .why-card h3 { margin: .6rem 0 .3rem; text-transform: uppercase; }
     .why-card p { color: var(--muted); }
+    .map-card { margin-top: 1rem; background: #171717; border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+    .map-card iframe { width: 100%; height: 340px; border: 0; display: block; filter: grayscale(.25) contrast(1.05); }
+    .map-card a { display: inline-flex; margin: 1rem; color: var(--orange); font-weight: 900; text-transform: uppercase; }
 
     footer { background: #070707; border-top: 1px solid var(--line); padding: 2.4rem 0 6rem; }
     .footer-grid { display: grid; gap: 1rem; }
@@ -163,7 +167,7 @@
 
   <header>
     <nav class="nav wrap" aria-label="Navegación principal">
-      <a href="#inicio" class="logo" aria-label="Embiciate inicio"><span class="logo-mark">B</span><strong>EM<span>B</span>ICIATE</strong></a>
+      <a href="#inicio" class="logo" id="site-logo" aria-label="Embiciate inicio"><img class="logo-img" src="/images/logo.png" alt="Embiciate"></a>
       <div class="menu">
         <a href="#inicio">Inicio</a><a href="#bicicletas">Bicicletas</a><a href="#accesorios">Accesorios</a><a href="#nosotros">Nosotros</a><a href="#contacto">Contacto</a>
       </div>
@@ -228,6 +232,10 @@
         <article class="why-card"><span>🚚</span><h3>Envíos Rápidos</h3><p>Envíos en Mar del Plata y a todo el país.</p></article>
         <article class="why-card"><span>🔧</span><h3>Servicio Técnico</h3><p>Asesoramiento y postventa para que tu bici dure más.</p></article>
       </div>
+      <div class="map-card" aria-label="Ubicación de Embiciate">
+        <iframe id="mapa-ubicacion" title="Mapa de Embiciate" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Embiciate%20Rivadavia%203050%20Mar%20del%20Plata&output=embed"></iframe>
+        <a id="mapa-link" href="https://share.google/kyp1uH8sStsCnTlP2" target="_blank" rel="noopener noreferrer">Abrir ubicación en Google Maps</a>
+      </div>
     </section>
   </main>
 
@@ -249,8 +257,8 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <script src="/config.js?v=20260520-6" defer></script>
-  <script src="/supabase-client.js?v=20260520-6" defer></script>
-  <script src="/main.js?v=20260520-6" defer></script>
+  <script src="/config.js?v=20260520-7" defer></script>
+  <script src="/supabase-client.js?v=20260520-7" defer></script>
+  <script src="/main.js?v=20260520-7" defer></script>
 </body>
 </html>

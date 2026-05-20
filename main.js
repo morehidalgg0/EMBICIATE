@@ -110,6 +110,11 @@ function applyConfig() {
   if (address && state.config.direccion) address.textContent = state.config.direccion
   if (hours && state.config.horarios) hours.textContent = state.config.horarios
 
+  const logo = document.getElementById('site-logo')
+  if (logo && state.config.logo_url) {
+    logo.innerHTML = `<img class="logo-img" src="${escapeHtml(state.config.logo_url)}" alt="Embiciate">`
+  }
+
   document.querySelectorAll('[data-config]').forEach((node) => {
     const key = node.dataset.config
     if (['hero_titulo', 'hero_subtitulo', 'direccion', 'horarios'].includes(key)) return
@@ -131,6 +136,11 @@ function applyConfig() {
   if (hero && state.config.hero_fondo_imagen) {
     hero.style.setProperty('--hero-bg-image', `url("${state.config.hero_fondo_imagen.replace(/"/g, '%22')}")`)
   }
+
+  const map = document.getElementById('mapa-ubicacion')
+  const mapLink = document.getElementById('mapa-link')
+  if (map && state.config.mapa_embed_url) map.src = state.config.mapa_embed_url
+  if (mapLink && state.config.ubicacion_url) mapLink.href = state.config.ubicacion_url
 
   document.querySelectorAll('[data-whatsapp-link]').forEach((link) => {
     link.href = whatsappHref('Hola, quiero consultar por bicicletas')

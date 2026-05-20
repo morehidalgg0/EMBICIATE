@@ -68,7 +68,7 @@
         <form id="producto-form" class="grid">
           <input type="hidden" id="producto-id">
           <label>Nombre visible de la bici<input id="nombre" required><span class="hint">Se ve como título de la tarjeta del producto.</span></label>
-          <label>Precio visible en pesos argentinos<input id="precio" type="number" min="0" max="2000000" step="1000" inputmode="numeric" required><span class="hint">Ingresalo sin puntos ni signo $. Ejemplo: 1500000. Máximo permitido: 2000000.</span></label>
+          <label>Precio visible en pesos argentinos<input id="precio" type="number" min="0" max="2000000" step="100" inputmode="numeric" required><span class="hint">Ingresalo sin puntos ni signo $. Ejemplo: 599900. Máximo permitido: 2000000.</span></label>
           <label>Filtro/categoría<select id="categoria"><option>MTB</option><option>Urbana</option><option>Electrica</option></select><span class="hint">Define en qué filtro aparece.</span></label>
           <label>Marca para filtro<input id="marca" placeholder="Firebird"><span class="hint">Crea el botón de marca automáticamente.</span></label>
           <label>Stock interno<input id="stock" type="number" value="0"><span class="hint">Por ahora solo se ve en el admin.</span></label>
@@ -89,7 +89,8 @@
         <p class="help">Acá modificás textos de la portada, dirección, horarios y WhatsApp. No cambia productos individuales.</p>
         <div class="where"><strong>Dónde se ve:</strong> portada superior, botones de WhatsApp y bloque de contacto del sitio público.</div>
         <form id="config-form" class="grid">
-          <label>Logo del sitio URL<input id="cfg-logo_url"><span class="hint">Reservado para logo si después lo conectamos al diseño.</span></label>
+          <label>Subir logo PNG<input id="cfg-logo_file" type="file" accept="image/*"><span class="hint">Usá el logo anterior o cualquier PNG/JPG desde tu compu o celular.</span></label>
+          <label>Logo del sitio URL<input id="cfg-logo_url"><span class="hint">Se completa al subir el logo. También podés pegar una URL.</span></label>
           <label>Subir foto principal<input id="cfg-hero_imagen_file" type="file" accept="image/*"><span class="hint">Imagen que aparece dentro de la tarjeta del Hero.</span></label>
           <label>Foto principal URL<input id="cfg-hero_imagen"><span class="hint">Se completa al subir la foto principal. También podés pegar una URL.</span></label>
           <label>Subir fondo del Hero<input id="cfg-hero_fondo_file" type="file" accept="image/*"><span class="hint">Imagen de fondo de toda la portada superior.</span></label>
@@ -105,6 +106,8 @@
           <label>Beneficio destacado valor<input id="cfg-hero_card_sec_valor"><span class="hint">Ejemplo: 12.</span></label>
           <label class="full">Beneficio destacado texto<textarea id="cfg-hero_card_sec_texto"></textarea><span class="hint">Ejemplo: cuotas fijas con todas las tarjetas.</span></label>
           <label>Dirección visible<input id="cfg-direccion"><span class="hint">Aparece en la zona de contacto/local.</span></label>
+          <label>Link de ubicación<input id="cfg-ubicacion_url"><span class="hint">Link para abrir Google Maps. Ejemplo: https://share.google/kyp1uH8sStsCnTlP2</span></label>
+          <label class="full">Mapa embebido URL<input id="cfg-mapa_embed_url"><span class="hint">URL de iframe de Google Maps. Si lo dejás vacío, queda el mapa de Rivadavia 3050.</span></label>
           <label>Horarios visibles<input id="cfg-horarios"><span class="hint">Aparece junto a la dirección.</span></label>
           <label>Número de WhatsApp<input id="cfg-whatsapp"><span class="hint">Usalo con código país, sin +. Ejemplo: 5492235505397.</span></label>
           <button class="primary full" type="submit">Guardar portada y contacto</button>
@@ -121,8 +124,8 @@
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/config.js?v=20260520-6"></script>
-  <script src="/supabase-client.js?v=20260520-6"></script>
+  <script src="/config.js?v=20260520-7"></script>
+  <script src="/supabase-client.js?v=20260520-7"></script>
   <script>
     const db = window.EmbiciateDB;
     const loginView = document.getElementById('login-view');
@@ -256,7 +259,7 @@
 
     async function loadConfig() {
       const config = await db.getConfig();
-      ['logo_url','hero_titulo','hero_subtitulo','hero_imagen','hero_fondo_imagen','hero_eyebrow','hero_badges','hero_card_titulo','hero_card_precio','hero_card_texto','hero_card_sec_titulo','hero_card_sec_valor','hero_card_sec_texto','direccion','horarios','whatsapp'].forEach((key) => {
+      ['logo_url','hero_titulo','hero_subtitulo','hero_imagen','hero_fondo_imagen','hero_eyebrow','hero_badges','hero_card_titulo','hero_card_precio','hero_card_texto','hero_card_sec_titulo','hero_card_sec_valor','hero_card_sec_texto','direccion','ubicacion_url','mapa_embed_url','horarios','whatsapp'].forEach((key) => {
         const input = document.getElementById(`cfg-${key}`);
         if (input) input.value = config[key] || '';
       });
@@ -269,7 +272,12 @@
       try {
         const heroImageFile = document.getElementById('cfg-hero_imagen_file').files[0];
         const heroBgFile = document.getElementById('cfg-hero_fondo_file').files[0];
-        ['logo_url','hero_titulo','hero_subtitulo','hero_imagen','hero_fondo_imagen','hero_eyebrow','hero_badges','hero_card_titulo','hero_card_precio','hero_card_texto','hero_card_sec_titulo','hero_card_sec_valor','hero_card_sec_texto','direccion','horarios','whatsapp'].forEach((key) => config[key] = document.getElementById(`cfg-${key}`).value);
+        const logoFile = document.getElementById('cfg-logo_file').files[0];
+        ['logo_url','hero_titulo','hero_subtitulo','hero_imagen','hero_fondo_imagen','hero_eyebrow','hero_badges','hero_card_titulo','hero_card_precio','hero_card_texto','hero_card_sec_titulo','hero_card_sec_valor','hero_card_sec_texto','direccion','ubicacion_url','mapa_embed_url','horarios','whatsapp'].forEach((key) => config[key] = document.getElementById(`cfg-${key}`).value);
+        if (logoFile) {
+          msg.textContent = 'Subiendo logo...';
+          config.logo_url = await db.uploadProductImage(logoFile);
+        }
         if (heroImageFile) {
           msg.textContent = 'Subiendo foto principal...';
           config.hero_imagen = await db.uploadProductImage(heroImageFile);
@@ -279,8 +287,10 @@
           config.hero_fondo_imagen = await db.uploadProductImage(heroBgFile);
         }
         await db.updateConfig(config);
+        document.getElementById('cfg-logo_url').value = config.logo_url || '';
         document.getElementById('cfg-hero_imagen').value = config.hero_imagen || '';
         document.getElementById('cfg-hero_fondo_imagen').value = config.hero_fondo_imagen || '';
+        document.getElementById('cfg-logo_file').value = '';
         document.getElementById('cfg-hero_imagen_file').value = '';
         document.getElementById('cfg-hero_fondo_file').value = '';
         msg.textContent = 'Portada y contacto guardados.';
