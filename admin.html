@@ -68,7 +68,7 @@
         <form id="producto-form" class="grid">
           <input type="hidden" id="producto-id">
           <label>Nombre visible de la bici<input id="nombre" required><span class="hint">Se ve como título de la tarjeta del producto.</span></label>
-          <label>Precio visible<input id="precio" type="number" required><span class="hint">Se muestra debajo de la descripción.</span></label>
+          <label>Precio visible en pesos argentinos<input id="precio" type="number" min="0" max="2000000" step="1000" inputmode="numeric" required><span class="hint">Ingresalo sin puntos ni signo $. Ejemplo: 1500000. Máximo permitido: 2000000.</span></label>
           <label>Filtro/categoría<select id="categoria"><option>MTB</option><option>Urbana</option><option>Electrica</option></select><span class="hint">Define en qué filtro aparece.</span></label>
           <label>Marca para filtro<input id="marca" placeholder="Firebird"><span class="hint">Crea el botón de marca automáticamente.</span></label>
           <label>Stock interno<input id="stock" type="number" value="0"><span class="hint">Por ahora solo se ve en el admin.</span></label>
@@ -153,10 +153,12 @@
     function getProductForm() {
       let specs = {};
       try { specs = JSON.parse(document.getElementById('specs').value || '{}'); } catch { specs = {}; }
+      const precio = Number(document.getElementById('precio').value || 0);
+      if (precio > 2000000) throw new Error('El precio máximo permitido es $2.000.000.');
       return {
         nombre: document.getElementById('nombre').value,
         descripcion: document.getElementById('descripcion').value,
-        precio: Number(document.getElementById('precio').value || 0),
+        precio,
         categoria: document.getElementById('categoria').value,
         marca: document.getElementById('marca').value,
         specs,
@@ -211,10 +213,10 @@
     document.getElementById('producto-form').onsubmit = async (event) => {
       event.preventDefault();
       const id = document.getElementById('producto-id').value;
-      const payload = getProductForm();
-      const imageFile = document.getElementById('imagen_file').files[0];
       const msg = document.getElementById('productos-msg');
       try {
+        const payload = getProductForm();
+        const imageFile = document.getElementById('imagen_file').files[0];
         if (imageFile) {
           msg.textContent = 'Subiendo imagen...';
           payload.imagen_url = await db.uploadProductImage(imageFile);
@@ -226,7 +228,9 @@
         msg.textContent = 'Producto guardado.';
         loadProductos();
       } catch (error) {
-        msg.textContent = error.message;
+        msg.textContent = error.message.includes('Bucket not found')
+          ? 'No existe el bucket product-images en Supabase Storage. Crealo con el SQL indicado.'
+          : error.message;
       }
     };
     document.getElementById('clear-product').onclick = () => setProductForm();
