@@ -1,337 +1,239 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Embiciate | Bicicletas en Mar del Plata | Envío y Cuotas</title>
-  <meta name="description" content="Comprá bicicletas en Embiciate, Mar del Plata. Firebird, Raleigh, Topmega. Cuotas sin interés, envío a domicilio.">
-  
+  <title>Embiciate | Bicicletas en Mar del Plata</title>
+  <meta name="description" content="Embiciate, bicicletería en Mar del Plata. Bicicletas MTB, urbanas, eléctricas, accesorios, financiación y envíos a todo el país.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400&display=swap" rel="stylesheet">
-  
-  <link rel="preload" as="image" href="/images/hero.jpg" fetchpriority="high">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --color-bg: #0A0A0A;
-      --color-surface: #141414;
-      --color-surface2: #1C1C1C;
-      --color-accent: #E8500A;
-      --color-text: #FFFFFF;
-      --color-muted: #999999;
-      --color-border: #2A2A2A;
-      --font-display: 'Barlow Condensed', sans-serif;
-      --font-body: 'Barlow', sans-serif;
-      --max-width: 1200px;
+      --bg: #0f0f0f;
+      --bg-soft: #171717;
+      --bg-card: #1f1f1f;
+      --orange: #f97316;
+      --orange-2: #ff5a00;
+      --green: #84cc16;
+      --green-wa: #25d366;
+      --text: #ffffff;
+      --muted: #b8b8b8;
+      --line: rgba(255,255,255,.12);
+      --shadow: 0 24px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+      --display: 'Barlow Condensed', sans-serif;
+      --body: 'Inter', sans-serif;
+      --max: 1180px;
     }
-    
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 16px; scroll-behavior: smooth; }
-    body { font-family: var(--font-body); font-weight: 400; color: var(--color-muted); background: var(--color-bg); line-height: 1.5; }
-    img { max-width: 100%; height: auto; display: block; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--body); color: var(--text); background: var(--bg); line-height: 1.5; overflow-x: hidden; }
     a { color: inherit; text-decoration: none; }
-    ul { list-style: none; }
-    
-    h1, h2, h3 { font-family: var(--font-display); color: var(--color-text); text-transform: uppercase; line-height: 1.1; margin: 0; }
-    h1 { font-size: clamp(3.5rem, 12vw, 6.25rem); font-weight: 800; }
-    h1 em { color: var(--color-accent); font-style: italic; }
-    h2 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; margin-bottom: 1rem; }
-    h3 { font-size: 1.3rem; font-weight: 700; }
-    
-    .container { max-width: var(--max-width); margin-inline: auto; padding-inline: 1rem; }
-    section { padding: 4rem 1rem; }
-    
-    .site-header { position: sticky; top: 0; z-index: 50; background: var(--color-bg); padding: 1rem 0; }
-    .nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-    .logo-img { width: 150px; max-height: 68px; object-fit: contain; }
-    .nav-links { display: none; gap: 1.5rem; align-items: center; }
-    .nav-links a { font-family: var(--font-display); font-weight: 600; text-transform: uppercase; color: var(--color-text); font-size: 1.1rem; transition: color 0.2s; }
-    .nav-links a.active { border-bottom: 2px solid var(--color-accent); }
-    .nav-links a:hover { color: var(--color-accent); }
-    
-    .btn-header { background: var(--color-accent); color: var(--color-text); font-family: var(--font-display); font-weight: 600; text-transform: uppercase; padding: 0.6rem 1.25rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.5rem; }
-    
-    #hero { position: relative; min-height: 100svh; display: grid; align-items: center; overflow: hidden; padding-top: 2rem; }
-    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; z-index: 1; }
-    .hero-inner { position: relative; z-index: 2; max-width: var(--max-width); margin-inline: auto; display: grid; gap: 2rem; width: 100%; }
-    .hero-content { display: flex; flex-direction: column; gap: 1.5rem; }
-    .hero-sub { font-size: 1.1rem; color: var(--color-text); }
-    .hero-sub span { color: var(--color-accent); font-weight: 600; }
-    
-    .btn-whatsapp-hero { background: var(--color-accent); color: var(--color-text); display: inline-flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; border-radius: 8px; width: max-content; }
-    .btn-whatsapp-hero svg { width: 32px; height: 32px; flex-shrink: 0; fill: currentColor; }
-    .btn-whatsapp-hero div { display: flex; flex-direction: column; line-height: 1.2; }
-    .btn-whatsapp-hero .line1 { font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; text-transform: uppercase; }
-    .btn-whatsapp-hero .line2 { font-family: var(--font-body); font-size: 0.85rem; font-weight: 400; text-transform: uppercase; }
-    
-    .trust-strip { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
-    .trust-item { display: flex; align-items: center; gap: 0.75rem; font-family: var(--font-display); font-weight: 600; text-transform: uppercase; color: var(--color-text); font-size: 1rem; }
-    .trust-item svg { width: 24px; height: 24px; color: var(--color-text); }
-    .trust-item span { color: var(--color-accent); }
-    
-    .hero-media { position: relative; display: flex; justify-content: center; }
-    .hero-bike { width: 100%; max-width: 600px; transform: scaleX(-1); }
-    
-    @media (min-width: 768px) {
-      .nav-links { display: flex; }
-      .hero-inner { grid-template-columns: 1fr 1fr; align-items: center; }
-      .trust-strip { flex-direction: row; gap: 2rem; }
+    button { font: inherit; }
+    .wrap { width: min(var(--max), calc(100% - 32px)); margin-inline: auto; }
+    :focus-visible { outline: 3px solid var(--green); outline-offset: 4px; }
+
+    .ticker { background: linear-gradient(90deg, var(--orange), #ff8a1f, var(--green)); color: #111; overflow: hidden; font-weight: 900; text-transform: uppercase; letter-spacing: .04em; }
+    .ticker-track { display: flex; width: max-content; animation: ticker 22s linear infinite; }
+    .ticker span { white-space: nowrap; padding: .55rem 1.4rem; font-size: .9rem; }
+    @keyframes ticker { to { transform: translateX(-50%); } }
+
+    header { position: sticky; top: 0; z-index: 50; background: rgba(15,15,15,.86); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+    .nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .logo { display: flex; align-items: center; gap: .55rem; font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 5vw, 3rem); line-height: 1; letter-spacing: -.03em; font-style: italic; }
+    .logo-mark { width: 44px; height: 44px; border: 4px solid #fff; border-radius: 50%; display: grid; place-items: center; color: var(--orange); box-shadow: inset 0 0 0 3px #000; }
+    .logo strong { color: #fff; text-shadow: 0 2px 0 #000; }
+    .logo strong span { color: var(--orange); }
+    .menu { display: none; gap: 1.4rem; align-items: center; font-family: var(--display); text-transform: uppercase; font-weight: 700; letter-spacing: .06em; }
+    .menu a { color: #e8e8e8; transition: color .18s; }
+    .menu a:hover { color: var(--orange); }
+    .header-wa { display: none; align-items: center; gap: .45rem; background: var(--green-wa); color: #04150a; padding: .75rem 1.15rem; border-radius: 12px; font-weight: 900; text-transform: uppercase; box-shadow: 0 10px 24px rgba(37,211,102,.18); }
+
+    .hero { position: relative; min-height: calc(100svh - 112px); display: grid; align-items: center; padding: 3rem 0 2rem; isolation: isolate; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; z-index: -2; background: radial-gradient(circle at 78% 34%, rgba(132,204,22,.28), transparent 20rem), radial-gradient(circle at 52% 18%, rgba(249,115,22,.32), transparent 22rem), linear-gradient(110deg, rgba(0,0,0,.98) 0%, rgba(0,0,0,.9) 42%, rgba(0,0,0,.45) 100%); }
+    .hero::after { content: '🚲'; position: absolute; right: -5rem; bottom: -5rem; z-index: -1; font-size: clamp(18rem, 45vw, 38rem); opacity: .09; filter: grayscale(1); transform: rotate(-9deg); }
+    .hero-grid { display: grid; gap: 2rem; align-items: center; }
+    .hero-copy { max-width: 720px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: .45rem; color: var(--green); background: rgba(132,204,22,.12); border: 1px solid rgba(132,204,22,.28); border-radius: 999px; padding: .35rem .85rem; font-weight: 800; text-transform: uppercase; font-size: .85rem; margin-bottom: 1rem; }
+    h1 { font-family: var(--display); text-transform: uppercase; font-size: clamp(4rem, 15vw, 8.8rem); line-height: .82; letter-spacing: -.045em; font-weight: 800; text-wrap: balance; }
+    h1 span { display: block; color: var(--orange); text-shadow: 0 6px 0 rgba(0,0,0,.42); }
+    .hero p { color: var(--muted); max-width: 560px; margin: 1.2rem 0; font-size: clamp(1rem, 2vw, 1.22rem); }
+    .cta-row { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; }
+    .btn-main { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; background: linear-gradient(135deg, var(--orange), var(--orange-2)); color: #fff; border: 0; border-radius: 14px; padding: .95rem 1.25rem; font-weight: 900; text-transform: uppercase; box-shadow: 0 14px 28px rgba(249,115,22,.22); transition: transform .16s, filter .16s; }
+    .btn-main:hover { transform: translateY(-2px); filter: brightness(1.05); }
+    .btn-ghost { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 14px; padding: .95rem 1.25rem; color: #fff; font-weight: 800; text-transform: uppercase; }
+    .badges { display: grid; grid-template-columns: 1fr; gap: .65rem; margin-top: 1.3rem; }
+    .badge { display: flex; align-items: center; gap: .55rem; background: rgba(255,255,255,.055); border: 1px solid var(--line); border-radius: 14px; padding: .75rem .8rem; color: #f3f3f3; font-weight: 800; }
+    .hero-card { background: linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border: 1px solid var(--line); border-radius: 26px; padding: 1rem; box-shadow: var(--shadow); }
+    .bike-visual { min-height: 260px; border-radius: 20px; background: radial-gradient(circle at 50% 35%, rgba(249,115,22,.25), transparent 13rem), linear-gradient(145deg, #242424, #090909); display: grid; place-items: center; font-size: clamp(8rem, 30vw, 14rem); }
+    .deal { margin-top: 1rem; display: grid; grid-template-columns: 1fr; gap: .8rem; }
+    .deal-box { border: 1px solid var(--line); border-radius: 16px; padding: .9rem; background: rgba(0,0,0,.38); }
+    .deal-box small { color: var(--orange); font-family: var(--display); font-size: 1rem; text-transform: uppercase; font-weight: 800; }
+    .deal-box strong { display: block; font-family: var(--display); font-size: clamp(2.7rem, 9vw, 4.5rem); line-height: 1; }
+    .deal-box p { margin: .2rem 0 0; color: var(--muted); font-size: .9rem; }
+
+    section { padding: clamp(3.2rem, 8vw, 6rem) 0; }
+    .section-title { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1.4rem; }
+    .section-title h2 { font-family: var(--display); font-size: clamp(2.4rem, 7vw, 4.5rem); line-height: .9; text-transform: uppercase; }
+    .section-title p { color: var(--muted); max-width: 420px; }
+
+    .brands { padding: 1.2rem 0; background: #090909; border-block: 1px solid var(--line); }
+    .brand-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; text-align: center; }
+    .brand { font-family: var(--display); font-size: clamp(1.5rem, 4vw, 2rem); font-style: italic; color: #aaa; letter-spacing: .08em; font-weight: 800; }
+
+    .filters { display: flex; gap: .65rem; overflow-x: auto; padding-bottom: .4rem; margin-bottom: 1.3rem; }
+    .filter { flex: 0 0 auto; cursor: pointer; background: #171717; color: #fff; border: 1px solid var(--line); border-radius: 999px; padding: .72rem 1rem; font-weight: 900; text-transform: uppercase; }
+    .filter.active, .filter:hover { background: var(--orange); border-color: var(--orange); }
+    .products { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    .product { background: var(--bg-card); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; transition: transform .18s, border-color .18s, box-shadow .18s; }
+    .product:hover { transform: translateY(-4px); border-color: rgba(249,115,22,.6); box-shadow: 0 18px 34px rgba(0,0,0,.32); }
+    .product.hidden { display: none; }
+    .placeholder { min-height: 210px; display: grid; place-items: center; font-size: 4.5rem; background: radial-gradient(circle at 30% 20%, rgba(132,204,22,.2), transparent 9rem), linear-gradient(145deg, #292929, #111); }
+    .product-info { padding: 1rem; }
+    .product h3 { font-family: var(--display); font-size: 1.8rem; text-transform: uppercase; }
+    .specs { color: var(--muted); min-height: 48px; margin: .35rem 0 .7rem; }
+    .price { font-family: var(--display); color: var(--orange); font-size: 2.1rem; font-weight: 800; }
+    .product-wa { margin-top: .8rem; display: inline-flex; width: 100%; justify-content: center; background: var(--green-wa); color: #07190d; border-radius: 12px; padding: .85rem; font-weight: 900; }
+
+    .offer { padding: 0; }
+    .offer-box { background: linear-gradient(135deg, var(--orange), #111 68%); border: 1px solid rgba(255,255,255,.14); border-radius: 26px; padding: clamp(1.4rem, 5vw, 3rem); display: grid; gap: .6rem; box-shadow: var(--shadow); }
+    .offer-box span { color: #111; background: #fff; border-radius: 999px; width: max-content; padding: .3rem .7rem; font-weight: 900; text-transform: uppercase; }
+    .offer-box h2 { font-family: var(--display); text-transform: uppercase; font-size: clamp(2.4rem, 8vw, 5rem); line-height: .9; }
+
+    .why { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    .why-card { background: #171717; border: 1px solid var(--line); border-radius: 20px; padding: 1.1rem; }
+    .why-card span { font-size: 2rem; }
+    .why-card h3 { margin: .6rem 0 .3rem; text-transform: uppercase; }
+    .why-card p { color: var(--muted); }
+
+    footer { background: #070707; border-top: 1px solid var(--line); padding: 2.4rem 0 6rem; }
+    .footer-grid { display: grid; gap: 1rem; }
+    .footer-card { background: #121212; border: 1px solid var(--line); border-radius: 18px; padding: 1rem; }
+    .footer-card h3 { color: var(--orange); text-transform: uppercase; margin-bottom: .45rem; }
+    .footer-card p, .footer-card a { color: var(--muted); }
+    .payments { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .7rem; }
+    .payments span { border: 1px solid var(--line); border-radius: 10px; padding: .45rem .65rem; font-weight: 800; background: #1d1d1d; }
+
+    .whatsapp-fab { position: fixed; right: 1rem; bottom: 1rem; z-index: 80; width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: var(--green-wa); color: #07190d; box-shadow: 0 14px 30px rgba(0,0,0,.35); font-size: 1.6rem; }
+
+    @media (min-width: 720px) {
+      .menu, .header-wa { display: flex; }
+      .hero-grid { grid-template-columns: .98fr 1fr; }
+      .badges { grid-template-columns: repeat(3, 1fr); }
+      .deal { grid-template-columns: 1.2fr .8fr; }
+      .brand-row { grid-template-columns: repeat(6, 1fr); }
+      .products { grid-template-columns: repeat(2, 1fr); }
+      .why { grid-template-columns: repeat(4, 1fr); }
+      .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; }
+    }
+
+    @media (min-width: 1040px) {
+      .products { grid-template-columns: repeat(4, 1fr); }
     }
   </style>
-  <link rel="stylesheet" href="/styles.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="/styles.css"></noscript>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container nav">
-      <a class="logo" href="#hero">
-        <img class="logo-img" src="/images/og-image.jpg" alt="Embiciate" width="180" height="80" fetchpriority="high">
-      </a>
-      <div class="nav-links">
-        <a href="#hero" class="active">Inicio</a>
-        <a href="#productos">Bicicletas</a>
-        <a href="#ventajas">Accesorios</a>
-        <a href="#ventajas">Nosotros</a>
-        <a href="#footer">Contacto</a>
-      </div>
-      <a class="btn-header" href="https://wa.me/5492235505397" target="_blank" rel="noopener noreferrer">
-        🟠 Escribinos
-      </a>
+  <div class="ticker" aria-label="Promociones y beneficios">
+    <div class="ticker-track">
+      <span>🚛 Envíos a todo el país</span><span>☀️ Mar del Plata</span><span>💳 12 cuotas fijas sin interés</span><span>💵 10% OFF pagando en efectivo</span><span>🔧 Servicio técnico</span>
+      <span>🚛 Envíos a todo el país</span><span>☀️ Mar del Plata</span><span>💳 12 cuotas fijas sin interés</span><span>💵 10% OFF pagando en efectivo</span><span>🔧 Servicio técnico</span>
     </div>
+  </div>
+
+  <header>
+    <nav class="nav wrap" aria-label="Navegación principal">
+      <a href="#inicio" class="logo" aria-label="Embiciate inicio"><span class="logo-mark">B</span><strong>EM<span>B</span>ICIATE</strong></a>
+      <div class="menu">
+        <a href="#inicio">Inicio</a><a href="#bicicletas">Bicicletas</a><a href="#accesorios">Accesorios</a><a href="#nosotros">Nosotros</a><a href="#contacto">Contacto</a>
+      </div>
+      <a class="header-wa" href="https://wa.me/5492235505397" target="_blank" rel="noopener noreferrer">🟢 Escribinos</a>
+    </nav>
   </header>
 
   <main>
-    <section id="hero">
-      <picture class="hero-bg">
-        <source srcset="/images/hero.avif" type="image/avif">
-        <source srcset="/images/hero.webp" type="image/webp">
-        <img src="/images/hero.jpg" alt="Montaña oscura" fetchpriority="high" decoding="sync" class="hero-bg">
-      </picture>
-      <div class="hero-inner">
-        <div class="hero-content">
-          <h1>LA BICI<br><em>QUE BUSCÁS</em><br>ESTÁ ACÁ</h1>
-          <p class="hero-sub">Las mejores marcas, los mejores precios y la <span>asesoría</span> que necesitás.</p>
-          
-          <a href="https://wa.me/5492235505397" class="btn-whatsapp-hero" target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-            <div>
-              <span class="line1">ESCRIBINOS POR WHATSAPP</span>
-              <span class="line2">Y LLEVÁTELA HOY</span>
-            </div>
-          </a>
-
-          <div class="trust-strip">
-            <div class="trust-item">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" /></svg>
-              <div>Hasta <span>12 CUOTAS FIJAS</span></div>
-            </div>
-            <div class="trust-item">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" /></svg>
-              <div><span>ENVÍOS</span> A TODO EL PAÍS</div>
-            </div>
-            <div class="trust-item">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" /></svg>
-              <div><span>GARANTÍA</span> Y SERVICIO TÉCNICO</div>
-            </div>
+    <section class="hero" id="inicio" aria-label="Inicio Embiciate">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Bicicletería en Mar del Plata</span>
+          <h1>La bici <span>que buscás</span> está acá</h1>
+          <p>Rodados, accesorios, financiación y asesoramiento real para que salgas pedaleando con la bici correcta.</p>
+          <div class="cta-row">
+            <a class="btn-main" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20bicicletas" target="_blank" rel="noopener noreferrer">💬 Consultar por WhatsApp</a>
+            <a class="btn-ghost" href="#bicicletas">Ver catálogo</a>
+          </div>
+          <div class="badges">
+            <div class="badge">💳 12 Cuotas Fijas</div>
+            <div class="badge">🚛 Envíos a Todo el País</div>
+            <div class="badge">✅ Garantía Oficial</div>
           </div>
         </div>
-        <div class="hero-media">
-          <img src="/images/producto-mtb-1.jpg" alt="Bicicleta destacada" class="hero-bike" fetchpriority="high" decoding="sync">
-        </div>
-      </div>
-    </section>
-
-    <section id="destacado">
-      <div class="container">
-        <div class="destacado-card">
-          <div class="destacado-left">
-            <div class="dest-subtitle">FIREBIRD ALUMINIO &gt;&gt;</div>
-            <div class="dest-price">$299.900</div>
-            <div class="dest-specs"><span>RODADO 29'</span> • <span>21 VELOCIDADES</span> • <span>FRENOS A DISCO</span></div>
-          </div>
-          <div class="destacado-right">
-            <div class="right-small">HASTA</div>
-            <div class="right-huge"><strong>12</strong> <span>CUOTAS FIJAS</span></div>
-            <div class="right-small">CON <em>TODAS</em> LAS TARJETAS</div>
-            <div class="right-icon">
-              <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
-            </div>
+        <div class="hero-card" aria-label="Producto destacado">
+          <div class="bike-visual" aria-hidden="true">🚲</div>
+          <div class="deal">
+            <div class="deal-box"><small>Firebird aluminio</small><strong>$299.900</strong><p>Rodado 29 · 21 velocidades · Frenos a disco</p></div>
+            <div class="deal-box"><small>Hasta</small><strong>12</strong><p>cuotas fijas con todas las tarjetas</p></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="brand-strip">
-      <div class="brands-grid">
-        <div class="brand-logo">TOPMEGA</div>
-        <div class="brand-logo">FIREBIRD</div>
-        <div class="brand-logo">RALEIGH</div>
-        <div class="brand-logo">SOUTH</div>
-        <div class="brand-logo">VENZO</div>
-        <div class="brand-logo">SLP</div>
+    <section class="brands" aria-label="Marcas disponibles">
+      <div class="wrap brand-row"><div class="brand">Topmega</div><div class="brand">Firebird</div><div class="brand">Raleigh</div><div class="brand">South</div><div class="brand">Venzo</div><div class="brand">SLP</div></div>
+    </section>
+
+    <section id="bicicletas" class="wrap" aria-label="Catálogo de bicicletas">
+      <div class="section-title"><div><h2>Bicicletas destacadas</h2><p>Filtrá por categoría y consultá stock directo por WhatsApp.</p></div></div>
+      <div class="filters" role="group" aria-label="Filtrar productos">
+        <button class="filter active" data-filter="todos" type="button">Todos</button><button class="filter" data-filter="mtb" type="button">MTB</button><button class="filter" data-filter="urbana" type="button">Urbanas</button><button class="filter" data-filter="electrica" type="button">Eléctricas</button>
+      </div>
+      <div class="products">
+        <article class="product" data-category="mtb"><div class="placeholder">🚵</div><div class="product-info"><h3>MTB Rodado 29 Aluminio</h3><p class="specs">Cuadro Aluminio 6061 | 21 Vel</p><p class="price">$269.900</p><a class="product-wa" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20MTB%20Rodado%2029%20Aluminio" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a></div></article>
+        <article class="product" data-category="mtb"><div class="placeholder">🚲</div><div class="product-info"><h3>Topmega MTB Pro</h3><p class="specs">Frenos Disco Hidráulico</p><p class="price">$389.900</p><a class="product-wa" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20Topmega%20MTB%20Pro" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a></div></article>
+        <article class="product" data-category="urbana"><div class="placeholder">🚲</div><div class="product-info"><h3>Urbana Paseo Vintage</h3><p class="specs">Con canasto y portaequipaje</p><p class="price">$215.000</p><a class="product-wa" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20Urbana%20Paseo%20Vintage" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a></div></article>
+        <article class="product" data-category="electrica"><div class="placeholder">⚡</div><div class="product-info"><h3>E-Bike Plegable</h3><p class="specs">Motor 350W | 40km autonomía</p><p class="price">$799.900</p><a class="product-wa" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20E-Bike%20Plegable" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a></div></article>
       </div>
     </section>
 
-    <section id="productos">
-      <div class="container">
-        <div class="filtros">
-          <button class="filtro active">TODOS</button>
-          <button class="filtro">MTB</button>
-          <button class="filtro">URBANAS</button>
-          <button class="filtro">ELÉCTRICAS</button>
-        </div>
-        
-        <div class="productos-grid">
-          <article class="producto-card">
-            <div class="card-img-wrap"><img src="/images/producto-mtb-1.jpg" alt="MTB" loading="lazy" decoding="async" width="400" height="400"></div>
-            <div class="producto-info">
-              <h3>MTB Rodado 29 Aluminio</h3>
-              <div class="prod-specs">
-                <div class="spec-line"><span>Cuadro</span><span>Aluminio 6061</span></div>
-                <div class="spec-line"><span>Transmisión</span><span>21 Vel</span></div>
-              </div>
-              <div class="prod-precio">$269.900</div>
-              <a href="https://wa.me/5492235505397" class="btn-card" target="_blank">Consultar</a>
-            </div>
-          </article>
-          
-          <article class="producto-card">
-            <div class="card-img-wrap"><img src="/images/producto-mtb-2.jpg" alt="MTB" loading="lazy" decoding="async" width="400" height="400"></div>
-            <div class="producto-info">
-              <h3>Topmega MTB Pro</h3>
-              <div class="prod-specs">
-                <div class="spec-line"><span>Cuadro</span><span>Aluminio</span></div>
-                <div class="spec-line"><span>Frenos</span><span>Disco Hidráulico</span></div>
-              </div>
-              <div class="prod-precio">$389.900</div>
-              <a href="https://wa.me/5492235505397" class="btn-card" target="_blank">Consultar</a>
-            </div>
-          </article>
-
-          <article class="producto-card">
-            <div class="card-img-wrap"><img src="/images/producto-urbana-1.jpg" alt="Urbana" loading="lazy" decoding="async" width="400" height="400"></div>
-            <div class="producto-info">
-              <h3>Urbana Paseo Vintage</h3>
-              <div class="prod-specs">
-                <div class="spec-line"><span>Accesorios</span><span>Canasto y Porta</span></div>
-              </div>
-              <div class="prod-precio">$215.000</div>
-              <a href="https://wa.me/5492235505397" class="btn-card" target="_blank">Consultar</a>
-            </div>
-          </article>
-          
-          <article class="producto-card">
-            <div class="card-img-wrap"><img src="/images/producto-electrica-1.jpg" alt="Eléctrica" loading="lazy" decoding="async" width="400" height="400"></div>
-            <div class="producto-info">
-              <h3>E-Bike Plegable</h3>
-              <div class="prod-specs">
-                <div class="spec-line"><span>Autonomía</span><span>40km</span></div>
-                <div class="spec-line"><span>Motor</span><span>350W</span></div>
-              </div>
-              <div class="prod-precio">$799.900</div>
-              <a href="https://wa.me/5492235505397" class="btn-card" target="_blank">Consultar</a>
-            </div>
-          </article>
-        </div>
-      </div>
+    <section class="offer wrap" aria-label="Oferta especial">
+      <div class="offer-box"><span>Liquidación de temporada</span><h2>10% OFF pagando en efectivo</h2><p>También trabajamos con Visa, Mastercard, Mercado Pago y hasta 12 cuotas fijas.</p></div>
     </section>
 
-    <section class="oferta-section">
-      <div class="brush-bg"></div>
-      <div class="container oferta-content">
-        <div class="badge-rotated">10% OFF</div>
-        <h2>LIQUIDACIÓN DE TEMPORADA</h2>
-        <p>Llevate tu bici hoy con un descuento exclusivo pagando en efectivo.</p>
-        <div class="oferta-prices">
-          <span class="price-old">$350.000</span>
-          <span class="price-new">$299.900</span>
-        </div>
+    <section id="accesorios" class="wrap" aria-label="Accesorios y beneficios">
+      <div class="section-title"><div><h2>Por qué elegirnos</h2><p>Atención local, marcas reconocidas y respaldo postventa.</p></div></div>
+      <div class="why" id="nosotros">
+        <article class="why-card"><span>🏆</span><h3>Garantía Oficial</h3><p>Trabajamos con marcas reconocidas y garantía real.</p></article>
+        <article class="why-card"><span>💳</span><h3>Financiación</h3><p>Hasta 12 cuotas fijas con todas las tarjetas.</p></article>
+        <article class="why-card"><span>🚚</span><h3>Envíos Rápidos</h3><p>Envíos en Mar del Plata y a todo el país.</p></article>
+        <article class="why-card"><span>🔧</span><h3>Servicio Técnico</h3><p>Asesoramiento y postventa para que tu bici dure más.</p></article>
       </div>
     </section>
-
-    <section id="ventajas">
-      <div class="container">
-        <h2>POR QUÉ ELEGIRNOS</h2>
-        <div class="ventajas-grid">
-          <article class="ventaja-card">
-            <div class="ventaja-icon"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg></div>
-            <div>
-              <h3>Garantía Oficial</h3>
-              <p>Trabajamos con primeras marcas y respaldo directo.</p>
-            </div>
-          </article>
-          <article class="ventaja-card">
-            <div class="ventaja-icon"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg></div>
-            <div>
-              <h3>Financiación</h3>
-              <p>Cuotas fijas y sin interés con tarjetas bancarias.</p>
-            </div>
-          </article>
-          <article class="ventaja-card">
-            <div class="ventaja-icon"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg></div>
-            <div>
-              <h3>Envíos Rápidos</h3>
-              <p>Despachamos a todo el país embalado de forma segura.</p>
-            </div>
-          </article>
-          <article class="ventaja-card">
-            <div class="ventaja-icon"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.5 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.4-2.4c.4-.4.4-1 0-1.3zM8.3 10.8c-1.1 1.1-3 1.1-4.2 0-1.1-1.1-1.1-3 0-4.2 1.1-1.1 3-1.1 4.2 0 1.1 1.2 1.1 3.1 0 4.2z"/></svg></div>
-            <div>
-              <h3>Servicio Técnico</h3>
-              <p>Taller especializado para armados y mantenimiento.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
   </main>
 
-  <footer id="footer" class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h3>EMBICIATE</h3>
-          <p style="margin-bottom: 1.5rem; max-width: 300px;">Tu tienda especializada en ciclismo en Mar del Plata. Asesoramiento, ventas y taller.</p>
-          <a href="https://wa.me/5492235505397" class="btn-card" target="_blank" style="width:max-content; padding: 0.6rem 1.5rem;">
-            CONTACTAR VENTAS
-          </a>
-        </div>
-        <div class="footer-col">
-          <h3>CONTACTO Y UBICACIÓN</h3>
-          <div class="footer-contact">
-            <div class="contact-item">
-              <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-              <div>
-                <strong style="color:#fff;">Local Comercial</strong><br>
-                Rivadavia 3050 Subsuelo (Los Gallegos)<br>Mar del Plata, Buenos Aires
-              </div>
-            </div>
-            <div class="contact-item">
-              <svg fill="currentColor" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-              <div>
-                <strong style="color:#fff;">Horarios</strong><br>
-                Lun a Vie: 09:00 a 19:00hs<br>Sab: 09:00 a 13:00hs
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2025 Embiciate. Todos los derechos reservados.</p>
-        <div class="payment-logos">
-          <img src="/images/visa.png" alt="Visa" width="48" height="24" loading="lazy" decoding="async">
-          <img src="/images/mastercard.png" alt="Mastercard" width="48" height="24" loading="lazy" decoding="async">
-          <img src="/images/mercado-pago.png" alt="Mercado Pago" width="96" height="24" loading="lazy" decoding="async">
-        </div>
-      </div>
+  <footer id="contacto">
+    <div class="wrap footer-grid">
+      <div class="footer-card"><h3>Embiciate</h3><p>Rivadavia 3050 Subsuelo (Los Gallegos), Mar del Plata</p><p><a href="https://wa.me/5492235505397">WhatsApp: 223 550 5397</a></p></div>
+      <div class="footer-card"><h3>Horarios</h3><p>Lun a Vie 09:00-19:00hs</p><p>Sáb 09:00-13:00hs</p></div>
+      <div class="footer-card"><h3>Medios de pago</h3><p>Visa, Mastercard, Mercado Pago</p><div class="payments"><span>Visa</span><span>Mastercard</span><span>Mercado Pago</span></div></div>
     </div>
   </footer>
 
-  <script src="/main.js" defer></script>
-  <script defer>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.defer=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5L223ZR2');
+  <a class="whatsapp-fab" href="https://wa.me/5492235505397" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">💬</a>
+
+  <script>
+    const filters = document.querySelectorAll('.filter');
+    const products = document.querySelectorAll('.product');
+    filters.forEach((button) => {
+      button.addEventListener('click', () => {
+        filters.forEach((item) => item.classList.remove('active'));
+        button.classList.add('active');
+        const selected = button.dataset.filter;
+        products.forEach((product) => {
+          product.classList.toggle('hidden', selected !== 'todos' && product.dataset.category !== selected);
+        });
+      });
+    });
   </script>
 </body>
 </html>
