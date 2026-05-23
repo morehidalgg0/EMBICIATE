@@ -67,6 +67,7 @@
         <p class="help">Acá modificás las bicicletas que aparecen en la página principal. Si subís una imagen desde tu galería, se guarda en Supabase y se usa automáticamente.</p>
         <div class="where"><strong>Dónde se ve:</strong> sección "Bicicletas destacadas" del sitio público.</div>
         <form id="producto-form" class="grid">
+          <h3 class="full" id="form-bici-title" style="margin-bottom:0.5rem; color:var(--orange)">Agregar nueva bicicleta</h3>
           <input type="hidden" id="producto-id">
           <label>Nombre visible de la bici<input id="nombre" required><span class="hint">Se ve como título de la tarjeta del producto.</span></label>
           <label>Precio visible en pesos argentinos<input id="precio" type="text" inputmode="numeric" required><span class="hint">Podés ingresarlo con o sin puntos/signo $. Ejemplo: 599.900 o 599900. Máximo permitido: 2.000.000.</span></label>
@@ -79,7 +80,7 @@
           <label class="full">URLs de imágenes adicionales<textarea id="imagenes_urls" placeholder="Una URL por línea"></textarea><span class="hint">Se muestran dentro de la ficha del producto junto con la imagen principal.</span></label>
           <label class="full">Datos técnicos visibles en ficha<textarea id="specs" placeholder='{"rodado":"29","velocidades":"21","cuadro":"Aluminio"}'>{}</textarea><span class="hint">Agregá o eliminá los datos que quieras. Se ven al tocar "Ver ficha".</span></label>
           <label><input id="activo" type="checkbox" checked style="width:auto"> Mostrar en la web</label>
-          <div class="actions full"><button class="primary" type="submit">Guardar producto</button><button class="ghost" type="button" id="clear-product">Limpiar</button></div>
+          <div class="actions full"><button class="primary" type="submit" id="bici-submit-btn">Agregar bicicleta</button><button class="ghost" type="button" id="clear-product">Limpiar</button></div>
         </form>
         <p class="msg" id="productos-msg"></p>
         <div class="list" id="productos-list"></div>
@@ -90,6 +91,7 @@
         <p class="help">Acá modificás los accesorios que aparecen en la sección de accesorios del sitio público.</p>
         <div class="where"><strong>Dónde se ve:</strong> sección "Accesorios destacados" del sitio público.</div>
         <form id="accesorio-form" class="grid">
+          <h3 class="full" id="form-acc-title" style="margin-bottom:0.5rem; color:var(--orange)">Agregar nuevo accesorio</h3>
           <input type="hidden" id="accesorio-id">
           <label>Nombre del accesorio<input id="acc-nombre" required><span class="hint">Ejemplo: Casco Firebird.</span></label>
           <label>Precio visible en pesos argentinos<input id="acc-precio" type="text" inputmode="numeric" required><span class="hint">Ejemplo: 25.000.</span></label>
@@ -101,7 +103,7 @@
           <label class="full">URLs de imágenes adicionales<textarea id="acc-imagenes_urls" placeholder="Una URL por línea"></textarea><span class="hint">Imágenes adicionales para la ficha.</span></label>
           <label class="full">Datos técnicos visibles en ficha<textarea id="acc-specs" placeholder='{"talle":"M","color":"Negro"}'>{}</textarea><span class="hint">Se ven al tocar "Ver ficha".</span></label>
           <label><input id="acc-activo" type="checkbox" checked style="width:auto"> Mostrar en la web</label>
-          <div class="actions full"><button class="primary" type="submit">Guardar accesorio</button><button class="ghost" type="button" id="clear-accesorio">Limpiar</button></div>
+          <div class="actions full"><button class="primary" type="submit" id="acc-submit-btn">Agregar accesorio</button><button class="ghost" type="button" id="clear-accesorio">Limpiar</button></div>
         </form>
         <p class="msg" id="accesorios-msg"></p>
         <div class="list" id="accesorios-list"></div>
@@ -227,7 +229,8 @@
     }
 
     function setProductForm(product = {}) {
-      document.getElementById('producto-id').value = product.id || '';
+      const id = product.id || '';
+      document.getElementById('producto-id').value = id;
       document.getElementById('nombre').value = product.nombre || '';
       document.getElementById('descripcion').value = product.descripcion || '';
       document.getElementById('precio').value = product.precio ? formatPrecioInput(product.precio) : '';
@@ -241,6 +244,10 @@
       delete specs.imagenes;
       document.getElementById('specs').value = JSON.stringify(specs, null, 2);
       document.getElementById('imagen_file').value = '';
+
+      const isEdit = !!id;
+      document.getElementById('form-bici-title').textContent = isEdit ? `Editar bicicleta: ${product.nombre}` : 'Agregar nueva bicicleta';
+      document.getElementById('bici-submit-btn').textContent = isEdit ? 'Guardar cambios' : 'Agregar bicicleta';
     }
 
     function getAccesorioForm() {
@@ -264,7 +271,8 @@
     }
 
     function setAccesorioForm(product = {}) {
-      document.getElementById('accesorio-id').value = product.id || '';
+      const id = product.id || '';
+      document.getElementById('accesorio-id').value = id;
       document.getElementById('acc-nombre').value = product.nombre || '';
       document.getElementById('acc-descripcion').value = product.descripcion || '';
       document.getElementById('acc-precio').value = product.precio ? formatPrecioInput(product.precio) : '';
@@ -277,6 +285,10 @@
       delete specs.imagenes;
       document.getElementById('acc-specs').value = JSON.stringify(specs, null, 2);
       document.getElementById('acc-imagen_file').value = '';
+
+      const isEdit = !!id;
+      document.getElementById('form-acc-title').textContent = isEdit ? `Editar accesorio: ${product.nombre}` : 'Agregar nuevo accesorio';
+      document.getElementById('acc-submit-btn').textContent = isEdit ? 'Guardar cambios' : 'Agregar accesorio';
     }
 
     async function loadProductos() {
@@ -304,9 +316,9 @@
             <img class="thumb" src="${p.imagen_url || ''}" alt="" onerror="this.style.display='none'">
             <div><strong>${p.nombre}</strong><br><small>${p.marca || ''} · Stock: ${p.stock || 0} · ${p.activo ? 'Activo' : 'Inactivo'}</small></div>
             <div class="actions">
-              <button class="ghost" data-edit-acc="${p.id}">Editar</button>
-              <button class="${p.activo ? 'ghost' : 'ok'}" data-toggle-acc="${p.id}">${p.activo ? 'Ocultar' : 'Mostrar'}</button>
-              <button class="danger" data-delete-acc="${p.id}">Eliminar</button>
+              <button class="ghost" data-edit="${p.id}">Editar</button>
+              <button class="${p.activo ? 'ghost' : 'ok'}" data-toggle="${p.id}">${p.activo ? 'Ocultar' : 'Mostrar'}</button>
+              <button class="danger" data-delete="${p.id}">Eliminar</button>
             </div>
           </article>
         `).join('');
@@ -325,15 +337,15 @@
       });
 
       if (accList) {
-        accList.querySelectorAll('[data-edit-acc]').forEach((btn) => btn.onclick = () => setAccesorioForm(productos.find((p) => p.id === btn.dataset.editAcc)));
-        accList.querySelectorAll('[data-toggle-acc]').forEach((btn) => btn.onclick = async () => {
-          const product = productos.find((p) => p.id === btn.dataset.toggleAcc);
+        accList.querySelectorAll('[data-edit]').forEach((btn) => btn.onclick = () => setAccesorioForm(productos.find((p) => p.id === btn.dataset.edit)));
+        accList.querySelectorAll('[data-toggle]').forEach((btn) => btn.onclick = async () => {
+          const product = productos.find((p) => p.id === btn.dataset.toggle);
           await db.updateProducto(product.id, { activo: !product.activo });
           loadProductos();
         });
-        accList.querySelectorAll('[data-delete-acc]').forEach((btn) => btn.onclick = async () => {
+        accList.querySelectorAll('[data-delete]').forEach((btn) => btn.onclick = async () => {
           if (!confirm('¿Eliminar accesorio?')) return;
-          await db.deleteProducto(btn.dataset.deleteAcc);
+          await db.deleteProducto(btn.dataset.delete);
           loadProductos();
         });
       }
