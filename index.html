@@ -130,6 +130,16 @@
     .map-card iframe { width: 100%; height: 340px; border: 0; display: block; filter: grayscale(.25) contrast(1.05); }
     .map-card a { display: inline-flex; margin: 1rem; color: var(--orange); font-weight: 900; text-transform: uppercase; }
 
+    .locations-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+    .branch-card { background: #171717; border: 1px solid var(--line); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; }
+    .branch-info { padding: 1.25rem 1.25rem 0.75rem; display: flex; flex-direction: column; gap: 0.35rem; }
+    .branch-info h3 { font-family: var(--display); font-size: 1.8rem; text-transform: uppercase; color: var(--orange); }
+    .branch-info p { color: var(--muted); font-size: 0.95rem; }
+    .branch-info strong { color: #fff; }
+    .branch-link { display: inline-flex; color: var(--orange); font-weight: 900; text-transform: uppercase; margin-top: 0.3rem; font-size: 0.9rem; transition: color .15s; }
+    .branch-link:hover { color: var(--orange-2); }
+    .branch-map iframe { width: 100%; height: 250px; border: 0; display: block; filter: grayscale(.25) contrast(1.05); }
+
     footer { background: #070707; border-top: 1px solid var(--line); padding: 2.4rem 0 6rem; }
     .footer-grid { display: grid; gap: 1rem; }
     .footer-card { background: #121212; border: 1px solid var(--line); border-radius: 18px; padding: 1rem; }
@@ -150,6 +160,7 @@
       .modal-body { grid-template-columns: 1.1fr .9fr; }
       .why { grid-template-columns: repeat(4, 1fr); }
       .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; }
+      .locations-grid { grid-template-columns: 1fr 1fr; }
     }
 
     @media (min-width: 1040px) {
@@ -224,26 +235,68 @@
       <div class="offer-box"><span>Liquidación de temporada</span><h2>10% OFF pagando en efectivo</h2><p>También trabajamos con Visa, Mastercard, Mercado Pago y hasta 12 cuotas fijas.</p></div>
     </section>
 
-    <section id="accesorios" class="wrap" aria-label="Accesorios y beneficios">
+    <section id="accesorios" class="wrap" aria-label="Catálogo de accesorios">
+      <div class="section-title"><div><h2>Accesorios destacados</h2><p>Equipá tu bici con cascos, luces, seguridad y más.</p></div></div>
+      <div class="products" id="accesorios-grid" aria-live="polite">
+        <!-- Se cargan dinámicamente -->
+      </div>
+    </section>
+
+    <section id="nosotros" class="wrap" aria-label="Por qué elegirnos y Ubicación">
       <div class="section-title"><div><h2>Por qué elegirnos</h2><p>Atención local, marcas reconocidas y respaldo postventa.</p></div></div>
-      <div class="why" id="nosotros">
+      <div class="why">
         <article class="why-card"><span>🏆</span><h3>Garantía Oficial</h3><p>Trabajamos con marcas reconocidas y garantía real.</p></article>
         <article class="why-card"><span>💳</span><h3>Financiación</h3><p>Hasta 12 cuotas fijas con todas las tarjetas.</p></article>
         <article class="why-card"><span>🚚</span><h3>Envíos Rápidos</h3><p>Envíos en Mar del Plata y a todo el país.</p></article>
         <article class="why-card"><span>🔧</span><h3>Servicio Técnico</h3><p>Asesoramiento y postventa para que tu bici dure más.</p></article>
       </div>
-      <div class="map-card" aria-label="Ubicación de Embiciate">
-        <iframe id="mapa-ubicacion" title="Mapa de Embiciate" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Embiciate%20Rivadavia%203050%20Mar%20del%20Plata&output=embed"></iframe>
-        <a id="mapa-link" href="https://share.google/kyp1uH8sStsCnTlP2" target="_blank" rel="noopener noreferrer">Abrir ubicación en Google Maps</a>
+      <div class="locations-grid">
+        <div class="branch-card">
+          <div class="branch-info">
+            <h3>Los Gallegos Shopping</h3>
+            <p><strong>Dirección:</strong> <span data-config="direccion">Rivadavia 3050, Subsuelo, Mar del Plata</span></p>
+            <p><strong>Horarios:</strong> <span data-config="horarios">Lun a Sáb 11:00 - 19:00 hs</span></p>
+            <a id="mapa-link" class="branch-link" href="https://share.google/kyp1uH8sStsCnTlP2" target="_blank" rel="noopener noreferrer">Abrir en Google Maps</a>
+          </div>
+          <div class="branch-map">
+            <iframe id="mapa-ubicacion" title="Mapa de Embiciate - Los Gallegos" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Embiciate%20Rivadavia%203050%20Mar%20del%20Plata&output=embed"></iframe>
+          </div>
+        </div>
+
+        <div class="branch-card">
+          <div class="branch-info">
+            <h3>Carrefour Constitución</h3>
+            <p><strong>Dirección:</strong> Av. Constitución 7598, Mar del Plata</p>
+            <p><strong>Horarios:</strong> Todos los días 09:00 - 21:00 hs</p>
+            <a class="branch-link" href="https://www.google.com/maps/search/?api=1&query=Carrefour+Av.+Constitucion+7598+Mar+del+Plata" target="_blank" rel="noopener noreferrer">Abrir en Google Maps</a>
+          </div>
+          <div class="branch-map">
+            <iframe title="Mapa de Embiciate - Carrefour Constitución" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Carrefour%20Av.%20Constitucion%207598%20Mar%20del%20Plata&output=embed"></iframe>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
   <footer id="contacto">
     <div class="wrap footer-grid">
-      <div class="footer-card"><h3>Embiciate</h3><p data-config="direccion">Rivadavia 3050 Subsuelo (Los Gallegos), Mar del Plata</p><p><a data-whatsapp-link href="https://wa.me/5492235505397">WhatsApp: 223 550 5397</a></p></div>
-      <div class="footer-card"><h3>Horarios</h3><p data-config="horarios">Lun a Vie 09:00-19:00hs | Sáb 09:00-13:00hs</p></div>
-      <div class="footer-card"><h3>Medios de pago</h3><p>Visa, Mastercard, Mercado Pago</p><div class="payments"><span>Visa</span><span>Mastercard</span><span>Mercado Pago</span></div></div>
+      <div class="footer-card">
+        <h3>Sucursal Los Gallegos</h3>
+        <p data-config="direccion">Rivadavia 3050 Subsuelo (Los Gallegos), Mar del Plata</p>
+        <p data-config="horarios" style="margin-top:0.35rem; font-size:0.9rem; color:var(--muted)">Lun a Vie 09:00-19:00hs | Sáb 09:00-13:00hs</p>
+        <p style="margin-top:0.5rem"><a data-whatsapp-link href="https://wa.me/5492235505397">WhatsApp: 223 550 5397</a></p>
+      </div>
+      <div class="footer-card">
+        <h3>Sucursal Constitución</h3>
+        <p>Av. Constitución 7598 (Carrefour), Mar del Plata</p>
+        <p style="margin-top:0.35rem; font-size:0.9rem; color:var(--muted)">Todos los días 09:00 - 21:00 hs</p>
+        <p style="margin-top:0.5rem"><a data-whatsapp-link href="https://wa.me/5492235505397">WhatsApp: 223 550 5397</a></p>
+      </div>
+      <div class="footer-card">
+        <h3>Medios de pago</h3>
+        <p>Visa, Mastercard, Mercado Pago</p>
+        <div class="payments"><span>Visa</span><span>Mastercard</span><span>Mercado Pago</span></div>
+      </div>
     </div>
   </footer>
 

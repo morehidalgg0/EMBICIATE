@@ -69,6 +69,7 @@ function productEmoji(producto) {
   const cat = normalize(producto.categoria)
   if (cat === 'electrica') return '⚡'
   if (cat === 'urbana') return '🚲'
+  if (cat === 'accesorios') return '🎒'
   return '🚵'
 }
 
@@ -102,13 +103,15 @@ function productCard(producto) {
 function applyConfig() {
   const title = document.querySelector('[data-config="hero_titulo"]')
   const subtitle = document.querySelector('[data-config="hero_subtitulo"]')
-  const address = document.querySelector('[data-config="direccion"]')
-  const hours = document.querySelector('[data-config="horarios"]')
+  document.querySelectorAll('[data-config="direccion"]').forEach((el) => {
+    if (state.config.direccion) el.textContent = state.config.direccion
+  })
+  document.querySelectorAll('[data-config="horarios"]').forEach((el) => {
+    if (state.config.horarios) el.textContent = state.config.horarios
+  })
 
   if (title && state.config.hero_titulo) title.innerHTML = state.config.hero_titulo
   if (subtitle && state.config.hero_subtitulo) subtitle.textContent = state.config.hero_subtitulo
-  if (address && state.config.direccion) address.textContent = state.config.direccion
-  if (hours && state.config.horarios) hours.textContent = state.config.horarios
 
   const logo = document.getElementById('site-logo')
   if (logo && state.config.logo_url) {
@@ -189,7 +192,10 @@ function closeProductModal() {
 function renderBrandFilters() {
   const container = document.getElementById('brand-filters')
   if (!container) return
-  const brands = [...new Set(state.productos.map((p) => p.marca).filter(Boolean))]
+  const brands = [...new Set(state.productos
+    .filter((p) => normalize(p.categoria) !== 'accesorios')
+    .map((p) => p.marca)
+    .filter(Boolean))]
   container.innerHTML = [
     '<button class="filter brand-filter active" data-brand="todos" type="button">Todas las marcas</button>',
     ...brands.map((brand) => `<button class="filter brand-filter" data-brand="${escapeHtml(normalize(brand))}" type="button">${escapeHtml(brand)}</button>`)
@@ -200,6 +206,8 @@ function renderProductos() {
   const grid = document.getElementById('productos-grid')
   if (!grid) return
   const productos = state.productos.filter((producto) => {
+    if (normalize(producto.categoria) === 'accesorios') return false
+
     const categoryMatch = state.categoria === 'todos' || normalize(producto.categoria) === state.categoria
     const brandMatch = state.marca === 'todos' || normalize(producto.marca) === state.marca
     return categoryMatch && brandMatch
@@ -251,6 +259,16 @@ function addToCart(productId) {
   console.log('addToCart pendiente', productId)
 }
 
+function renderAccesorios() {
+  const grid = document.getElementById('accesorios-grid')
+  if (!grid) return
+  const accesorios = state.productos.filter((producto) => normalize(producto.categoria) === 'accesorios')
+
+  grid.innerHTML = accesorios.length
+    ? accesorios.map(productCard).join('')
+    : '<p class="specs">Próximamente catálogo de accesorios en línea.</p>'
+}
+
 async function init() {
   try {
     const data = await window.EmbiciateDB.getSiteData()
@@ -265,6 +283,7 @@ async function init() {
   renderBrandFilters()
   bindFilters()
   renderProductos()
+  renderAccesorios()
 }
 
 window.addToCart = addToCart

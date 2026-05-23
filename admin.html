@@ -68,8 +68,8 @@
         <form id="producto-form" class="grid">
           <input type="hidden" id="producto-id">
           <label>Nombre visible de la bici<input id="nombre" required><span class="hint">Se ve como título de la tarjeta del producto.</span></label>
-          <label>Precio visible en pesos argentinos<input id="precio" type="number" min="0" max="2000000" step="100" inputmode="numeric" required><span class="hint">Ingresalo sin puntos ni signo $. Ejemplo: 599900. Máximo permitido: 2000000.</span></label>
-          <label>Filtro/categoría<select id="categoria"><option>MTB</option><option>Urbana</option><option>Electrica</option></select><span class="hint">Define en qué filtro aparece.</span></label>
+          <label>Precio visible en pesos argentinos<input id="precio" type="text" inputmode="numeric" required><span class="hint">Podés ingresarlo con o sin puntos/signo $. Ejemplo: 599.900 o 599900. Máximo permitido: 2.000.000.</span></label>
+          <label>Filtro/categoría<select id="categoria"><option>MTB</option><option>Urbana</option><option>Electrica</option><option>Accesorios</option></select><span class="hint">Define en qué filtro aparece.</span></label>
           <label>Marca para filtro<input id="marca" placeholder="Firebird"><span class="hint">Crea el botón de marca automáticamente.</span></label>
           <label>Stock interno<input id="stock" type="number" value="0"><span class="hint">Por ahora solo se ve en el admin.</span></label>
           <label>Imágenes desde galería/cámara<input id="imagen_file" type="file" accept="image/*" multiple><span class="hint">Podés elegir más de una imagen desde computadora o celular.</span></label>
@@ -131,6 +131,23 @@
     const loginView = document.getElementById('login-view');
     const adminView = document.getElementById('admin-view');
 
+    function parsePrecio(valStr) {
+      if (!valStr) return 0;
+      let clean = valStr.replace(/[$ ]/g, '');
+      clean = clean.replace(/[,.]\d{2}$/, '');
+      clean = clean.replace(/[.,]/g, '');
+      return Number(clean || 0);
+    }
+
+    function formatPrecioInput(num) {
+      return new Intl.NumberFormat('es-AR', { maximumFractionDigits: 0 }).format(num);
+    }
+
+    document.getElementById('precio').onblur = (e) => {
+      const parsed = parsePrecio(e.target.value);
+      e.target.value = parsed > 0 ? formatPrecioInput(parsed) : '';
+    };
+
     async function showAdmin(session) {
       loginView.classList.add('hidden');
       adminView.classList.remove('hidden');
@@ -168,7 +185,9 @@
     function getProductForm() {
       let specs = {};
       try { specs = JSON.parse(document.getElementById('specs').value || '{}'); } catch { specs = {}; }
-      const precio = Number(document.getElementById('precio').value || 0);
+      const rawPrecio = document.getElementById('precio').value;
+      const precio = parsePrecio(rawPrecio);
+      if (isNaN(precio) || precio <= 0) throw new Error('El precio ingresado no es válido.');
       if (precio > 2000000) throw new Error('El precio máximo permitido es $2.000.000.');
       specs.imagenes = document.getElementById('imagenes_urls').value.split('\n').map((url) => url.trim()).filter(Boolean);
       return {
@@ -188,7 +207,7 @@
       document.getElementById('producto-id').value = product.id || '';
       document.getElementById('nombre').value = product.nombre || '';
       document.getElementById('descripcion').value = product.descripcion || '';
-      document.getElementById('precio').value = product.precio || 0;
+      document.getElementById('precio').value = product.precio ? formatPrecioInput(product.precio) : '';
       document.getElementById('categoria').value = product.categoria || 'MTB';
       document.getElementById('marca').value = product.marca || '';
       document.getElementById('imagen_url').value = product.imagen_url || '';
