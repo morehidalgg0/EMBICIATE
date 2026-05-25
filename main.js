@@ -81,7 +81,7 @@ function productCard(producto) {
   const images = imageUrls(producto)
   const imagenUrl = escapeHtml(images[0])
   const image = images[0]
-    ? `<img src="${imagenUrl}" alt="${nombre}" loading="lazy" style="width:100%;height:210px;object-fit:cover;display:block;">`
+    ? `<img src="${imagenUrl}" alt="${nombre}" loading="lazy" width="270" height="210" style="width:100%;height:210px;object-fit:cover;display:block;">`
     : productEmoji(producto)
 
   return `
@@ -115,7 +115,7 @@ function applyConfig() {
 
   const logo = document.getElementById('site-logo')
   if (logo && state.config.logo_url) {
-    logo.innerHTML = `<img class="logo-img" src="${escapeHtml(state.config.logo_url)}" alt="Embiciate">`
+    logo.innerHTML = `<img class="logo-img" src="${escapeHtml(state.config.logo_url)}" alt="Embiciate" width="240" height="72">`
   }
 
   document.querySelectorAll('[data-config]').forEach((node) => {
@@ -132,7 +132,7 @@ function applyConfig() {
 
   const visual = document.getElementById('hero-visual')
   if (visual && state.config.hero_imagen) {
-    visual.innerHTML = `<img src="${escapeHtml(state.config.hero_imagen)}" alt="Bicicleta destacada" loading="eager" style="width:100%;height:100%;min-height:260px;object-fit:cover;display:block;border-radius:20px;">`
+    visual.innerHTML = `<img src="${escapeHtml(state.config.hero_imagen)}" alt="Bicicleta destacada" fetchpriority="high" width="540" height="260" style="width:100%;height:100%;min-height:260px;object-fit:cover;display:block;border-radius:20px;">`
   }
 
   const hero = document.getElementById('inicio')
@@ -168,8 +168,8 @@ function openProductModal(producto) {
   title.textContent = producto.nombre || 'Producto'
   body.innerHTML = `
     <div>
-      <div class="gallery-main" id="gallery-main">${firstImage ? `<img src="${escapeHtml(firstImage)}" alt="${escapeHtml(producto.nombre)}">` : productEmoji(producto)}</div>
-      ${images.length > 1 ? `<div class="gallery-thumbs">${images.map((url) => `<button type="button" data-gallery-image="${escapeHtml(url)}"><img src="${escapeHtml(url)}" alt=""></button>`).join('')}</div>` : ''}
+      <div class="gallery-main" id="gallery-main">${firstImage ? `<img src="${escapeHtml(firstImage)}" alt="${escapeHtml(producto.nombre)}" width="440" height="280" style="width:100%;height:100%;max-height:440px;object-fit:cover;display:block;">` : productEmoji(producto)}</div>
+      ${images.length > 1 ? `<div class="gallery-thumbs">${images.map((url) => `<button type="button" data-gallery-image="${escapeHtml(url)}"><img src="${escapeHtml(url)}" alt="" loading="lazy" width="76" height="62" style="width:100%;height:100%;object-fit:cover;display:block;"></button>`).join('')}</div>` : ''}
     </div>
     <div>
       <p class="price">${formatPrice(producto.precio)}</p>
@@ -270,20 +270,40 @@ function renderAccesorios() {
 }
 
 async function init() {
-  try {
-    const data = await window.EmbiciateDB.getSiteData()
-    state.config = data.config || {}
-    state.productos = (data.productos || []).length ? data.productos : fallbackProductos
-  } catch (error) {
-    console.error('No se pudo cargar Supabase. Usando fallback local.', error)
-    state.productos = fallbackProductos
+  // Inicializar estado usando fallback estático del HTML
+  state.productos = fallbackProductos
+
+  // Vincular eventos de filtros y modales para interactividad inmediata (TBT optimizado)
+  bindFilters()
+
+  // Renderizar filtros de marcas iniciales y productos fallback
+  renderBrandFilters()
+
+  // Cargar datos de Supabase de manera diferida/no bloqueante
+  const loadSupabaseData = async () => {
+    try {
+      const data = await window.EmbiciateDB.getSiteData()
+      if (data) {
+        state.config = data.config || {}
+        if (data.productos && data.productos.length) {
+          state.productos = data.productos
+        }
+      }
+    } catch (error) {
+      console.error('No se pudo cargar Supabase. Usando fallback local.', error)
+    }
+
+    applyConfig()
+    renderBrandFilters()
+    renderProductos()
+    renderAccesorios()
   }
 
-  applyConfig()
-  renderBrandFilters()
-  bindFilters()
-  renderProductos()
-  renderAccesorios()
+  if (window.requestIdleCallback) {
+    window.requestIdleCallback(loadSupabaseData)
+  } else {
+    setTimeout(loadSupabaseData, 50)
+  }
 }
 
 window.addToCart = addToCart
