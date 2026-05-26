@@ -237,12 +237,15 @@ function bindFilters() {
     renderProductos()
   })
 
-  document.getElementById('productos-grid')?.addEventListener('click', (event) => {
+  const handleProductDetailClick = (event) => {
     const button = event.target.closest('[data-product-detail]')
     if (!button) return
     const product = state.productos.find((item) => String(item.id || item.nombre) === button.dataset.productDetail)
     if (product) openProductModal(product)
-  })
+  }
+
+  document.getElementById('productos-grid')?.addEventListener('click', handleProductDetailClick)
+  document.getElementById('accesorios-grid')?.addEventListener('click', handleProductDetailClick)
 
   document.getElementById('modal-close')?.addEventListener('click', closeProductModal)
   document.getElementById('product-modal')?.addEventListener('click', (event) => {
