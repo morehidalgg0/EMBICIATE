@@ -1,0 +1,82 @@
+{
+  "0": {
+    "precio": "$269.900",
+    "etiqueta": "MTB",
+    "specs": [
+      "Rodado 29",
+      "21 velocidades",
+      "Frenos a disco"
+    ],
+    "imagenes": [
+      "assets/bici-0-0.jpeg"
+    ],
+    "modelo": "Firebird Turbo R29"
+  },
+  "1": {
+    "deleted": true
+  },
+  "2": {
+    "modelo": "Fiat 500",
+    "precio": "$289.900",
+    "etiqueta": "MTB",
+    "specs": [
+      "Rodado 29",
+      "24 velocidades",
+      "Frenos hidráulicos",
+      "SHIMANO"
+    ],
+    "imagenes": [
+      "assets/bici-2-0.jpeg"
+    ]
+  },
+  "3": {
+    "modelo": "TopMega Thor",
+    "precio": "$599.900",
+    "etiqueta": "MTB",
+    "specs": [
+      "Rodado 29",
+      "21 velocidades",
+      "Cuadro aluminio"
+    ],
+    "imagenes": [
+      "assets/bici-3-0.jpeg"
+    ]
+  },
+  "4": {
+    "deleted": true
+  },
+  "5": {
+    "deleted": true
+  },
+  "6": {
+    "deleted": true
+  },
+  "7": {
+    "deleted": true
+  },
+  "8": {
+    "deleted": true
+  },
+  "9": {
+    "deleted": true
+  },
+  "10": {
+    "deleted": true
+  },
+  "11": {
+    "deleted": true
+  },
+  "site": {
+    "whatsapp_numero": "5492235505397",
+    "whatsapp_mensaje": "Hola! Me interesa una bicicleta, ¿tienen stock disponible?",
+    "direccion": "Los Gallegos (Rivadavia 3050.Subsuelo) , Mar del Plata, Argentina",
+    "horarios": "Lunes a Sábados: 11:00 a 19:00 hs",
+    "ubicacion_url": "https://share.google/kyp1uH8sStsCnTlP2",
+    "contacto_texto": "Vení a conocer todos nuestros modelos en vivo en nuestro local ubicado en <strong>Mar del Plata</strong>. Te asesoraremos para que encuentres la bicicleta perfecta para vos.",
+    "pago_badge_1": "⚡ 3 cuotas sin interés",
+    "pago_desc_1": "Con Visa y Mastercard",
+    "pago_badge_2": "Resto de tarjetas",
+    "pago_desc_2": "Hasta 12 cuotas fijas",
+    "pago_img_visa": "assets/pago-visa.png"
+  }
+}
