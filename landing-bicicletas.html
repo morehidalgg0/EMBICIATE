@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embiciate | Encontrá tu Bicicleta Ideal al Mejor Precio</title>
+    <meta name="description" content="Encontrá tu bicicleta en Mar del Plata. Modelos MTB, Urbanas y Eléctricas con la mejor financiación de hasta 12 cuotas fijas y envíos a todo el país.">
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5L223ZR2');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- CSS Adicional Específico para la Landing -->
+    <style>
+        .whatsapp-fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            z-index: 999;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease;
+        }
+        .whatsapp-fab:hover {
+            transform: scale(1.1);
+            background-color: #1ebe5d;
+        }
+        .whatsapp-fab svg {
+            width: 32px;
+            height: 32px;
+            fill: currentColor;
+        }
+        .benefit-card-icon {
+            background: rgba(255, 85, 0, 0.1);
+            border: 1.5px solid rgba(255, 85, 0, 0.4);
+            border-radius: 50%;
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+        .contact-box:hover .benefit-card-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        .branch-grid {
+            margin-top: 1.5rem;
+        }
+        .branch-map-wrapper {
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            height: 250px;
+        }
+        .branch-map-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+            filter: grayscale(0.6) contrast(1.1) invert(0.9);
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5L223ZR2"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Urgencia Banner -->
+    <div class="urgencia-banner">
+        ⚡ Stock limitado — Consultá disponibilidad antes de que se agote
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <a href="#hero" class="logo">
+            <img src="assets/logo.png" alt="Embiciate Logo" style="height: 180px; width: auto;">
+        </a>
+        <ul class="nav-links">
+            <li><a href="#hero">Inicio</a></li>
+            <li><a href="#bicicletas">Bicicletas</a></li>
+            <li><a href="#beneficios">Beneficios</a></li>
+            <li><a href="#locales">Locales</a></li>
+            <li><a href="#locales" class="btn-outline">Contacto</a></li>
+        </ul>
+        <!-- Botón WhatsApp Responsivo de Navbar -->
+        <a href="https://wa.me/5492235505397?text=Hola!%20Vengo%20de%20la%20página%20de%20bicicletas,%20quiero%20hacer%20una%20consulta." target="_blank" id="btn-nav-mobile" class="btn-nav-mobile" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="white" width="16" height="16" style="margin-right: 5px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            ESCRIBINOS
+        </a>
+
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Static version optimized for conversions) -->
+    <header id="hero" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-bike-layer" style="background-image: url('assets/bici-0-0.webp');"></div>
+        
+        <div class="container hero-container">
+            <div class="hero-content fade-in-up">
+                <h1 data-txt="hero_titulo">LA BICI<br><span class="text-accent">QUE BUSCÁS</span><br>ESTÁ ACÁ</h1>
+                <div data-txt="hero_precio_principal" class="hero-price-highlight">Bicicletas desde <span>$269.900</span></div>
+                
+                <!-- CTA principal de WhatsApp (script.js will dynamically replace its href using the config) -->
+                <a href="https://wa.me/5492235505397?text=Hola!%20Me%20interesa%20comprar%20una%20bicicleta,%20¿tienen%20stock%20disponible?" target="_blank" id="btn-whatsapp-hero" class="btn-whatsapp-hero btn-full-width-mobile mt-2">
+                    <span class="wa-icon">
+                        <svg viewBox="0 0 24 24" fill="white" width="32" height="32"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                    </span>
+                    <div class="btn-text-content">
+                        <strong>ESCRIBINOS POR WHATSAPP</strong>
+                        <span>Y LLEVÁTELAS HOY</span>
+                    </div>
+                </a>
+
+                <!-- Imagen de la bici para celulares (responsivo) -->
+                <div class="hero-bike-mobile-wrapper">
+                    <img src="assets/bici-0-0.webp" alt="Bicicleta Destacada" class="hero-bike-img-mobile">
+                </div>
+
+                <!-- Características con SVGs -->
+                <div class="hero-features mt-2">
+                    <div class="feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        <span>HASTA <strong class="text-accent">12</strong><br>CUOTAS FIJAS</span>
+                    </div>
+                    <div class="feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                        <span>ENVÍOS A<br><strong class="text-accent">TODO</strong> EL PAÍS</span>
+                    </div>
+                    <div class="feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+                        <span>GARANTÍA<br>Y SERVICIO <strong class="text-accent">TÉCNICO</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ficha de Precio Hero (Static Highlight) -->
+            <div class="hero-price-card fade-in-up" style="transition-delay: 0.2s;">
+                <div class="price-left">
+                    <span class="bike-model text-accent">MODELOS DESTACADOS >></span>
+                    <div class="price">$269.900</div>
+                    <div class="bike-specs">RODADO 29' &bull; CUADRO ALUMINIO &bull; FRENOS A DISCO</div>
+                </div>
+                <div class="price-divider"></div>
+                <div class="price-right">
+                    <span class="hasta">HASTA</span>
+                    <div class="cuotas">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" width="32" height="32"><rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        <span class="num text-accent">12</span>
+                        <span class="text">CUOTAS<br>FIJAS</span>
+                    </div>
+                    <span class="con-todas">CON TODAS LAS TARJETAS</span>
+                </div>
+            </div>
+            
+            <div class="hero-brands fade-in-up" style="transition-delay: 0.4s;">
+                <span>TOPMEGA</span>
+                <span>FIREBIRD</span>
+                <span>RALEIGH</span>
+                <span>SOUTH</span>
+                <span>VENZO</span>
+                <span>SLP</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Medios de Pago -->
+    <section id="pagos" class="pagos-section">
+        <div class="container">
+            <div class="pagos-inner">
+                <!-- Visa + Mastercard: 3 cuotas sin interés -->
+                <div class="pagos-group pagos-destacado">
+                    <div class="pagos-logos">
+                        <img src="assets/pago-visa.png" alt="Visa" class="pago-logo pago-logo--visa" loading="lazy">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" class="pago-logo pago-logo--mc" loading="lazy">
+                    </div>
+                    <div class="pagos-info">
+                        <span class="pagos-badge pagos-badge--highlight">⚡ 3 cuotas sin interés</span>
+                        <p class="pagos-desc">Con Visa y Mastercard</p>
+                    </div>
+                </div>
+
+                <div class="pagos-sep"></div>
+
+                <!-- Resto de tarjetas -->
+                <div class="pagos-group">
+                    <div class="pagos-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="36" height="36">
+                            <rect x="2" y="5" width="20" height="14" rx="2"/>
+                            <line x1="2" y1="10" x2="22" y2="10"/>
+                        </svg>
+                    </div>
+                    <div class="pagos-info">
+                        <span class="pagos-badge pagos-badge--secondary">Hasta 12 cuotas fijas</span>
+                        <p class="pagos-desc">Con todas las tarjetas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bicicletas Section -->
+    <section id="bicicletas" class="section">
+        <div class="container">
+            <div class="section-heading fade-in-up">
+                <h2 class="section-title">Encontrá tu Rodado</h2>
+                <p class="section-intro">Selección exclusiva de bicicletas listas para retirar hoy. Consultanos por WhatsApp y te asesoramos al instante.</p>
+            </div>
+            
+            <div class="product-grid">
+                <!-- Tarjeta 1: MTB Rodado 29 -->
+                <article class="product-card fade-in-up">
+                    <div class="product-img-wrapper">
+                        <span class="product-badge">Aventura</span>
+                        <img src="assets/bici-0-0.webp" alt="Bicicleta MTB Rodado 29" class="product-img" loading="lazy">
+                        <div class="product-price-overlay">$269.900</div>
+                    </div>
+                    <div class="product-content">
+                        <h3>MTB Rodado 29</h3>
+                        <ul class="product-specs">
+                            <li>Rodado 29</li>
+                            <li>21 Velocidades sincronizadas</li>
+                            <li>Frenos a disco mecánicos delanteros y traseros</li>
+                        </ul>
+                        <div class="product-cuotas">
+                            <span class="cuotas-badge">⚡ 3 cuotas sin interés</span>
+                            <span class="cuotas-sub">Visa y Mastercard</span>
+                        </div>
+                        <div class="product-divider"></div>
+                        <a href="https://wa.me/5492235505397?text=Hola!%20Quiero%20consultar%20por%20la%20MTB%20Rodado%2029%20de%20$269.900" target="_blank" rel="noopener" class="product-btn">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                            Consultar por WhatsApp
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 2: Topmega MTB Pro -->
+                <article class="product-card fade-in-up" style="transition-delay: 0.1s;">
+                    <div class="product-img-wrapper">
+                        <span class="product-badge">MTB Pro</span>
+                        <img src="assets/bici-3-0.jpeg" alt="Bicicleta Topmega MTB Pro" class="product-img" loading="lazy">
+                        <div class="product-price-overlay">$389.900</div>
+                    </div>
+                    <div class="product-content">
+                        <h3>Topmega MTB Pro</h3>
+                        <ul class="product-specs">
+                            <li>Rodado 29</li>
+                            <li>24 Velocidades de precisión</li>
+                            <li>Frenos a disco hidráulicos de alta potencia</li>
+                        </ul>
+                        <div class="product-cuotas">
+                            <span class="cuotas-badge">⚡ 3 cuotas sin interés</span>
+                            <span class="cuotas-sub">Visa y Mastercard</span>
+                        </div>
+                        <div class="product-divider"></div>
+                        <a href="https://wa.me/5492235505397?text=Hola!%20Quiero%20consultar%20por%20la%20Topmega%20MTB%20Pro%20de%20$389.900" target="_blank" rel="noopener" class="product-btn">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                            Consultar por WhatsApp
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 3: Urbana Vintage -->
+                <article class="product-card fade-in-up" style="transition-delay: 0.2s;">
+                    <div class="product-img-wrapper">
+                        <span class="product-badge">Ciudad</span>
+                        <img src="assets/urban.png" alt="Bicicleta Urbana Vintage" class="product-img" loading="lazy">
+                        <div class="product-price-overlay">$215.000</div>
+                    </div>
+                    <div class="product-content">
+                        <h3>Urbana Vintage</h3>
+                        <ul class="product-specs">
+                            <li>Estilo Paseo Vintage Clásico</li>
+                            <li>Cuadro bajo de fácil acceso</li>
+                            <li>Equipada con canasto, guardabarros y portaequipaje</li>
+                        </ul>
+                        <div class="product-cuotas">
+                            <span class="cuotas-badge">⚡ 3 cuotas sin interés</span>
+                            <span class="cuotas-sub">Visa y Mastercard</span>
+                        </div>
+                        <div class="product-divider"></div>
+                        <a href="https://wa.me/5492235505397?text=Hola!%20Quiero%20consultar%20por%20la%20Urbana%20Vintage%20de%20$215.000" target="_blank" rel="noopener" class="product-btn">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                            Consultar por WhatsApp
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 4: E-Bike Plegable -->
+                <article class="product-card fade-in-up" style="transition-delay: 0.3s;">
+                    <div class="product-img-wrapper">
+                        <span class="product-badge">Eléctrica</span>
+                        <img src="assets/bici-1-0.jpeg" alt="Bicicleta E-Bike Plegable" class="product-img" loading="lazy">
+                        <div class="product-price-overlay">$799.900</div>
+                    </div>
+                    <div class="product-content">
+                        <h3>E-Bike Plegable</h3>
+                        <ul class="product-specs">
+                            <li>Motor eléctrico de 350W</li>
+                            <li>Batería de Litio integrada de larga duración</li>
+                            <li>Cuadro plegable ideal para guardar en espacios reducidos</li>
+                        </ul>
+                        <div class="product-cuotas">
+                            <span class="cuotas-badge">⚡ 3 cuotas sin interés</span>
+                            <span class="cuotas-sub">Visa y Mastercard</span>
+                        </div>
+                        <div class="product-divider"></div>
+                        <a href="https://wa.me/5492235505397?text=Hola!%20Quiero%20consultar%20por%20la%20E-Bike%20Plegable%20de%20$799.900" target="_blank" rel="noopener" class="product-btn">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                            Consultar por WhatsApp
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beneficios Section -->
+    <section id="beneficios" class="section bg-darker">
+        <div class="container">
+            <div class="section-heading fade-in-up">
+                <h2 class="section-title">¿Por qué elegirnos?</h2>
+                <p class="section-intro">Te brindamos soluciones reales para que solo te preocupes por pedalear.</p>
+            </div>
+            
+            <div class="grid fade-in-up">
+                <!-- Beneficio 1 -->
+                <div class="contact-box" style="margin: 0; max-width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 3rem 2rem;">
+                    <div class="benefit-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32"><rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    </div>
+                    <h3 style="font-size: 1.4rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem;">Hasta 12 Cuotas</h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.95rem; line-height: 1.5;">Financiación flexible en cuotas fijas con todas las tarjetas de crédito bancarias y de retail.</p>
+                </div>
+
+                <!-- Beneficio 2 -->
+                <div class="contact-box" style="margin: 0; max-width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 3rem 2rem;">
+                    <div class="benefit-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                    <h3 style="font-size: 1.4rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem;">Envíos Nacionales</h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.95rem; line-height: 1.5;">Llegamos a cada rincón del país con envíos rápidos, embalaje de alta seguridad y tracking online.</p>
+                </div>
+
+                <!-- Beneficio 3 -->
+                <div class="contact-box" style="margin: 0; max-width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 3rem 2rem;">
+                    <div class="benefit-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+                    </div>
+                    <h3 style="font-size: 1.4rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem;">Garantía y Taller</h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.95rem; line-height: 1.5;">Garantía oficial y servicio de postventa en nuestro taller especializado de Mar del Plata.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locales Section -->
+    <section id="locales" class="section">
+        <div class="container">
+            <div class="section-heading fade-in-up">
+                <h2 class="section-title">Nuestras Sucursales</h2>
+                <p class="section-intro">Vení a visitarnos y conocé todos nuestros modelos en vivo. Te esperamos para asesorarte en lo que necesités.</p>
+            </div>
+            
+            <div class="grid fade-in-up branch-grid">
+                <!-- Sucursal 1: Los Gallegos -->
+                <div class="contact-box" style="margin: 0; max-width: 100%;">
+                    <h3 class="text-accent mb-1" style="font-size: 1.8rem; font-weight: 800; text-transform: uppercase;">Los Gallegos Shopping</h3>
+                    <p class="description-text">Nuestra sucursal céntrica dentro de Los Gallegos Shopping. Un espacio cómodo con atención especializada.</p>
+                    <div class="contact-info" style="flex-direction: column; align-items: flex-start; justify-content: flex-start;">
+                        <div class="info-item">
+                            <span class="icon">📍</span>
+                            <p>Rivadavia 3050 (Subsuelo), Mar del Plata</p>
+                        </div>
+                        <div class="info-item">
+                            <span class="icon">🕒</span>
+                            <p>Lunes a Sábados: 11:00 a 19:00 hs</p>
+                        </div>
+                        <div class="info-item">
+                            <span class="icon">📲</span>
+                            <p>WhatsApp: <strong>223 550 5397</strong></p>
+                        </div>
+                    </div>
+                    <div class="contact-cta mt-2" style="grid-template-columns: 1fr; margin-top: 1.5rem;">
+                        <a href="https://share.google/kyp1uH8sStsCnTlP2" target="_blank" rel="noopener" class="btn-outline btn-location text-center" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                            📍 Ver en Google Maps
+                        </a>
+                        <a href="https://wa.me/5492235505397?text=Hola!%20Me%20contacto%20desde%20la%20landing%20para%20consultar%20por%20sucursal%20Los%20Gallegos" target="_blank" rel="noopener" class="btn-primary text-center" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                            📲 Consultar Sucursal
+                        </a>
+                    </div>
+                    <div class="branch-map-wrapper">
+                        <iframe title="Mapa Los Gallegos" src="https://www.google.com/maps?q=Embiciate%20Rivadavia%203050%20Mar%20del%20Plata&output=embed" loading="lazy"></iframe>
+                    </div>
+                </div>
+
+                <!-- Sucursal 2: Av. Constitución -->
+                <div class="contact-box" style="margin: 0; max-width: 100%;">
+                    <h3 class="text-accent mb-1" style="font-size: 1.8rem; font-weight: 800; text-transform: uppercase;">Constitución</h3>
+                    <p class="description-text">Nuestra sucursal en zona norte en la galería comercial de Carrefour. Estacionamiento libre y excelente accesibilidad.</p>
+                    <div class="contact-info" style="flex-direction: column; align-items: flex-start; justify-content: flex-start;">
+                        <div class="info-item">
+                            <span class="icon">📍</span>
+                            <p>Av. Constitución 7598 (Carrefour), Mar del Plata</p>
+                        </div>
+                        <div class="info-item">
+                            <span class="icon">🕒</span>
+                            <p>Todos los días: 09:00 a 21:00 hs</p>
+                        </div>
+                        <div class="info-item">
+                            <span class="icon">📲</span>
+                            <p>WhatsApp: <strong>223 551 7857</strong></p>
+                        </div>
+                    </div>
+                    <div class="contact-cta mt-2" style="grid-template-columns: 1fr; margin-top: 1.5rem;">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Carrefour+Av.+Constitucion+7598+Mar+del+Plata" target="_blank" rel="noopener" class="btn-outline btn-location text-center" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                            📍 Ver en Google Maps
+                        </a>
+                        <a href="https://wa.me/5492235517857?text=Hola!%20Me%20contacto%20desde%20la%20landing%20para%20consultar%20por%20sucursal%20Constitucion" target="_blank" rel="noopener" class="btn-primary text-center" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                            📲 Consultar Sucursal
+                        </a>
+                    </div>
+                    <div class="branch-map-wrapper">
+                        <iframe title="Mapa Carrefour Constitucion" src="https://maps.google.com/maps?q=Carrefour%20Av.%20Constitucion%207598%20Mar%20del%20Plata&output=embed" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <img src="assets/logo.png" alt="Embiciate Logo" style="height: 120px; width: auto; margin: 0 auto;">
+            </div>
+            <p>&copy; 2026 Embiciate. Pasión por las bicicletas. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Botón Flotante de WhatsApp (Móvil y Escritorio) -->
+    <a href="https://wa.me/5492235505397?text=Hola!%20Vengo%20de%20la%20página%20de%20bicicletas,%20quiero%20hacer%20una%20consulta." class="whatsapp-fab" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.248 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.557-5.343 11.897-11.95 11.897h-.007c-2.1 0-4.13-.55-5.936-1.594L0 24zm6.305-1.654c1.761 1.043 3.518 1.59 5.688 1.59 5.46 0 9.897-4.436 9.901-9.902.002-2.65-1.03-5.14-2.9-7.01-1.87-1.87-4.364-2.9-7.01-2.901-5.468 0-9.908 4.436-9.913 9.903-.002 2.164.55 4.276 1.6 6.079l-1.05 3.829 3.924-1.029zm12.355-6.52c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+    </a>
+
+    <!-- Config y Scripts -->
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
