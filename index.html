@@ -59,23 +59,27 @@
     .menu a:hover { color: var(--orange); }
     .header-wa { display: none; align-items: center; gap: .45rem; background: var(--green-wa); color: #04150a; padding: .75rem 1.15rem; border-radius: 12px; font-weight: 900; text-transform: uppercase; box-shadow: 0 10px 24px rgba(37,211,102,.18); }
 
-    .hero { --hero-bg-image: none; position: relative; min-height: calc(100svh - 112px); display: grid; align-items: center; padding: 3rem 0 2rem; isolation: isolate; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; z-index: -2; background: radial-gradient(circle at 78% 34%, rgba(132,204,22,.28), transparent 20rem), radial-gradient(circle at 52% 18%, rgba(249,115,22,.32), transparent 22rem), linear-gradient(110deg, rgba(0,0,0,.98) 0%, rgba(0,0,0,.9) 42%, rgba(0,0,0,.45) 100%), var(--hero-bg-image); background-size: auto, auto, auto, cover; background-position: center; }
-    .hero::after { content: '🚲'; position: absolute; right: -5rem; bottom: -5rem; z-index: -1; font-size: clamp(18rem, 45vw, 38rem); opacity: .09; filter: grayscale(1); transform: rotate(-9deg); }
-    .hero-grid { display: grid; gap: 2rem; align-items: center; }
-    .hero-copy { max-width: 720px; }
-    .eyebrow { display: inline-flex; align-items: center; gap: .45rem; color: var(--green); background: rgba(132,204,22,.12); border: 1px solid rgba(132,204,22,.28); border-radius: 999px; padding: .35rem .85rem; font-weight: 800; text-transform: uppercase; font-size: .85rem; margin-bottom: 1rem; }
-    h1 { font-family: var(--display); text-transform: uppercase; font-size: clamp(4rem, 15vw, 8.8rem); line-height: .82; letter-spacing: -.045em; font-weight: 800; text-wrap: balance; }
-    h1 span { display: block; color: var(--orange); text-shadow: 0 6px 0 rgba(0,0,0,.42); }
-    .hero p { color: var(--muted); max-width: 560px; margin: 1.2rem 0; font-size: clamp(1rem, 2vw, 1.22rem); }
+    .hero { --hero-bg-image: none; --hero-accent: #D85A30; position: relative; min-height: min(620px, calc(100svh - 112px)); display: grid; align-items: center; padding: clamp(1.4rem, 4vw, 2.4rem) 0; isolation: isolate; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; z-index: -2; background: radial-gradient(circle at 78% 34%, rgba(216,90,48,.22), transparent 18rem), linear-gradient(110deg, rgba(0,0,0,.96) 0%, rgba(0,0,0,.86) 48%, rgba(0,0,0,.52) 100%), var(--hero-bg-image); background-size: auto, auto, cover; background-position: center; }
+    .hero::after { content: ''; position: absolute; right: -8rem; bottom: -8rem; z-index: -1; width: 24rem; height: 24rem; border-radius: 50%; background: rgba(216,90,48,.12); filter: blur(10px); }
+    .hero-grid { display: grid; gap: clamp(1.2rem, 4vw, 2.6rem); align-items: center; }
+    .hero-copy { max-width: 520px; display: flex; flex-direction: column; justify-content: center; }
+    .eyebrow { display: inline-flex; width: max-content; align-items: center; gap: .45rem; color: #E88C5C; background: rgba(216,90,48,.15); border: 1px solid rgba(232,140,92,.28); border-radius: 999px; padding: .35rem .85rem; font-weight: 800; text-transform: uppercase; font-size: .78rem; margin-bottom: .85rem; }
+    h1 { font-family: var(--display); text-transform: uppercase; font-size: clamp(1.9rem, 2.8vw, 2rem); line-height: 1.02; letter-spacing: -.025em; font-weight: 800; text-wrap: balance; max-width: 520px; }
+    h1 span { display: inline; color: var(--hero-accent); text-shadow: none; }
+    .hero p { color: var(--muted); max-width: 420px; margin: .9rem 0 1rem; font-size: clamp(.98rem, 1.4vw, 1.06rem); }
     .cta-row { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; }
-    .btn-main { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; background: linear-gradient(135deg, var(--orange), var(--orange-2)); color: #fff; border: 0; border-radius: 14px; padding: .95rem 1.25rem; font-weight: 900; text-transform: uppercase; box-shadow: 0 14px 28px rgba(249,115,22,.22); transition: transform .16s, filter .16s; }
+    .btn-main { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; background: #25D366; color: #07190d; border: 0; border-radius: 14px; padding: .85rem 1.15rem; font-weight: 900; text-transform: uppercase; box-shadow: 0 14px 28px rgba(37,211,102,.18); transition: transform .16s, filter .16s; }
     .btn-main:hover { transform: translateY(-2px); filter: brightness(1.05); }
-    .btn-ghost { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 14px; padding: .95rem 1.25rem; color: #fff; font-weight: 800; text-transform: uppercase; }
-    .badges { display: grid; grid-template-columns: 1fr; gap: .65rem; margin-top: 1.3rem; }
-    .badge { display: flex; align-items: center; gap: .55rem; background: rgba(255,255,255,.055); border: 1px solid var(--line); border-radius: 14px; padding: .75rem .8rem; color: #f3f3f3; font-weight: 800; }
-    .hero-card { background: linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border: 1px solid var(--line); border-radius: 26px; padding: 1rem; box-shadow: var(--shadow); }
-    .bike-visual { min-height: 260px; border-radius: 20px; background: radial-gradient(circle at 50% 35%, rgba(249,115,22,.25), transparent 13rem), linear-gradient(145deg, #242424, #090909); display: grid; place-items: center; font-size: clamp(8rem, 30vw, 14rem); }
+    .btn-ghost { display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid rgba(255,255,255,.24); border-radius: 14px; padding: .85rem 1.15rem; color: #fff; font-weight: 800; text-transform: uppercase; }
+    .badges { display: grid; grid-template-columns: 1fr; gap: .55rem; margin-top: 1rem; }
+    .badge { display: flex; align-items: center; gap: .55rem; background: rgba(255,255,255,.055); border: 1px solid var(--line); border-radius: 14px; padding: .62rem .72rem; color: #f3f3f3; font-weight: 800; font-size: .9rem; }
+    .hero-card { background: linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border: 1px solid var(--line); border-radius: 26px; padding: .8rem; box-shadow: var(--shadow); }
+    .bike-visual { min-height: min(42svh, 360px); border-radius: 20px; background: radial-gradient(circle at 50% 35%, rgba(216,90,48,.24), transparent 13rem), linear-gradient(145deg, #242424, #090909); display: grid; place-items: center; overflow: hidden; }
+    .bike-visual picture { width: 100%; height: 100%; display: block; }
+    .bike-visual img { width: 100%; height: 100%; min-height: inherit; object-fit: cover; object-position: 52% 62%; transform: scale(1.18); display: block; }
+    .hero-placeholder { color: #d9d9d9; text-align: center; font-weight: 900; text-transform: uppercase; }
+    .hero-placeholder small { display: block; margin-top: .35rem; color: var(--muted); font-size: .75rem; }
     .deal { margin-top: 1rem; display: grid; grid-template-columns: 1fr; gap: .8rem; }
     .deal-box { border: 1px solid var(--line); border-radius: 16px; padding: .9rem; background: rgba(0,0,0,.38); }
     .deal-box small { color: var(--orange); font-family: var(--display); font-size: 1rem; text-transform: uppercase; font-weight: 800; }
@@ -159,7 +163,7 @@
 
     @media (min-width: 720px) {
       .menu, .header-wa { display: flex; }
-      .hero-grid { grid-template-columns: .98fr 1fr; }
+      .hero-grid { grid-template-columns: .9fr 1.1fr; }
       .badges { grid-template-columns: repeat(3, 1fr); }
       .deal { grid-template-columns: 1.2fr .8fr; }
       .brand-row { grid-template-columns: repeat(6, 1fr); }
@@ -198,10 +202,10 @@
       <div class="wrap hero-grid">
         <div class="hero-copy">
           <span class="eyebrow" data-config="hero_eyebrow">Bicicletería en Mar del Plata</span>
-          <h1 data-config="hero_titulo">La bici <span>que buscás</span> está acá</h1>
-          <p data-config="hero_subtitulo">Rodados, accesorios, financiación y asesoramiento real para que salgas pedaleando con la bici correcta.</p>
+          <h1 data-config="hero_titulo">Encontrá tu bici ideal <span>en el día</span></h1>
+          <p data-config="hero_subtitulo">Asesoramiento real, stock local y hasta 12 cuotas fijas. Salí pedaleando hoy mismo.</p>
           <div class="cta-row">
-            <a class="btn-main" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20bicicletas" target="_blank" rel="noopener noreferrer">💬 Consultar por WhatsApp</a>
+            <a class="btn-main" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20bicicletas" target="_blank" rel="noopener noreferrer">💬 Consultar</a>
             <a class="btn-ghost" href="#bicicletas">Ver catálogo</a>
           </div>
           <div class="badges" id="hero-badges">
@@ -217,10 +221,6 @@
               <source srcset="/images/hero-400.webp 400w, /images/hero-800.webp 800w, /images/hero-1200.webp 1200w" type="image/webp" sizes="(max-width: 720px) 100vw, 540px">
               <img src="/images/hero.jpg" alt="Bicicleta destacada" fetchpriority="high" width="540" height="260" style="width:100%;height:100%;min-height:260px;object-fit:cover;display:block;border-radius:20px;">
             </picture>
-          </div>
-          <div class="deal">
-            <div class="deal-box"><small data-config="hero_card_titulo">Firebird aluminio</small><strong data-config="hero_card_precio">$299.900</strong><p data-config="hero_card_texto">Rodado 29 · 21 velocidades · Frenos a disco</p></div>
-            <div class="deal-box"><small data-config="hero_card_sec_titulo">Hasta</small><strong data-config="hero_card_sec_valor">12</strong><p data-config="hero_card_sec_texto">cuotas fijas con todas las tarjetas</p></div>
           </div>
         </div>
       </div>
@@ -324,8 +324,8 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <script src="/config.js?v=20260520-7" defer></script>
-  <script src="/supabase-client.js?v=20260520-7" defer></script>
-  <script src="/main.js?v=20260520-7" defer></script>
+  <script src="/config.js?v=20260520-8" defer></script>
+  <script src="/supabase-client.js?v=20260520-8" defer></script>
+  <script src="/main.js?v=20260520-8" defer></script>
 </body>
 </html>

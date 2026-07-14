@@ -110,8 +110,13 @@ function applyConfig() {
     if (state.config.horarios) el.textContent = state.config.horarios
   })
 
-  if (title && state.config.hero_titulo) title.innerHTML = state.config.hero_titulo
-  if (subtitle && state.config.hero_subtitulo) subtitle.textContent = state.config.hero_subtitulo
+  const legacyHeroTitle = 'La bici <span>que buscás</span> está acá'
+  const legacyHeroSubtitle = 'Rodados, accesorios, financiación y asesoramiento real para que salgas pedaleando con la bici correcta.'
+  const defaultHeroTitle = 'Encontrá tu bici ideal <span>en el día</span>'
+  const defaultHeroSubtitle = 'Asesoramiento real, stock local y hasta 12 cuotas fijas. Salí pedaleando hoy mismo.'
+
+  if (title) title.innerHTML = state.config.hero_titulo && state.config.hero_titulo !== legacyHeroTitle ? state.config.hero_titulo : defaultHeroTitle
+  if (subtitle) subtitle.textContent = state.config.hero_subtitulo && state.config.hero_subtitulo !== legacyHeroSubtitle ? state.config.hero_subtitulo : defaultHeroSubtitle
 
   const logo = document.getElementById('site-logo')
   if (logo && state.config.logo_url) {
