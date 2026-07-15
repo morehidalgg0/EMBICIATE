@@ -62,7 +62,8 @@
     .hero { padding: 0; background: #050505; overflow: hidden; }
     .hero-grid { width: 100%; }
     .hero-copy { display: none; }
-    .hero-image { width: 100%; min-height: min(720px, calc(100svh - 76px)); display: block; object-fit: cover; object-position: center; }
+    .hero-image { width: 100%; min-height: min(720px, calc(100svh - 76px)); display: none; object-fit: cover; object-position: center; }
+    .hero-image[src] { display: block; }
     .eyebrow { display: inline-flex; width: max-content; align-items: center; gap: .45rem; color: #E88C5C; background: rgba(216,90,48,.15); border: 1px solid rgba(232,140,92,.28); border-radius: 999px; padding: .35rem .85rem; font-weight: 800; text-transform: uppercase; font-size: .78rem; margin-bottom: .85rem; }
     h1 { font-family: var(--display); text-transform: uppercase; font-size: clamp(1.9rem, 2.8vw, 2rem); line-height: 1.02; letter-spacing: -.025em; font-weight: 800; text-wrap: balance; max-width: 520px; }
     h1 span { display: inline; color: var(--hero-accent); text-shadow: none; }
@@ -202,7 +203,7 @@
   <main>
     <section class="hero" id="inicio" aria-label="Inicio Embiciate">
       <div class="hero-grid">
-        <img class="hero-image" id="hero-image" src="/images/hero.jpg" alt="Embiciate bicicletas, accesorios y repuestos" fetchpriority="high">
+        <img class="hero-image" id="hero-image" alt="Embiciate bicicletas, accesorios y repuestos" fetchpriority="high">
         <div class="hero-copy">
           <span class="eyebrow" data-config="hero_eyebrow">Bicicletería en Mar del Plata</span>
           <h1 data-config="hero_titulo">Encontrá tu bici ideal <span>en el día</span></h1>
@@ -318,8 +319,8 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <script src="/config.js?v=20260520-11" defer></script>
-  <script src="/supabase-client.js?v=20260520-11" defer></script>
-  <script src="/main.js?v=20260520-11" defer></script>
+  <script src="/config.js?v=20260520-12" defer></script>
+  <script src="/supabase-client.js?v=20260520-12" defer></script>
+  <script src="/main.js?v=20260520-12" defer></script>
 </body>
 </html>
