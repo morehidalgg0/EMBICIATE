@@ -136,7 +136,9 @@ function applyConfig() {
   }
 
   const hero = document.getElementById('inicio')
+  const heroImg = document.getElementById('hero-image')
   const heroImage = state.config.hero_fondo_imagen || state.config.hero_imagen || '/images/hero.jpg'
+  if (heroImg && heroImage) heroImg.src = heroImage
   if (hero && heroImage) {
     hero.style.setProperty('--hero-bg-image', `url("${heroImage.replace(/"/g, '%22')}")`)
   }
