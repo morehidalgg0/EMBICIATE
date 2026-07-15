@@ -73,6 +73,13 @@ function productEmoji(producto) {
   return '🚵'
 }
 
+function specChips(producto) {
+  const values = Object.entries(producto.specs || {})
+    .filter(([key, value]) => key !== 'imagenes' && value)
+    .map(([key, value]) => `${key}: ${typeof value === 'object' ? JSON.stringify(value) : value}`)
+  return values.slice(0, 3).map((value) => `<span class="spec-chip">${escapeHtml(value)}</span>`).join('')
+}
+
 function productCard(producto) {
   const category = normalize(producto.categoria)
   const brand = normalize(producto.marca)
@@ -81,19 +88,29 @@ function productCard(producto) {
   const images = imageUrls(producto)
   const imagenUrl = escapeHtml(images[0])
   const image = images[0]
-    ? `<img src="${imagenUrl}" alt="${nombre}" loading="lazy" width="270" height="210" style="width:100%;height:210px;object-fit:cover;display:block;">`
+    ? `<img src="${imagenUrl}" alt="${nombre}" loading="lazy" width="320" height="245" style="width:100%;height:245px;object-fit:cover;display:block;">`
     : productEmoji(producto)
+  const meta = [producto.categoria, producto.marca].filter(Boolean).join(' · ')
+  const chips = specChips(producto)
 
   return `
     <article class="product" data-category="${escapeHtml(category)}" data-brand="${escapeHtml(brand)}">
-      <div class="placeholder">${image}</div>
+      <div class="placeholder">
+        <div class="product-badge-row">
+          <span class="product-badge accent">${escapeHtml(producto.categoria || 'Catálogo')}</span>
+          ${producto.marca ? `<span class="product-badge">${escapeHtml(producto.marca)}</span>` : ''}
+        </div>
+        ${image}
+      </div>
       <div class="product-info">
+        <p class="product-meta">${escapeHtml(meta || 'Embiciate')}</p>
         <h3>${nombre}</h3>
         <p class="specs">${descripcion}</p>
+        ${chips ? `<div class="spec-chips">${chips}</div>` : ''}
         <p class="price">${formatPrice(producto.precio)}</p>
         <div class="product-actions">
           <button class="product-detail" data-product-detail="${escapeHtml(producto.id || producto.nombre)}" type="button">Ver ficha</button>
-          <a class="product-wa" href="${whatsappHref(`Hola, quiero consultar por ${producto.nombre}`)}" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a>
+          <a class="product-wa" href="${whatsappHref(`Hola, quiero consultar por ${producto.nombre}`)}" target="_blank" rel="noopener noreferrer">Consultar</a>
         </div>
       </div>
     </article>

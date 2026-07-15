@@ -93,17 +93,25 @@
     .filter { flex: 0 0 auto; cursor: pointer; background: #171717; color: #fff; border: 1px solid var(--line); border-radius: 999px; padding: .72rem 1rem; font-weight: 900; text-transform: uppercase; }
     .filter.active, .filter:hover { background: var(--orange); border-color: var(--orange); }
     .products { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-    .product { background: var(--bg-card); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; transition: transform .18s, border-color .18s, box-shadow .18s; }
-    .product:hover { transform: translateY(-4px); border-color: rgba(249,115,22,.6); box-shadow: 0 18px 34px rgba(0,0,0,.32); }
+    .product { position: relative; display: flex; flex-direction: column; background: linear-gradient(180deg, #202020 0%, #121212 100%); border: 1px solid rgba(255,255,255,.1); border-radius: 22px; overflow: hidden; box-shadow: 0 16px 36px rgba(0,0,0,.26); transition: transform .18s, border-color .18s, box-shadow .18s; }
+    .product:hover { transform: translateY(-5px); border-color: rgba(249,115,22,.65); box-shadow: 0 22px 44px rgba(0,0,0,.38); }
     .product.hidden { display: none; }
-    .placeholder { min-height: 210px; display: grid; place-items: center; font-size: 4.5rem; background: radial-gradient(circle at 30% 20%, rgba(132,204,22,.2), transparent 9rem), linear-gradient(145deg, #292929, #111); }
-    .product-info { padding: 1rem; }
-    .product h3 { font-family: var(--display); font-size: 1.8rem; text-transform: uppercase; }
-    .specs { color: var(--muted); min-height: 48px; margin: .35rem 0 .7rem; }
-    .price { font-family: var(--display); color: var(--orange); font-size: 2.1rem; font-weight: 800; }
-    .product-actions { display: grid; gap: .55rem; margin-top: .8rem; }
-    .product-detail { cursor: pointer; width: 100%; justify-content: center; background: transparent; color: #fff; border: 1px solid var(--line); border-radius: 12px; padding: .85rem; font-weight: 900; text-transform: uppercase; }
-    .product-wa { margin-top: .8rem; display: inline-flex; width: 100%; justify-content: center; background: var(--green-wa); color: #07190d; border-radius: 12px; padding: .85rem; font-weight: 900; }
+    .placeholder { position: relative; min-height: 245px; display: grid; place-items: center; font-size: 4.5rem; background: radial-gradient(circle at 50% 30%, rgba(249,115,22,.18), transparent 10rem), linear-gradient(145deg, #2a2a2a, #0e0e0e); overflow: hidden; }
+    .placeholder img { transition: transform .22s ease; }
+    .product:hover .placeholder img { transform: scale(1.04); }
+    .product-badge-row { position: absolute; left: .85rem; right: .85rem; top: .85rem; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: .5rem; }
+    .product-badge { border: 1px solid rgba(255,255,255,.14); border-radius: 999px; padding: .32rem .58rem; background: rgba(0,0,0,.56); color: #fff; font-size: .72rem; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; backdrop-filter: blur(8px); }
+    .product-badge.accent { color: var(--orange); border-color: rgba(249,115,22,.42); }
+    .product-info { display: flex; flex: 1; flex-direction: column; padding: 1rem; }
+    .product-meta { color: var(--orange); font-size: .78rem; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; }
+    .product h3 { margin-top: .25rem; font-family: var(--display); font-size: 1.65rem; line-height: .95; text-transform: uppercase; }
+    .specs { color: var(--muted); min-height: 44px; margin: .45rem 0 .75rem; font-size: .92rem; }
+    .spec-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .85rem; }
+    .spec-chip { border: 1px solid rgba(255,255,255,.1); border-radius: 999px; padding: .32rem .5rem; color: #d8d8d8; background: rgba(255,255,255,.045); font-size: .76rem; font-weight: 800; }
+    .price { margin-top: auto; font-family: var(--display); color: var(--orange); font-size: 2rem; line-height: 1; font-weight: 800; }
+    .product-actions { display: grid; grid-template-columns: 1fr 1fr; gap: .55rem; margin-top: .9rem; }
+    .product-detail { cursor: pointer; width: 100%; justify-content: center; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.16); border-radius: 12px; padding: .78rem .7rem; font-weight: 900; text-transform: uppercase; }
+    .product-wa { display: inline-flex; width: 100%; justify-content: center; background: var(--green-wa); color: #07190d; border-radius: 12px; padding: .78rem .7rem; font-weight: 900; text-transform: uppercase; }
 
     .modal { position: fixed; inset: 0; z-index: 120; display: none; align-items: center; justify-content: center; padding: 1rem; background: rgba(0,0,0,.78); }
     .modal.open { display: flex; }
@@ -223,10 +231,10 @@
       </div>
       <div class="filters brand-filters" role="group" aria-label="Filtrar productos por marca" id="brand-filters"></div>
       <div class="products" id="productos-grid" aria-live="polite">
-        <article class="product" data-category="mtb"><div class="placeholder">🚵</div><div class="product-info"><h3>MTB Rodado 29 Aluminio</h3><p class="specs">Cuadro Aluminio 6061 | 21 Vel</p><p class="price">$269.900</p><a class="product-wa" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20MTB%20Rodado%2029%20Aluminio" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a></div></article>
-        <article class="product" data-category="mtb"><div class="placeholder">🚲</div><div class="product-info"><h3>Topmega MTB Pro</h3><p class="specs">Frenos Disco Hidráulico</p><p class="price">$389.900</p><a class="product-wa" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20Topmega%20MTB%20Pro" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a></div></article>
-        <article class="product" data-category="urbana"><div class="placeholder">🚲</div><div class="product-info"><h3>Urbana Paseo Vintage</h3><p class="specs">Con canasto y portaequipaje</p><p class="price">$215.000</p><a class="product-wa" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20Urbana%20Paseo%20Vintage" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a></div></article>
-        <article class="product" data-category="electrica"><div class="placeholder">⚡</div><div class="product-info"><h3>E-Bike Plegable</h3><p class="specs">Motor 350W | 40km autonomía</p><p class="price">$799.900</p><a class="product-wa" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20E-Bike%20Plegable" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp</a></div></article>
+        <article class="product" data-category="mtb"><div class="placeholder"><div class="product-badge-row"><span class="product-badge accent">MTB</span></div>🚵</div><div class="product-info"><p class="product-meta">MTB · Embiciate</p><h3>MTB Rodado 29 Aluminio</h3><p class="specs">Cuadro Aluminio 6061 | 21 Vel</p><div class="spec-chips"><span class="spec-chip">Rodado 29</span><span class="spec-chip">Aluminio</span></div><p class="price">$269.900</p><div class="product-actions"><button class="product-detail" type="button">Ver ficha</button><a class="product-wa" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20MTB%20Rodado%2029%20Aluminio" target="_blank" rel="noopener noreferrer">Consultar</a></div></div></article>
+        <article class="product" data-category="mtb"><div class="placeholder"><div class="product-badge-row"><span class="product-badge accent">MTB</span><span class="product-badge">Topmega</span></div>🚲</div><div class="product-info"><p class="product-meta">MTB · Topmega</p><h3>Topmega MTB Pro</h3><p class="specs">Frenos Disco Hidráulico</p><div class="spec-chips"><span class="spec-chip">Disco</span><span class="spec-chip">Pro</span></div><p class="price">$389.900</p><div class="product-actions"><button class="product-detail" type="button">Ver ficha</button><a class="product-wa" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20Topmega%20MTB%20Pro" target="_blank" rel="noopener noreferrer">Consultar</a></div></div></article>
+        <article class="product" data-category="urbana"><div class="placeholder"><div class="product-badge-row"><span class="product-badge accent">Urbana</span></div>🚲</div><div class="product-info"><p class="product-meta">Urbana · Embiciate</p><h3>Urbana Paseo Vintage</h3><p class="specs">Con canasto y portaequipaje</p><div class="spec-chips"><span class="spec-chip">Canasto</span><span class="spec-chip">Paseo</span></div><p class="price">$215.000</p><div class="product-actions"><button class="product-detail" type="button">Ver ficha</button><a class="product-wa" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20Urbana%20Paseo%20Vintage" target="_blank" rel="noopener noreferrer">Consultar</a></div></div></article>
+        <article class="product" data-category="electrica"><div class="placeholder"><div class="product-badge-row"><span class="product-badge accent">Eléctrica</span></div>⚡</div><div class="product-info"><p class="product-meta">Eléctrica · Embiciate</p><h3>E-Bike Plegable</h3><p class="specs">Motor 350W | 40km autonomía</p><div class="spec-chips"><span class="spec-chip">350W</span><span class="spec-chip">40km</span></div><p class="price">$799.900</p><div class="product-actions"><button class="product-detail" type="button">Ver ficha</button><a class="product-wa" href="https://wa.me/5492235505397?text=Hola%2C%20quiero%20consultar%20por%20E-Bike%20Plegable" target="_blank" rel="noopener noreferrer">Consultar</a></div></div></article>
       </div>
     </section>
 
@@ -310,8 +318,8 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <script src="/config.js?v=20260520-10" defer></script>
-  <script src="/supabase-client.js?v=20260520-10" defer></script>
-  <script src="/main.js?v=20260520-10" defer></script>
+  <script src="/config.js?v=20260520-11" defer></script>
+  <script src="/supabase-client.js?v=20260520-11" defer></script>
+  <script src="/main.js?v=20260520-11" defer></script>
 </body>
 </html>
