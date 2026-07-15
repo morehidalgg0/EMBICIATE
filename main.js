@@ -135,14 +135,10 @@ function applyConfig() {
     badges.innerHTML = heroBadges.map((badge) => `<div class="badge">${escapeHtml(badge)}</div>`).join('')
   }
 
-  const visual = document.getElementById('hero-visual')
-  if (visual && state.config.hero_imagen) {
-    visual.innerHTML = `<img src="${escapeHtml(state.config.hero_imagen)}" alt="Bicicleta destacada" fetchpriority="high" width="540" height="260" style="width:100%;height:100%;min-height:260px;object-fit:cover;display:block;border-radius:20px;">`
-  }
-
   const hero = document.getElementById('inicio')
-  if (hero && state.config.hero_fondo_imagen) {
-    hero.style.setProperty('--hero-bg-image', `url("${state.config.hero_fondo_imagen.replace(/"/g, '%22')}")`)
+  const heroImage = state.config.hero_fondo_imagen || state.config.hero_imagen || '/images/hero.jpg'
+  if (hero && heroImage) {
+    hero.style.setProperty('--hero-bg-image', `url("${heroImage.replace(/"/g, '%22')}")`)
   }
 
   const map = document.getElementById('mapa-ubicacion')
